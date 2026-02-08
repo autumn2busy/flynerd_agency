@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlyNerd Tech Website
+
+Official marketing site for FlyNerd Tech, an AI automation agency for franchise operators. Built with Next.js 14, Tailwind CSS, and shadcn/ui.
+
+## Features
+
+- **Franchise Automation OS**: Modular product showcase (Growth, Ops, Reputation, Training).
+- **Interactive Tools**: ROI Estimator, AI Concierge (Demo).
+- **Techwear Aesthetic**: Use of dark mode, glassmorphism, and monospace accents.
+- **Conversion Focused**: Clear CTAs, social proof, and trust signals to drive "Blueprint" bookings.
 
 ## Getting Started
 
-First, run the development server:
+1.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2.  **Run development server**:
+    ```bash
+    npm run dev
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3.  **Build for production**:
+    ```bash
+    npm run build
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app`: Next.js App Router pages.
+- `src/components/layout`: Global components (Navbar, Footer, MobileNav).
+- `src/components/marketing`: Landing page components (Hero).
+- `src/components/tools`: Interactive widgets (ROI Estimator, AI Concierge).
+- `src/components/ui`: Reusable shadcn/ui components.
 
-## Learn More
+## Deployment on Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1.  Connect your GitHub repository to Vercel.
+2.  The framework preset should automatically detect Next.js.
+3.  Ensure the **Build Command** is `next build`.
+4.  Ensure the **Output Directory** is `.next`.
+5.  Deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Integration Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Forms**: Currently mocked. Connect to ActiveCampaign via API Route or external form embed in `src/app/contact/page.tsx`.
+- **Analytics**: Add Google Tag Manager ID in `layout.tsx` or use `next/third-parties`.
