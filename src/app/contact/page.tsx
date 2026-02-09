@@ -15,7 +15,7 @@ export default function ContactPage() {
 
                     <div>
                         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-                            Let's Map Your Automation.
+                            Let&apos;s Map Your Automation.
                         </h1>
                         <p className="text-xl text-muted-foreground mb-8">
                             Ready to replace chaos with control? Book an Automation Blueprint or start a conversation.
