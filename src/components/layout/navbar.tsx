@@ -6,53 +6,51 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { MobileNav } from "@/components/layout/mobile-nav"
-import { Network } from "lucide-react"
 
 export function Navbar() {
     const pathname = usePathname()
 
     const routes = [
+        { href: "/", label: "Home" },
         { href: "/solutions", label: "Solutions" },
-        { href: "/services", label: "Services" },
         { href: "/industries", label: "Industries" },
+        { href: "/pricing", label: "Pricing" },
         { href: "/case-studies", label: "Case Studies" },
+        { href: "/trust", label: "About" },
+        { href: "/contact", label: "Contact" },
     ]
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="sticky top-0 z-50 w-full border-b bg-white/90 backdrop-blur-lg supports-[backdrop-filter]:bg-white/80">
             <div className="container flex h-16 items-center justify-between">
                 <Link href="/" className="flex items-center space-x-2">
-                    <Network className="h-6 w-6 text-primary" />
-                    <span className="text-xl font-bold tracking-tight text-foreground">
+                    <span className="text-xl font-heading font-bold tracking-tight text-foreground">
                         FlyNerd<span className="text-primary">Tech</span>
                     </span>
                 </Link>
-                <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+                <nav className="hidden lg:flex items-center gap-7 text-sm font-medium">
                     {routes.map((route) => (
                         <Link
                             key={route.href}
                             href={route.href}
                             className={cn(
                                 "transition-colors hover:text-primary",
-                                pathname === route.href ? "text-foreground" : "text-muted-foreground"
+                                pathname === route.href ? "text-foreground font-semibold" : "text-muted-foreground"
                             )}
                         >
                             {route.label}
                         </Link>
                     ))}
-                    <Link href="/trust" className="text-muted-foreground hover:text-primary transition-colors">
-                        Trust
-                    </Link>
                 </nav>
-                <div className="hidden md:flex items-center gap-4">
-                    <Button variant="ghost" asChild>
-                        <Link href="/contact">Contact</Link>
-                    </Button>
-                    <Button asChild>
-                        <Link href="/contact">Book a Blueprint</Link>
+                <div className="hidden lg:flex items-center gap-3">
+                    <Link href="#how-it-works" className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium">
+                        See How It Works
+                    </Link>
+                    <Button asChild className="bg-primary hover:bg-primary/90 text-white font-semibold px-5">
+                        <Link href="/contact">Get My Free Teardown</Link>
                     </Button>
                 </div>
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <MobileNav />
                 </div>
             </div>
