@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
 
@@ -83,12 +82,34 @@ const intakeQuestions = [
 export default function ContactPage() {
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real implementation, this would send to an API
-        console.log("Form submitted:", formData);
-        setIsSubmitted(true);
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || "Something went wrong. Please try again.");
+            }
+
+            console.log("Form submitted successfully");
+            setIsSubmitted(true);
+        } catch (err: any) {
+            console.error("Submission error:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (id: string, value: string) => {
@@ -221,9 +242,19 @@ export default function ContactPage() {
                                     </div>
                                 ))}
 
-                                <button type="submit" className="btn btn-primary w-full text-lg py-4">
-                                    Submit & Book a Call
-                                    <ArrowUpRight size={20} />
+                                {error && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                                        {error}
+                                    </div>
+                                )}
+
+                                <button 
+                                    type="submit" 
+                                    disabled={isLoading}
+                                    className="btn btn-primary w-full text-lg py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isLoading ? "Submitting..." : "Submit & Book a Call"}
+                                    {!isLoading && <ArrowUpRight size={20} />}
                                 </button>
                             </form>
                         </div>
