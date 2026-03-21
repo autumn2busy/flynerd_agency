@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                                 <p className="text-[var(--text-secondary)] leading-relaxed">
                                     You have the right to access, correct, or delete your personal information.
                                     You may also opt out of marketing communications at any time. To exercise these
-                                    rights, contact us at info@flynerdtech.com.
+                                    rights, contact us at hello@flynerdtech.com.
                                 </p>
                             </section>
 
