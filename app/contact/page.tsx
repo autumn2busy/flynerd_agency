@@ -7,6 +7,18 @@ import { ArrowUpRight, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
 
 const intakeQuestions = [
     {
+        id: "name",
+        label: "What's your name?",
+        type: "text",
+        placeholder: "John Doe",
+    },
+    {
+        id: "email",
+        label: "What's your email address?",
+        type: "text",
+        placeholder: "john@example.com",
+    },
+    {
         id: "business_name",
         label: "What's your business name?",
         type: "text",
@@ -83,12 +95,35 @@ const intakeQuestions = [
 export default function ContactPage() {
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real implementation, this would send to an API
-        console.log("Form submitted:", formData);
-        setIsSubmitted(true);
+        
+        if (!formData.email || !formData.name) {
+            alert("Please provide your name and email.");
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                setIsSubmitted(true);
+            } else {
+                alert("Something went wrong joining the pipeline. Please try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error submitting the form.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (id: string, value: string) => {
