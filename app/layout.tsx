@@ -101,7 +101,7 @@ export default function RootLayout({
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "sales",
-                email: "hello@flynerdtech.com",
+                email: "info@flynerdtech.com",
               },
             }),
           }}
