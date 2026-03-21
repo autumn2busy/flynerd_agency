@@ -104,8 +104,8 @@ export async function POST(req: Request) {
           contact: contactId,
           value: 0,
           currency: "usd",
-          group: 3,
-          stage: 8,
+          group: "3",
+          stage: "8",
           status: 0, // 0 = Open
         },
       }),
