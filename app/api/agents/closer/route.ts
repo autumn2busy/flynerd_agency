@@ -1,73 +1,372 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import Groq from "groq-sdk";
-import { upsertContact, addTagToContact, getDealsByContact, updateDealStage } from "@/lib/activecampaign";
+import OpenAI from "openai";
+import {
+  upsertContact,
+  addTagToContact,
+  getDealsByContact,
+  updateDealStage,
+} from "@/lib/activecampaign";
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // ActiveCampaign Stage IDs (Flynerd Auto-Pilot Pipeline)
 const STAGE_NEGOTIATING = "12";
-const STAGE_CLOSED_WON = "13";
 
-// POST /api/agents/closer (Webhook from Inbound Email/n8n)
+// ─────────────────────────────────────────────────────────────────────────────
+// FLYNERD TECH KNOWLEDGE BASE
+// Source of truth for the closer agent. Update here, not in the prompt.
+// ─────────────────────────────────────────────────────────────────────────────
+const FLYNERD_KB = `
+## Company
+FlyNerd Tech is an Atlanta-based AI agency that builds AI-powered websites for local
+service businesses. Founded by a Solutions Architect with 15+ years in technology,
+marketing operations, and business systems design. Atlanta-based, serving clients globally.
+Tagline: "Where intelligence meets influence."
+
+## Core Product: The AI-Powered Website
+This is NOT a generic website. It is a "Digital Employee" — a website that actively
+works for the business 24/7: booking appointments, answering customer questions,
+qualifying leads, and converting visitors without the owner being involved.
+
+Every FlyNerd AI Website includes the "Core Five":
+1. AI Booking & Support Agent — 24/7 conversational agent trained on the client's
+   services, pricing, and availability. Not a contact form. Not a script.
+2. AI-Generated Personalization — Design and copy generated from Yelp reviews and
+   reputation data. Every site is unique to the business.
+3. 7-Day Launch Guarantee — AI-accelerated pipeline delivers live sites in 7 days.
+4. Local SEO Architecture — Next.js headless with schema markup, sub-second load times.
+5. Managed Monthly — Hosting, SSL, security, and AI updates bundled in monthly plan.
+
+## Why FlyNerd vs Wix or Generic Designers
+- Wix sends you a form submission at 2 AM. FlyNerd's AI agent books the appointment.
+- Wix requires you to write your own copy. FlyNerd's Intel Agent reads your Yelp data.
+- Wix takes 4-6 weeks with you doing the work. FlyNerd launches in 7 days.
+
+## Pricing — AI Website Packages (PUBLIC)
+
+### Quickstart Build — $1,250 setup + $197/month
+Target: Local service businesses (HVAC, salons, lawyers, contractors, real estate agents)
+Includes: Custom niche design, AI booking agent, local SEO, Vercel hosting, monthly maintenance.
+Payment: 50/50 split — $625 deposit to start, $625 on delivery.
+Link: https://www.flynerd.tech/pricing
+
+### AI Concierge Bundle — $2,400 setup + $750/month
+Target: High lead volume businesses or multi-location operations
+Includes: Everything in Quickstart + advanced AI agents (custom KB), CRM automation
+(ActiveCampaign), lead qualification + routing, 2 improvement tickets/month.
+Payment: 50/50 split — $1,200 deposit, $1,200 on launch.
+Link: https://www.flynerd.tech/pricing
+
+### INTERNAL ONLY — Cold Pitch Special — $997 setup + $197/month
+FOR SCOUTED PROSPECTS ONLY. This is the price for a prospect who received a
+personalized demo through FlyNerd's automated pipeline to "claim" their site.
+NEVER quote this to inbound or organic prospects. NEVER mention this publicly.
+
+## Pricing — Automation Retainers (PUBLIC)
+
+### Automation Audit — $495 one-time
+Best first step for businesses unsure where to start. 60-90 min session, systems
+audit, roadmap. Credit toward any build.
+
+### Monthly Care Plan — $750/month
+System monitoring, 2 improvement tickets/month, performance reports, optimization.
+Cancel anytime at portal.flynerd.tech
+
+### Growth Ops Partner — $1,800/month
+Everything in Care Plan + multi-workflow optimization, quarterly roadmap, Slack support.
+Best for businesses running multiple workflows or wanting their own automation pipeline.
+
+## The Scouting Pipeline as a Service
+If a prospect asks how FlyNerd finds and pitches local businesses automatically,
+and they want that capability for their OWN business — this is a premium custom
+implementation. Position it as: "We can build you your own automated outreach
+pipeline — your own Scout, Intel, and Builder agents. Book a strategy call."
+This falls under AI Concierge Bundle ($2,400) or Growth Ops Partner ($1,800/mo).
+Never give away implementation details. Just position it as a custom scope.
+
+## Booking
+Best next step: https://www.flynerd.tech/contact or https://www.flynerd.tech/pricing
+
+## What We Do NOT Do
+- No static brochure websites
+- No Wix, Squarespace, or WordPress
+- Never quote $997 to inbound/organic prospects
+- Never reveal internal pipeline or agent architecture to prospects
+`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SYSTEM PROMPT
+// ─────────────────────────────────────────────────────────────────────────────
+function buildSystemPrompt(businessName: string): string {
+  return `You are Jordan, a senior Sales Executive at FlyNerd Tech — an Atlanta-based AI automation agency.
+You are responding to an inbound email from ${businessName}, a local business owner who received our personalized demo.
+
+Your personality: confident, knowledgeable, genuinely helpful, zero fluff. You write like a real human — not corporate, not salesy.
+Your goal: answer their question accurately, move them toward booking a call or the right package.
+
+CRITICAL RULES:
+1. Answer ONLY what was asked. Do not volunteer unrelated information.
+2. Use ONLY the pricing and service details from the knowledge base below. Never invent numbers.
+3. If asked about cost, always recommend starting with the $495 Automation Audit as the lowest-risk entry point, then explain the relevant build package.
+4. If asked what you do or what services you offer, describe the AI automation and workflow systems — NOT just the demo website.
+5. If the question is outside your knowledge base (e.g., a general industry question about AI, automation trends, or tech best practices), answer as a knowledgeable expert. You have deep knowledge of AI automation, n8n, ActiveCampaign, make.com, Zapier, CRM systems, and local business marketing.
+6. NEVER include meta-commentary, notes, or explanations about your response (e.g. "This email aims to..."). Return ONLY the email body text.
+7. Keep replies under 150 words unless the question genuinely requires more detail.
+8. Always end with a clear single next step — book a call, reply with questions, or a relevant package link. Never end with multiple CTAs.
+9. Sign off as: Jordan | FlyNerd Tech
+
+FORMATTING RULES (critical — this is a plain text email):
+- Use blank lines between paragraphs (one empty line = paragraph break).
+- Do NOT use markdown: no **, no ##, no bullet dashes, no asterisks.
+- If listing items, write them as separate lines with a simple dash or number, each on its own line with a blank line before and after the list.
+- Do NOT use \n literally — just write natural paragraph breaks.
+- Do NOT use HTML tags.
+- The email must read cleanly in a standard Gmail inbox as plain text.
+
+EXAMPLE of correct formatting:
+Hi [Name],
+
+Great question. Here is what that includes:
+
+- Item one
+- Item two
+- Item three
+
+Ready to move forward? Reply here and I will get you set up.
+
+Jordan | FlyNerd Tech
+
+KNOWLEDGE BASE:
+${FLYNERD_KB}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS — extract clean fields from n8n Gmail trigger payload
+// n8n Gmail trigger sends nested objects, not flat TextBody/From
+// ─────────────────────────────────────────────────────────────────────────────
+function extractEmail(from: any): string {
+  // Handle "Name <email@domain.com>" format
+  if (typeof from === "string") {
+    const match = from.match(/<([^>]+)>/);
+    return (match ? match[1] : from).toLowerCase().trim();
+  }
+  // Handle n8n Gmail trigger format: from.value[0].address
+  if (Array.isArray(from?.value)) {
+    return (from.value[0]?.address || "").toLowerCase().trim();
+  }
+  return "";
+}
+
+function extractTextBody(body: any): string {
+  // Direct TextBody (Postmark/webhook format)
+  if (typeof body.TextBody === "string" && body.TextBody.trim()) {
+    return body.TextBody.trim();
+  }
+  // n8n Gmail format: body.text or body.body
+  if (typeof body.text === "string" && body.text.trim()) {
+    return body.text.trim();
+  }
+  if (typeof body.body === "string" && body.body.trim()) {
+    return body.body.trim();
+  }
+  // Fallback: snippet (truncated but better than nothing)
+  if (typeof body.snippet === "string" && body.snippet.trim()) {
+    return body.snippet.trim();
+  }
+  return "";
+}
+
+function extractThreadId(body: any): string | null {
+  return body.threadId || body.ThreadId || body.thread_id || null;
+}
+
+function extractMessageId(body: any): string | null {
+  return body.id || body.messageId || body.MessageId || null;
+}
+
+function extractFromRaw(body: any): string {
+  // Support both flat and nested n8n Gmail formats
+  if (body.From) return body.From;
+  if (body.from) {
+    if (typeof body.from === "string") return body.from;
+    if (Array.isArray(body.from?.value)) {
+      const v = body.from.value[0];
+      return v?.name ? `${v.name} <${v.address}>` : v?.address || "";
+    }
+  }
+  return "";
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONVERSATION MEMORY — Supabase via Prisma raw queries
+// Table: email_conversation_threads
+// ─────────────────────────────────────────────────────────────────────────────
+async function getThreadHistory(threadId: string): Promise<Array<{ role: string; content: string }>> {
+  try {
+    const rows = await prisma.$queryRaw<Array<{ role: string; content: string; created_at: Date }>>`
+      SELECT role, content, created_at
+      FROM email_conversation_threads
+      WHERE thread_id = ${threadId}
+      ORDER BY created_at ASC
+      LIMIT 20
+    `;
+    return rows.map((r) => ({ role: r.role, content: r.content }));
+  } catch {
+    // Table may not exist yet — fail gracefully, stateless fallback
+    console.warn("[Closer] Thread history unavailable — running stateless");
+    return [];
+  }
+}
+
+async function saveThreadMessage(
+  threadId: string,
+  leadEmail: string,
+  role: "user" | "assistant",
+  content: string
+): Promise<void> {
+  try {
+    await prisma.$executeRaw`
+      INSERT INTO email_conversation_threads (thread_id, lead_email, role, content, created_at)
+      VALUES (${threadId}, ${leadEmail}, ${role}, ${content}, NOW())
+    `;
+  } catch (e) {
+    console.warn("[Closer] Could not save thread message:", e);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GROQ with OpenAI fallback
+// ─────────────────────────────────────────────────────────────────────────────
+async function generateReply(
+  systemPrompt: string,
+  messages: Array<{ role: string; content: string }>
+): Promise<string> {
+  const formattedMessages = messages.map((m) => ({
+    role: m.role as "user" | "assistant" | "system",
+    content: m.content,
+  }));
+
+  try {
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [{ role: "system", content: systemPrompt }, ...formattedMessages],
+      temperature: 0.4, // Lower = more factual, less hallucination
+      max_tokens: 600,
+    });
+    return completion.choices[0]?.message?.content?.trim() || "";
+  } catch (groqErr: any) {
+    console.warn("[Closer] Groq failed, falling back to OpenAI:", groqErr.message);
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const fallback = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "system", content: systemPrompt }, ...formattedMessages],
+      temperature: 0.4,
+      max_tokens: 600,
+    });
+    return fallback.choices[0]?.message?.content?.trim() || "";
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN HANDLER
+// ─────────────────────────────────────────────────────────────────────────────
 export async function POST(req: Request) {
+  const start = Date.now();
+
   try {
     const body = await req.json();
-    const { From, TextBody } = body;
 
-    if (!From || !TextBody) {
-      return NextResponse.json({ error: "Missing email payload data" }, { status: 400 });
+    // Extract fields — handles both n8n Gmail format and direct webhook format
+    const fromRaw = extractFromRaw(body);
+    const leadEmail = extractEmail(fromRaw || body.from || body.From);
+    const textBody = extractTextBody(body);
+    const threadId = extractThreadId(body);
+    const messageId = extractMessageId(body);
+
+    if (!leadEmail) {
+      console.error("[Closer] Could not extract sender email. Payload:", JSON.stringify(body).slice(0, 500));
+      return NextResponse.json({ error: "Missing or unreadable sender email" }, { status: 400 });
     }
 
-    const leadEmail = From.toLowerCase().trim();
+    if (!textBody) {
+      console.error("[Closer] Could not extract message body. Payload:", JSON.stringify(body).slice(0, 500));
+      return NextResponse.json({ error: "Missing or unreadable message body" }, { status: 400 });
+    }
+
+    // Find lead in DB
     const lead = await prisma.agencyLead.findFirst({
       where: { contactEmail: leadEmail },
     });
 
-    if (!lead) return NextResponse.json({ message: "No lead found" });
+    // Use business name from DB or fall back to email domain
+    const businessName = lead?.businessName || leadEmail.split("@")[1]?.split(".")[0] || "there";
 
-    // 1. Update DB status
-    await prisma.agencyLead.update({
-      where: { id: lead.id },
-      data: { status: "NEGOTIATING" },
-    });
+    // Update lead status if found
+    if (lead) {
+      await prisma.agencyLead.update({
+        where: { id: lead.id },
+        data: { status: "NEGOTIATING" },
+      });
+    }
 
-    // 2. Generate AI response
-    const prompt = `Handle objection for ${lead.businessName}: "${TextBody}". Push to Stripe ${process.env.STRIPE_PAYMENT_LINK}`;
+    // Build conversation history for this thread
+    const sessionId = threadId || leadEmail; // fall back to email if no threadId
+    const history = await getThreadHistory(sessionId);
 
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [{ role: "user", content: prompt }],
-    });
+    // Save the incoming user message to thread history
+    await saveThreadMessage(sessionId, leadEmail, "user", textBody);
 
-    const aiReplyDraft = completion.choices[0]?.message?.content || "";
+    // Build messages array: history + current message
+    const messages = [
+      ...history,
+      { role: "user", content: textBody },
+    ];
 
-    // 3. ActiveCampaign: Tag + Move Deal to "Negotiating" stage
-    const contactRes = await upsertContact(leadEmail, lead.businessName, "Business");
-    const contactId = contactRes.contact?.id;
-    
-    if (contactId) {
-      await addTagToContact(contactId, "AI_REPLY_READY");
+    // Generate AI reply
+    const systemPrompt = buildSystemPrompt(businessName);
+    const aiReplyDraft = await generateReply(systemPrompt, messages);
 
-      // Find the contact's open deal and move it to Negotiating
-      const dealsRes = await getDealsByContact(contactId);
-      const openDeal = dealsRes.deals?.find((d: any) => d.status === "0"); // status 0 = Open
-      
-      if (openDeal) {
-        await updateDealStage(openDeal.id, STAGE_NEGOTIATING);
-        console.log(`[Closer Agent] Moved Deal ${openDeal.id} to Stage: Negotiating`);
+    if (!aiReplyDraft) {
+      return NextResponse.json({ error: "AI returned empty reply" }, { status: 500 });
+    }
+
+    // Save AI reply to thread history
+    await saveThreadMessage(sessionId, leadEmail, "assistant", aiReplyDraft);
+
+    // ActiveCampaign: tag + move deal
+    if (lead) {
+      try {
+        const contactRes = await upsertContact(leadEmail, lead.businessName, "Business");
+        const contactId = contactRes.contact?.id;
+        if (contactId) {
+          await addTagToContact(contactId, "AI_REPLY_READY");
+          await addTagToContact(contactId, "email replied");
+          const dealsRes = await getDealsByContact(contactId);
+          const openDeal = dealsRes.deals?.find((d: any) => d.status === "0");
+          if (openDeal) {
+            await updateDealStage(openDeal.id, STAGE_NEGOTIATING);
+            console.log(`[Closer] Moved Deal ${openDeal.id} to Negotiating`);
+          }
+        }
+      } catch (acErr: any) {
+        // AC failure should not break the reply
+        console.warn("[Closer] ActiveCampaign update failed:", acErr.message);
       }
     }
 
+    const durationMs = Date.now() - start;
+    console.log(`[Closer] Reply generated in ${durationMs}ms for ${leadEmail}`);
+
     return NextResponse.json({
-      message: "Reply processed via Groq. Deal moved to Negotiating.",
+      message: "Reply processed. Deal moved to Negotiating.",
       draftedReply: aiReplyDraft,
+      threadId: sessionId,
+      durationMs,
     });
   } catch (error: any) {
     console.error("Closer Agent Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error", message: error.message }, { status: 500 });
   }
 }
-

@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const navLinks = [
-    { href: "/services", label: "Services" },
+    { href: "/ai-website", label: "AI Websites" },
+    { href: "/services", label: "Automation" },
     { href: "/work", label: "Work" },
 ];
 

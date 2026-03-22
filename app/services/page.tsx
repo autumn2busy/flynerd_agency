@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowUpRight, Zap, Sparkles, Mail, Cpu, Globe, FileText, CheckCircle } from "lucide-react";
+import { ArrowUpRight, Zap, Sparkles, Cpu, Globe, FileText, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Services",
-    description: "AI automation, marketing operations, email campaigns, AI agents, website design, and content systems. Full-spectrum solutions for growing businesses.",
+    title: "Automation Services | FlyNerd Tech",
+    description: "AI automation, CRM operations, AI agents, and workflow systems for businesses ready to scale. Supporting services to complement your AI-powered website.",
 };
 
 const services = [
@@ -39,22 +39,7 @@ const services = [
         startingAt: "$2,500",
         featured: true,
     },
-    {
-        slug: "email-campaigns",
-        icon: Mail,
-        title: "Personalized Email Campaigns",
-        tagline: "Campaigns that convert",
-        description: "From strategy to launch, we handle it all. Audience segmentation, AI-powered copy, A/B testing, and performance tracking.",
-        features: [
-            "Strategy & consultation",
-            "Audience segmentation",
-            "AI-assisted copywriting",
-            "ActiveCampaign setup",
-            "Performance tracking & optimization",
-        ],
-        startingAt: "$499",
-        popular: true,
-    },
+
     {
         slug: "ai-agents",
         icon: Cpu,
@@ -109,13 +94,20 @@ export default function ServicesPage() {
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl">
-                        <span className="section-label">Our Services</span>
+                        <span className="section-label">Automation Services</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-                            Full-Spectrum AI <span className="gradient-text">Solutions</span>
+                            The systems <span className="gradient-text">behind the site.</span>
                         </h1>
-                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-                            End-to-end systems designed to work together, scale infinitely, and evolve with your business.
-                            From automation to AI agents—we build what you need.
+                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-4">
+                            Every FlyNerd AI website includes a built-in booking agent and local SEO foundation.
+                            These services go deeper — for businesses that want to automate operations,
+                            marketing, and lead pipelines beyond the site itself.
+                        </p>
+                        <p className="text-sm text-[var(--text-muted)]">
+                            Looking for the AI-powered website?{" "}
+                            <a href="/ai-website" className="text-[var(--gold-400)] hover:underline">
+                                See the full product →
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -132,11 +124,6 @@ export default function ServicesPage() {
                                 className={`glass-card rounded-2xl p-8 lg:p-10 group relative overflow-hidden ${service.featured ? "lg:col-span-2 lg:flex lg:gap-12" : ""
                                     }`}
                             >
-                                {service.popular && (
-                                    <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-3 py-1 rounded-full">
-                                        Starting at {service.startingAt}
-                                    </span>
-                                )}
                                 {service.featured && (
                                     <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--gold-400)] bg-[var(--gold-500)]/10 px-3 py-1 rounded-full">
                                         Most Popular
