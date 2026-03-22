@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
 
@@ -117,14 +116,16 @@ const packageMap: Record<string, string> = {
 };
 
 export default function ContactPage() {
-    const searchParams = useSearchParams();
-    const selectedPackage = searchParams.get("package");
-    const initialFormData: Record<string, string> =
-        selectedPackage && packageMap[selectedPackage]
-            ? { package: packageMap[selectedPackage] }
-            : {};
-    const [formData, setFormData] = useState<Record<string, string>>(initialFormData);
+    const [formData, setFormData] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    useEffect(() => {
+        const selectedPackage = new URLSearchParams(window.location.search).get("package");
+        if (!selectedPackage) return;
+        const mappedPackage = packageMap[selectedPackage];
+        if (!mappedPackage) return;
+        setFormData((prev) => (prev.package ? prev : { ...prev, package: mappedPackage }));
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
