@@ -119,11 +119,11 @@ const packageMap: Record<string, string> = {
 export default function ContactPage() {
     const searchParams = useSearchParams();
     const selectedPackage = searchParams.get("package");
-    const [formData, setFormData] = useState<Record<string, string>>(() => {
-        if (!selectedPackage) return {};
-        const mappedPackage = packageMap[selectedPackage];
-        return mappedPackage ? { package: mappedPackage } : {};
-    });
+    const initialFormData: Record<string, string> =
+        selectedPackage && packageMap[selectedPackage]
+            ? { package: packageMap[selectedPackage] }
+            : {};
+    const [formData, setFormData] = useState<Record<string, string>>(initialFormData);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
