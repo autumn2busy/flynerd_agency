@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
 
@@ -29,6 +29,20 @@ const intakeQuestions = [
         label: "What industry or niche are you in?",
         type: "text",
         placeholder: "E-commerce, SaaS, Services, etc.",
+    },
+    {
+        id: "package",
+        label: "Which offer are you most interested in?",
+        type: "select",
+        options: [
+            "Automation Audit + Roadmap ($495)",
+            "Quickstart Workflow Build ($1,250)",
+            "AI Concierge Agent Launch ($2,400)",
+            "Email Revenue Sprint ($900)",
+            "Monthly Care Plan ($750/mo)",
+            "Growth Ops Partner ($1,800/mo)",
+            "Not sure yet",
+        ],
     },
     {
         id: "revenue",
@@ -83,8 +97,8 @@ const intakeQuestions = [
         type: "select",
         options: [
             "Under $1,000",
-            "$1,000 - $2,500",
-            "$2,500 - $5,000",
+            "$1,000 - $2,000",
+            "$2,000 - $5,000",
             "$5,000 - $10,000",
             "$10,000+",
             "Need to discuss",
@@ -92,10 +106,25 @@ const intakeQuestions = [
     },
 ];
 
+const packageMap: Record<string, string> = {
+    "automation-audit": "Automation Audit + Roadmap ($495)",
+    "quickstart-build": "Quickstart Workflow Build ($1,250)",
+    "agent-launch": "AI Concierge Agent Launch ($2,400)",
+    "ai-concierge": "AI Concierge Agent Launch ($2,400)",
+    "email-revenue-sprint": "Email Revenue Sprint ($900)",
+    "care-plan": "Monthly Care Plan ($750/mo)",
+    "growth-partner": "Growth Ops Partner ($1,800/mo)",
+};
+
 export default function ContactPage() {
-    const [formData, setFormData] = useState<Record<string, string>>({});
+    const searchParams = useSearchParams();
+    const selectedPackage = searchParams.get("package");
+    const [formData, setFormData] = useState<Record<string, string>>(() => {
+        if (!selectedPackage) return {};
+        const mappedPackage = packageMap[selectedPackage];
+        return mappedPackage ? { package: mappedPackage } : {};
+    });
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -105,7 +134,6 @@ export default function ContactPage() {
             return;
         }
 
-        setIsSubmitting(true);
         try {
             const res = await fetch("/api/contact", {
                 method: "POST",
@@ -121,8 +149,6 @@ export default function ContactPage() {
         } catch (error) {
             console.error(error);
             alert("Error submitting the form.");
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
@@ -166,7 +192,7 @@ export default function ContactPage() {
                             </h1>
                             <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-10">
                                 Ready to explore what AI automation can do for your business?
-                                Fill out the quick intake form and we&apos;ll set up a strategy call.
+                                Fill out the quick intake form and we&apos;ll recommend the best offer and next steps.
                             </p>
 
                             <div className="space-y-6">

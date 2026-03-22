@@ -3,47 +3,47 @@ import { ArrowUpRight, Sparkles, Zap, Cpu, Mail, Globe, FileText, ChevronRight }
 
 const services = [
   {
-    icon: Zap,
-    number: "01",
-    title: "AI Automation & Workflows",
-    description: "Intelligent systems that handle the repetitive work while you focus on what matters. Custom automations built for your exact business needs.",
-    href: "/services/ai-automation",
-  },
-  {
     icon: Sparkles,
-    number: "02",
-    title: "Marketing Operations",
-    description: "CRM cleanup, lifecycle journeys, and attribution readiness. We build the marketing infrastructure that scales.",
-    href: "/services/marketing-operations",
+    number: "01",
+    title: "Automation Audit + Roadmap",
+    description: "60-90 minute discovery + systems audit with a practical 30-day plan. Best first step before any custom implementation.",
+    href: "/contact?package=automation-audit",
     featured: true,
   },
   {
-    icon: Mail,
-    number: "03",
-    title: "Email Campaign Automation",
-    description: "Personalized campaigns that convert. From strategy to launch, we handle it all. Starting at $499 per campaign.",
-    href: "/services/email-campaigns",
+    icon: Zap,
+    number: "02",
+    title: "Quickstart Workflow Build",
+    description: "One high-impact workflow built end-to-end with up to 3 integrations. Starting at $1,250.",
+    href: "/contact?package=quickstart-build",
   },
   {
     icon: Cpu,
+    number: "03",
+    title: "AI Concierge Agent Launch",
+    description: "Website/chat lead qualification agent with CRM handoff and routing logic. Starting at $2,400.",
+    href: "/contact?package=ai-concierge",
+  },
+  {
+    icon: Mail,
     number: "04",
-    title: "AI Agents & Integrations",
-    description: "Chatbots, support copilots, and content assistants that work 24/7. Seamlessly integrated with your existing stack.",
-    href: "/services/ai-agents",
+    title: "Email Revenue Sprint",
+    description: "Segmentation + 3-5 email sequence + trigger automation and test setup. Starting at $900.",
+    href: "/contact?package=email-revenue-sprint",
   },
   {
     icon: Globe,
     number: "05",
-    title: "Website Design",
-    description: "Conversion-focused websites with SEO foundations built in. Clean, fast, and designed to turn visitors into customers.",
-    href: "/services/website-design",
+    title: "Monthly Care Plan",
+    description: "Monitoring, bug fixes, and monthly optimization tickets to keep everything running and improving. Starting at $750/mo.",
+    href: "/contact?package=care-plan",
   },
   {
     icon: FileText,
     number: "06",
-    title: "Content Systems",
-    description: "Newsletter, blog, and repurposing workflows. Create once, distribute everywhere with AI-powered efficiency.",
-    href: "/services/content-systems",
+    title: "Growth Ops Partner",
+    description: "Multi-system optimization and strategic ongoing support for scaling teams. Starting at $1,800/mo.",
+    href: "/contact?package=growth-partner",
   },
 ];
 
@@ -132,14 +132,14 @@ export default function HomePage() {
 
           {/* Description */}
           <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            AI automation and systems design for businesses ready to scale.
-            We build intelligent workflows that work while you sleep.
+            AI automation systems for service businesses that want faster lead response, cleaner operations, and predictable growth.
+            Start with a paid audit, then implement only what drives ROI.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/contact" className="btn btn-primary px-8 py-4 pulse-glow">
-              Book a Strategy Call
+              Book an Automation Audit
               <ArrowUpRight size={18} />
             </Link>
             <Link href="/services" className="btn btn-ghost px-8 py-4 bg-[rgba(24,25,29,0.8)] backdrop-blur-sm border border-[var(--glass-border)]">
