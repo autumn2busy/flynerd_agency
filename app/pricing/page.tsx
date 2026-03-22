@@ -4,149 +4,151 @@ import { ArrowUpRight, Check, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Pricing",
-    description: "Transparent pricing for AI automation services. From $499 email campaigns to full-scale business transformation.",
+    description: "Productized AI automation pricing for solo-operator friendly implementation: audit, workflow builds, AI concierge launch, and monthly optimization retainers.",
 };
 
 const pricingTiers = [
     {
         name: "Starter",
-        subtitle: "Email Campaign Automation",
-        price: "$499",
-        period: "per campaign",
-        description: "Perfect for testing the waters. A complete done-for-you email campaign with strategy, copy, and automation.",
+        subtitle: "Automation Audit + Roadmap",
+        price: "$495",
+        period: "one-time",
+        description: "A 60-90 minute discovery and systems audit with a 30-day implementation roadmap. Perfect first step before any build.",
         features: [
-            "30-min strategy consultation",
-            "Audience segmentation setup",
-            "3-5 email sequence",
-            "AI-assisted copywriting",
-            "ActiveCampaign setup",
-            "A/B testing",
-            "30-day performance report",
+            "60-90 minute strategy session",
+            "Systems + tools audit",
+            "3 quick-win opportunities",
+            "30-day implementation roadmap",
+            "Priority score by impact/effort",
+            "Proposal credit option",
         ],
-        cta: "Get Started",
-        href: "/contact?package=starter",
+        cta: "Book Audit",
+        href: "/contact?package=automation-audit",
         popular: true,
     },
     {
         name: "Build",
-        subtitle: "Foundation Package",
-        price: "$2,500",
+        subtitle: "Quickstart Workflow Build",
+        price: "$1,250",
         period: "one-time",
-        description: "Get your systems in order. CRM cleanup, basic automations, and a solid foundation for growth.",
+        description: "One fixed-scope workflow implementation to remove repetitive work and improve speed-to-lead, handoffs, or reporting.",
         features: [
-            "Everything in Starter",
-            "CRM data cleanup",
-            "3 custom automations",
-            "Lead scoring setup",
-            "Basic analytics dashboard",
-            "2 weeks of support",
-            "Team training session",
+            "1 workflow (trigger + actions)",
+            "Up to 3 tool integrations",
+            "Business logic + routing rules",
+            "QA + test scenarios",
+            "Loom walkthrough + docs",
+            "1 revision round",
         ],
-        cta: "Get Started",
-        href: "/contact?package=build",
-    },
-    {
-        name: "Optimize",
-        subtitle: "Growth Retainer",
-        price: "$5,000",
-        period: "/month",
-        description: "Ongoing optimization and expansion. We become an extension of your team.",
-        features: [
-            "Everything in Build",
-            "Unlimited automations",
-            "AI agent development",
-            "Advanced attribution",
-            "Weekly strategy calls",
-            "Priority support",
-            "Content system setup",
-        ],
-        cta: "Get Started",
-        href: "/contact?package=optimize",
+        cta: "Start Build",
+        href: "/contact?package=quickstart-build",
         featured: true,
     },
     {
-        name: "Scale",
-        subtitle: "Full Transformation",
-        price: "$10,000",
-        period: "/month",
-        description: "Complete AI transformation. Full-stack implementation with dedicated resources.",
+        name: "Agent",
+        subtitle: "AI Concierge Launch",
+        price: "$2,400",
+        period: "one-time",
+        description: "Launch a qualified lead or support AI concierge with human handoff, conversion flow, and CRM sync.",
         features: [
-            "Everything in Optimize",
-            "Dedicated project manager",
-            "Custom integrations",
-            "Enterprise AI solutions",
-            "Data warehouse setup",
-            "24/7 monitoring",
-            "Quarterly strategy reviews",
+            "Website/chat channel setup",
+            "Knowledge base bootstrapping",
+            "Qualification flow + lead capture",
+            "Human handoff logic",
+            "CRM + notifications integration",
+            "Launch checklist + training",
         ],
-        cta: "Contact Us",
-        href: "/contact?package=scale",
+        cta: "Launch Agent",
+        href: "/contact?package=agent-launch",
+    },
+    {
+        name: "Optimize",
+        subtitle: "Monthly Care Plan",
+        price: "$750",
+        period: "/month",
+        description: "Monitoring + iterative improvements to keep your systems healthy, accurate, and compounding results each month.",
+        features: [
+            "Monitoring + issue triage",
+            "Up to 2 improvement tickets / month",
+            "Performance summary report",
+            "Monthly optimization review",
+            "Priority async support",
+            "SLA response windows",
+        ],
+        cta: "Join Care Plan",
+        href: "/contact?package=care-plan",
+    },
+    {
+        name: "Growth Partner",
+        subtitle: "Multi-System Ops Retainer",
+        price: "$1,800",
+        period: "/month",
+        description: "For teams running multiple workflows/agents that need a strategic operator and execution partner every month.",
+        features: [
+            "Everything in Care Plan",
+            "Multi-workflow optimization",
+            "Quarterly roadmap planning",
+            "Advanced automation experiments",
+            "Cross-channel reporting",
+            "Slack/priority support",
+        ],
+        cta: "Apply Now",
+        href: "/contact?package=growth-partner",
     },
 ];
 
 const faqs = [
     {
-        question: "What if I'm not sure which package I need?",
-        answer: "Book a free strategy call and we'll help you identify the right fit based on your goals, budget, and current setup.",
+        question: "Do I need to start with an audit?",
+        answer: "For custom or multi-system work, yes. The audit ensures we build the highest-ROI workflow first and avoid scope creep.",
     },
     {
-        question: "Can I upgrade my package later?",
-        answer: "Absolutely. Most clients start with Build or a Starter campaign, then move to monthly retainers as they see results.",
+        question: "How long do projects take?",
+        answer: "Audit delivery is typically 2-3 business days. Quickstart builds usually ship in 1-2 weeks. Agent launches typically run 2-4 weeks.",
     },
     {
-        question: "Do you offer custom packages?",
-        answer: "Yes. If none of these fit your needs exactly, we can create a custom scope based on your specific requirements.",
+        question: "What are your payment terms?",
+        answer: "Projects under $2,000 are typically paid upfront. Larger scopes use milestone billing. Retainers are monthly with a 3-month minimum.",
     },
     {
-        question: "What's your refund policy?",
-        answer: "We stand behind our work. If you're not satisfied with deliverables, we'll make it right or refund unused work.",
+        question: "Can we expand after launch?",
+        answer: "Yes. Most clients start with one workflow or one agent, then expand into additional systems through Care Plan or Growth Partner.",
     },
     {
-        question: "How quickly can you start?",
-        answer: "Typically within 1-2 weeks of signing. Rush timelines may be available for an additional fee.",
-    },
-    {
-        question: "Do you require long-term contracts?",
-        answer: "Monthly retainers are month-to-month with 30 days notice. Project work is milestone-based with agreed deliverables.",
+        question: "What if we need a custom package?",
+        answer: "If your requirements are outside fixed scope, we create a custom SOW after the audit with clear deliverables and timelines.",
     },
 ];
 
 export default function PricingPage() {
     return (
         <>
-            {/* Hero */}
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl mx-auto text-center">
                         <span className="section-label">Pricing</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-                            Transparent <span className="gradient-text">Pricing</span>
+                            Productized <span className="gradient-text">Growth Systems</span>
                         </h1>
                         <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-                            From single campaigns to full business transformation. Choose what fits your stage.
+                            Clear scopes. Clear outcomes. Built for service businesses that want better lead follow-up,
+                            faster operations, and less manual work.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {/* Pricing Grid */}
             <section className="pb-24 lg:pb-32">
                 <div className="section-container">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                         {pricingTiers.map((tier) => (
                             <div
                                 key={tier.name}
-                                className={`glass-card rounded-2xl p-8 relative ${tier.featured ? "ring-2 ring-[var(--gold-500)] lg:scale-105" : ""
-                                    }`}
+                                className={`glass-card rounded-2xl p-8 relative ${tier.featured ? "ring-2 ring-[var(--gold-500)]" : ""}`}
                             >
                                 {tier.popular && (
                                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
-                                        Popular
-                                    </span>
-                                )}
-                                {tier.featured && (
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
-                                        Best Value
+                                        Best first step
                                     </span>
                                 )}
 
@@ -171,10 +173,7 @@ export default function PricingPage() {
                                     ))}
                                 </ul>
 
-                                <Link
-                                    href={tier.href}
-                                    className={`btn w-full ${tier.featured ? "btn-primary" : "btn-ghost"}`}
-                                >
+                                <Link href={tier.href} className={`btn w-full ${tier.featured ? "btn-primary" : "btn-ghost"}`}>
                                     {tier.cta}
                                     <ArrowUpRight size={16} />
                                 </Link>
@@ -184,14 +183,11 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            {/* FAQs */}
             <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
                     <div className="text-center mb-16">
                         <span className="section-label">FAQ</span>
-                        <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">
-                            Common Questions
-                        </h2>
+                        <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">Common Questions</h2>
                     </div>
 
                     <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -208,18 +204,15 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            {/* CTA */}
             <section className="py-24 lg:py-32">
                 <div className="section-container">
                     <div className="max-w-2xl mx-auto text-center">
-                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
-                            Still Have Questions?
-                        </h2>
+                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">Need Help Choosing?</h2>
                         <p className="text-lg text-[var(--text-secondary)] mb-8">
-                            Book a free 30-minute strategy call. No pressure—just honest advice about what would work for your business.
+                            Start with the Automation Audit. We&apos;ll map your fastest wins and recommend the right implementation path.
                         </p>
-                        <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
-                            Book a Free Call
+                        <Link href="/contact?package=automation-audit" className="btn btn-primary text-lg px-10 py-4">
+                            Book Your Audit
                             <ArrowUpRight size={20} />
                         </Link>
                     </div>
