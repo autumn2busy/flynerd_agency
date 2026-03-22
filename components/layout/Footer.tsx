@@ -3,11 +3,20 @@ import { ArrowUpRight } from "lucide-react";
 
 const footerLinks = {
     services: [
+<<<<<<< HEAD
         { href: "/ai-website", label: "AI-Powered Websites" },
         { href: "/ai-website#pricing", label: "Quickstart Build" },
         { href: "/ai-website#pricing", label: "AI Concierge Bundle" },
         { href: "/services", label: "Automation Services" },
         { href: "/pricing", label: "All Pricing" },
+=======
+        { href: "/contact?package=automation-audit", label: "Automation Audit" },
+        { href: "/contact?package=quickstart-build", label: "Workflow Build" },
+        { href: "/contact?package=agent-launch", label: "AI Concierge Agent" },
+        { href: "/contact?package=email-revenue-sprint", label: "Email Revenue Sprint" },
+        { href: "/contact?package=care-plan", label: "Monthly Care Plan" },
+        { href: "/contact?package=growth-partner", label: "Growth Ops Partner" },
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
     ],
     company: [
         { href: "/work", label: "Case Studies" },

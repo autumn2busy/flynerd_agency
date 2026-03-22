@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 
 const differentiators = [
   {
+<<<<<<< HEAD
     feature: "Philosophy",
     generic: "Digital Brochure",
     flynerd: "Digital Employee",
@@ -25,6 +26,21 @@ const differentiators = [
     generic: "Static contact form",
     flynerd: "AI books, answers, qualifies 24/7",
     highlight: false,
+=======
+    icon: Sparkles,
+    number: "01",
+    title: "Automation Audit + Roadmap",
+    description: "60-90 minute discovery + systems audit with a practical 30-day plan. Best first step before any custom implementation.",
+    href: "/contact?package=automation-audit",
+    featured: true,
+  },
+  {
+    icon: Zap,
+    number: "02",
+    title: "Quickstart Workflow Build",
+    description: "One high-impact workflow built end-to-end with up to 3 integrations. Starting at $1,250.",
+    href: "/contact?package=quickstart-build",
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
   },
   {
     feature: "Launch speed",
@@ -43,6 +59,7 @@ const differentiators = [
 const coreFive = [
   {
     icon: Cpu,
+<<<<<<< HEAD
     title: "AI Booking & Support Agent",
     description: "Not a contact form. A 24/7 front-desk agent that knows your pricing, services, and availability — and books appointments while you sleep.",
   },
@@ -65,6 +82,33 @@ const coreFive = [
     icon: Zap,
     title: "Managed Growth",
     description: "Hosting, security, and continuous AI improvements are bundled into the monthly subscription. Your site gets smarter over time.",
+=======
+    number: "03",
+    title: "AI Concierge Agent Launch",
+    description: "Website/chat lead qualification agent with CRM handoff and routing logic. Starting at $2,400.",
+    href: "/contact?package=ai-concierge",
+  },
+  {
+    icon: Mail,
+    number: "04",
+    title: "Email Revenue Sprint",
+    description: "Segmentation + 3-5 email sequence + trigger automation and test setup. Starting at $900.",
+    href: "/contact?package=email-revenue-sprint",
+  },
+  {
+    icon: Globe,
+    number: "05",
+    title: "Monthly Care Plan",
+    description: "Monitoring, bug fixes, and monthly optimization tickets to keep everything running and improving. Starting at $750/mo.",
+    href: "/contact?package=care-plan",
+  },
+  {
+    icon: FileText,
+    number: "06",
+    title: "Growth Ops Partner",
+    description: "Multi-system optimization and strategic ongoing support for scaling teams. Starting at $1,800/mo.",
+    href: "/contact?package=growth-partner",
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
   },
 ];
 
@@ -170,9 +214,22 @@ export default function HomePage() {
             Live in <span className="text-[var(--amber-400)] font-semibold">7 days</span> · Starting at <span className="text-[var(--amber-400)] font-semibold">$1,250</span> · Managed monthly
           </p>
 
+<<<<<<< HEAD
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/ai-website" className="btn btn-primary px-8 py-4 pulse-glow text-base">
               See How It Works
+=======
+          {/* Description */}
+          <p className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed">
+            AI automation systems for service businesses that want faster lead response, cleaner operations, and predictable growth.
+            Start with a paid audit, then implement only what drives ROI.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/contact" className="btn btn-primary px-8 py-4 pulse-glow">
+              Book an Automation Audit
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
               <ArrowUpRight size={18} />
             </Link>
             <Link href="/pricing" className="btn btn-ghost px-8 py-4 bg-[rgba(24,25,29,0.8)] backdrop-blur-sm border border-[var(--glass-border)] text-base">

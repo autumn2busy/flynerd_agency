@@ -3,12 +3,18 @@ import Link from "next/link";
 import { ArrowUpRight, Check, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
+<<<<<<< HEAD
     title: "Pricing | FlyNerd Tech",
     description: "AI-powered website pricing from $1,250. Quickstart Build, AI Concierge Bundle, and Growth Ops retainers. 7-day launch guarantee.",
+=======
+    title: "Pricing",
+    description: "Productized AI automation pricing for solo-operator friendly implementation: audit, workflow builds, AI concierge launch, and monthly optimization retainers.",
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
 };
 
 const websitePackages = [
     {
+<<<<<<< HEAD
         name: "Quickstart Build",
         tag: "Local service businesses",
         setup: "$1,250",
@@ -45,6 +51,94 @@ const websitePackages = [
         note: "Final $1,200 due on launch",
         featured: true,
     },
+=======
+        name: "Starter",
+        subtitle: "Automation Audit + Roadmap",
+        price: "$495",
+        period: "one-time",
+        description: "A 60-90 minute discovery and systems audit with a 30-day implementation roadmap. Perfect first step before any build.",
+        features: [
+            "60-90 minute strategy session",
+            "Systems + tools audit",
+            "3 quick-win opportunities",
+            "30-day implementation roadmap",
+            "Priority score by impact/effort",
+            "Proposal credit option",
+        ],
+        cta: "Book Audit",
+        href: "/contact?package=automation-audit",
+        popular: true,
+    },
+    {
+        name: "Build",
+        subtitle: "Quickstart Workflow Build",
+        price: "$1,250",
+        period: "one-time",
+        description: "One fixed-scope workflow implementation to remove repetitive work and improve speed-to-lead, handoffs, or reporting.",
+        features: [
+            "1 workflow (trigger + actions)",
+            "Up to 3 tool integrations",
+            "Business logic + routing rules",
+            "QA + test scenarios",
+            "Loom walkthrough + docs",
+            "1 revision round",
+        ],
+        cta: "Start Build",
+        href: "/contact?package=quickstart-build",
+        featured: true,
+    },
+    {
+        name: "Agent",
+        subtitle: "AI Concierge Launch",
+        price: "$2,400",
+        period: "one-time",
+        description: "Launch a qualified lead or support AI concierge with human handoff, conversion flow, and CRM sync.",
+        features: [
+            "Website/chat channel setup",
+            "Knowledge base bootstrapping",
+            "Qualification flow + lead capture",
+            "Human handoff logic",
+            "CRM + notifications integration",
+            "Launch checklist + training",
+        ],
+        cta: "Launch Agent",
+        href: "/contact?package=agent-launch",
+    },
+    {
+        name: "Optimize",
+        subtitle: "Monthly Care Plan",
+        price: "$750",
+        period: "/month",
+        description: "Monitoring + iterative improvements to keep your systems healthy, accurate, and compounding results each month.",
+        features: [
+            "Monitoring + issue triage",
+            "Up to 2 improvement tickets / month",
+            "Performance summary report",
+            "Monthly optimization review",
+            "Priority async support",
+            "SLA response windows",
+        ],
+        cta: "Join Care Plan",
+        href: "/contact?package=care-plan",
+    },
+    {
+        name: "Growth Partner",
+        subtitle: "Multi-System Ops Retainer",
+        price: "$1,800",
+        period: "/month",
+        description: "For teams running multiple workflows/agents that need a strategic operator and execution partner every month.",
+        features: [
+            "Everything in Care Plan",
+            "Multi-workflow optimization",
+            "Quarterly roadmap planning",
+            "Advanced automation experiments",
+            "Cross-channel reporting",
+            "Slack/priority support",
+        ],
+        cta: "Apply Now",
+        href: "/contact?package=growth-partner",
+    },
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
 ];
 
 const retainers = [
@@ -101,6 +195,7 @@ const audit = {
 
 const faqs = [
     {
+<<<<<<< HEAD
         q: "How does the deposit structure work?",
         a: "Website packages are split 50/50. You pay half to secure your project start date. The remainder is due on delivery — when you've seen the site and approved it.",
     },
@@ -123,27 +218,59 @@ const faqs = [
     {
         q: "Do you build custom automation systems?",
         a: "Yes — the AI Concierge Bundle and Growth Partner both include custom automation work. If you want your own scouting, outreach, or AI pipeline, book a strategy call and we'll scope it.",
+=======
+        question: "Do I need to start with an audit?",
+        answer: "For custom or multi-system work, yes. The audit ensures we build the highest-ROI workflow first and avoid scope creep.",
+    },
+    {
+        question: "How long do projects take?",
+        answer: "Audit delivery is typically 2-3 business days. Quickstart builds usually ship in 1-2 weeks. Agent launches typically run 2-4 weeks.",
+    },
+    {
+        question: "What are your payment terms?",
+        answer: "Projects under $2,000 are typically paid upfront. Larger scopes use milestone billing. Retainers are monthly with a 3-month minimum.",
+    },
+    {
+        question: "Can we expand after launch?",
+        answer: "Yes. Most clients start with one workflow or one agent, then expand into additional systems through Care Plan or Growth Partner.",
+    },
+    {
+        question: "What if we need a custom package?",
+        answer: "If your requirements are outside fixed scope, we create a custom SOW after the audit with clear deliverables and timelines.",
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
     },
 ];
 
 export default function PricingPage() {
     return (
         <>
+<<<<<<< HEAD
             {/* ── Hero ──────────────────────────────────────────────────────────── */}
+=======
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl mx-auto text-center">
                         <span className="section-label">Pricing</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
+<<<<<<< HEAD
                             Clear scope. <span className="gradient-text">Clear outcomes.</span>
                         </h1>
                         <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
                             AI-powered websites built in 7 days, plus automation retainers for businesses ready to scale their operations.
+=======
+                            Productized <span className="gradient-text">Growth Systems</span>
+                        </h1>
+                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
+                            Clear scopes. Clear outcomes. Built for service businesses that want better lead follow-up,
+                            faster operations, and less manual work.
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                         </p>
                     </div>
                 </div>
             </section>
 
+<<<<<<< HEAD
             {/* ── Website Packages ──────────────────────────────────────────────── */}
             <section className="pb-24 lg:pb-16">
                 <div className="section-container">
@@ -165,6 +292,25 @@ export default function PricingPage() {
                                 <div className="mb-2">
                                     <p className="text-xs text-[var(--amber-400)] font-medium uppercase tracking-wider">{pkg.tag}</p>
                                     <h3 className="text-xl font-semibold mt-1">{pkg.name}</h3>
+=======
+            <section className="pb-24 lg:pb-32">
+                <div className="section-container">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {pricingTiers.map((tier) => (
+                            <div
+                                key={tier.name}
+                                className={`glass-card rounded-2xl p-8 relative ${tier.featured ? "ring-2 ring-[var(--gold-500)]" : ""}`}
+                            >
+                                {tier.popular && (
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
+                                        Best first step
+                                    </span>
+                                )}
+
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold">{tier.name}</h3>
+                                    <p className="text-sm text-[var(--gold-400)]">{tier.subtitle}</p>
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                                 </div>
                                 <div className="mb-4 flex items-baseline gap-2">
                                     <span className="text-4xl font-bold">{pkg.setup}</span>
@@ -189,6 +335,7 @@ export default function PricingPage() {
                 </div>
             </section>
 
+<<<<<<< HEAD
             {/* ── Retainers ─────────────────────────────────────────────────────── */}
             <section className="py-16 lg:py-24 bg-[var(--bg-elevated)]">
                 <div className="section-container">
@@ -223,6 +370,11 @@ export default function PricingPage() {
                                 </ul>
                                 <Link href={pkg.href} className={`btn w-full ${pkg.featured ? "btn-primary" : "btn-ghost"}`}>
                                     {pkg.cta} <ArrowUpRight size={16} />
+=======
+                                <Link href={tier.href} className={`btn w-full ${tier.featured ? "btn-primary" : "btn-ghost"}`}>
+                                    {tier.cta}
+                                    <ArrowUpRight size={16} />
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                                 </Link>
                             </div>
                         ))}
@@ -230,6 +382,7 @@ export default function PricingPage() {
                 </div>
             </section>
 
+<<<<<<< HEAD
             {/* ── Audit ─────────────────────────────────────────────────────────── */}
             <section className="py-16 lg:py-24">
                 <div className="section-container">
@@ -264,6 +417,8 @@ export default function PricingPage() {
             </section>
 
             {/* ── FAQ ───────────────────────────────────────────────────────────── */}
+=======
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
             <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
                     <div className="text-center mb-16">
@@ -284,6 +439,7 @@ export default function PricingPage() {
                 </div>
             </section>
 
+<<<<<<< HEAD
             {/* ── CTA ───────────────────────────────────────────────────────────── */}
             <section className="py-24 lg:py-32">
                 <div className="section-container">
@@ -296,6 +452,18 @@ export default function PricingPage() {
                         </p>
                         <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
                             Book a Free Call <ArrowUpRight size={20} />
+=======
+            <section className="py-24 lg:py-32">
+                <div className="section-container">
+                    <div className="max-w-2xl mx-auto text-center">
+                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">Need Help Choosing?</h2>
+                        <p className="text-lg text-[var(--text-secondary)] mb-8">
+                            Start with the Automation Audit. We&apos;ll map your fastest wins and recommend the right implementation path.
+                        </p>
+                        <Link href="/contact?package=automation-audit" className="btn btn-primary text-lg px-10 py-4">
+                            Book Your Audit
+                            <ArrowUpRight size={20} />
+>>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                         </Link>
                     </div>
                 </div>

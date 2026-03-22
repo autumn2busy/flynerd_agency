@@ -128,7 +128,7 @@ export function Header() {
                                 href="/contact"
                                 className="btn btn-primary text-sm ml-4 flex items-center gap-2"
                             >
-                                Book a Strategy Call
+                                Book an Audit
                                 <ArrowUpRight size={16} />
                             </Link>
                         </div>
@@ -189,7 +189,7 @@ export function Header() {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="btn btn-primary text-center mt-4"
                                 >
-                                    Book a Strategy Call
+                                    Book an Audit
                                 </Link>
                             </div>
                         </motion.nav>
