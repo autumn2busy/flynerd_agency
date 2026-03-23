@@ -29,7 +29,7 @@ const packages = [
             "Monthly maintenance + minor AI updates",
             "7-day launch guarantee",
         ],
-        stripe: process.env.STRIPE_LINK_BUILD_DEPOSIT || "/contact?package=build",
+        stripe: "/apply?package=build",
         cta: "Start — Pay $625 Deposit",
     },
     {
@@ -45,7 +45,7 @@ const packages = [
             "Monthly iterative improvements (2 tickets/mo)",
             "Quarterly roadmap review",
         ],
-        stripe: process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact?package=agent",
+        stripe: "/apply?package=agent",
         cta: "Launch — Pay $1,200 Deposit",
         featured: true,
     },

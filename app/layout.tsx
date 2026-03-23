@@ -11,48 +11,49 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://flynerdtech.com"),
+  metadataBase: new URL("https://flynerd.tech"),
   title: {
-    default: "FlyNerd Tech | AI Automation Agency | Atlanta",
+    default: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
     template: "%s | FlyNerd Tech",
   },
   description:
-    "FlyNerd Tech builds AI-powered automation systems for small and midsize businesses. Marketing operations, email campaigns, AI agents, and workflow design. Atlanta-based, global reach.",
+    "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Atlanta-based, serving clients globally.",
   keywords: [
-    "AI automation for small business",
-    "marketing automation",
-    "AI agency Atlanta",
-    "AI agents for customer lifecycle",
-    "email automation services",
-    "CRM automation",
-    "workflow automation",
-    "AI chatbots",
-    "marketing operations",
+    "AI-powered website for local business",
+    "AI booking agent",
+    "local business website Atlanta",
+    "AI website for HVAC",
+    "AI website for salons",
+    "digital employee website",
+    "AI automation agency Atlanta",
+    "local SEO website",
+    "7 day website launch",
+    "AI concierge for small business",
   ],
   authors: [{ name: "FlyNerd Tech" }],
   creator: "FlyNerd Tech",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://flynerdtech.com",
+    url: "https://flynerd.tech",
     siteName: "FlyNerd Tech",
-    title: "FlyNerd Tech | AI Automation Agency",
+    title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
     description:
-      "Where intelligence meets influence. AI-powered automation for businesses ready to scale smarter.",
+      "Your website should be a digital employee. FlyNerd Tech builds AI-powered sites that book appointments, answer questions, and convert leads 24/7.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "FlyNerd Tech - AI Automation Agency",
+        alt: "FlyNerd Tech - AI-Powered Websites for Local Businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "FlyNerd Tech | AI Automation Agency",
+    title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
     description:
-      "Where intelligence meets influence. AI-powered automation for businesses ready to scale smarter.",
+      "Your website should be a digital employee. FlyNerd Tech builds AI-powered sites that book appointments and convert leads 24/7.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -81,27 +82,30 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": "LocalBusiness",
               name: "FlyNerd Tech",
-              url: "https://flynerdtech.com",
-              logo: "https://flynerdtech.com/logo.png",
+              url: "https://flynerd.tech",
+              logo: "https://flynerd.tech/logo.png",
               description:
-                "AI automation agency specializing in marketing operations, email campaigns, and workflow design for small and midsize businesses.",
+                "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO architecture, and 7-day launch guarantee.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Atlanta",
                 addressRegion: "GA",
                 addressCountry: "US",
               },
+              areaServed: "Worldwide",
+              serviceType: "AI-Powered Website Development",
               sameAs: [
                 "https://flynerdofficial.com",
                 "https://linkedin.com/company/flynerdtech",
                 "https://twitter.com/flynerdtech",
+                "https://instagram.com/flynerdofficial",
               ],
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "sales",
-                email: "hello@flynerdtech.com",
+                email: "hello@flynerd.tech",
               },
             }),
           }}

@@ -82,7 +82,7 @@ const packages = [
       "High-speed Vercel hosting",
       "Monthly maintenance included",
     ],
-    href: process.env.STRIPE_LINK_BUILD_DEPOSIT || "/contact?package=build",
+    href: "/apply?package=build",
     cta: "Start Build",
   },
   {
@@ -98,7 +98,7 @@ const packages = [
       "Lead qualification + routing",
       "Monthly iterative improvements",
     ],
-    href: process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact?package=agent",
+    href: "/apply?package=agent",
     cta: "Launch Concierge",
     featured: true,
   },

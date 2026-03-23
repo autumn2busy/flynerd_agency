@@ -23,7 +23,7 @@ const websitePackages = [
             "Monthly maintenance included",
         ],
         cta: "Start — Pay $625 Deposit",
-        href: process.env.STRIPE_LINK_BUILD_DEPOSIT || "/contact?package=build",
+        href: "/apply?package=build",
         note: "Final $625 due on delivery",
     },
     {
@@ -41,7 +41,7 @@ const websitePackages = [
             "Quarterly roadmap review",
         ],
         cta: "Launch — Pay $1,200 Deposit",
-        href: process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact?package=agent",
+        href: "/apply?package=agent",
         note: "Final $1,200 due on launch",
         featured: true,
     },
@@ -62,7 +62,7 @@ const retainers = [
             "SLA response windows",
         ],
         cta: "Join Care Plan",
-        href: process.env.STRIPE_LINK_CARE_PLAN || "/contact?package=care-plan",
+        href: "/apply?package=care-plan",
     },
     {
         name: "Growth Ops Partner",
@@ -78,7 +78,7 @@ const retainers = [
             "Slack + priority support",
         ],
         cta: "Apply Now",
-        href: process.env.STRIPE_LINK_GROWTH_PARTNER || "/contact?package=growth-partner",
+        href: "/apply?package=growth-partner",
         featured: true,
     },
 ];
@@ -96,7 +96,7 @@ const audit = {
         "Credit toward any build package",
     ],
     cta: "Book Audit",
-    href: process.env.STRIPE_LINK_AUDIT || "/contact?package=audit",
+    href: "/apply?package=audit",
 };
 
 const faqs = [
