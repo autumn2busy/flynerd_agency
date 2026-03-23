@@ -1,32 +1,32 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Award, Clock, Lightbulb, Users } from "lucide-react";
+import { ArrowUpRight, Award, BarChart3, Clock, ShieldCheck, TerminalSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "About",
-    description: "Meet the founder of FlyNerd Tech. 15+ years in tech, specializing in AI systems that convert and scale.",
+    title: "About Us | FlyNerd Tech",
+    description: "Meet the team behind FlyNerd Tech. 15+ years of enterprise solutions architecture brought to local businesses.",
 };
 
-const values = [
+const principles = [
     {
-        icon: Lightbulb,
-        title: "Lateral Thinking",
-        description: "We approach problems differently. The best solutions often come from unexpected connections.",
+        icon: TerminalSquare,
+        title: "Systems Over Services",
+        description: "We don't just 'do marketing.' We build autonomous systems that work for you 24/7, so your business scales without burning you out.",
     },
     {
-        icon: Users,
-        title: "Radical Creativity",
-        description: "We push boundaries while staying practical. Innovation without execution is just ideas.",
+        icon: BarChart3,
+        title: "Obsessed With ROI",
+        description: "A beautiful website is useless if it doesn't ring the register. Every AI agent, workflow, and design choice we make is engineered to convert traffic into revenue.",
     },
     {
         icon: Clock,
-        title: "Cross-Domain Expertise",
-        description: "Tech, marketing, operations, design—we connect the dots that others miss.",
+        title: "Painless Execution",
+        description: "Local business owners don't have time to manage tech projects. We use AI intelligence to gather your data and build your systems in days, not months.",
     },
     {
-        icon: Award,
-        title: "AI as the Intern",
-        description: "AI does the heavy lifting. Humans provide the judgment, creativity, and strategic direction.",
+        icon: ShieldCheck,
+        title: "Enterprise Grade. Local Focus.",
+        description: "We're bringing tools traditionally reserved for Fortune 500 companies straight to local roofers, salons, and law firms.",
     },
 ];
 
@@ -34,140 +34,136 @@ export default function AboutPage() {
     return (
         <>
             {/* Hero */}
-            <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
-                <div className="section-container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                        {/* Content */}
-                        <div>
-                            <span className="section-label">About FlyNerd Tech</span>
-                            <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold mt-4 mb-6">
-                                Where Intelligence <span className="gradient-text">Meets Influence</span>
-                            </h1>
-                            <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-6">
-                                Brilliance deserves style. Unapologetically melanin. We&apos;re here to help
-                                creative intellectuals and ambitious businesses build systems that scale.
-                            </p>
-                            <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                                Based in Atlanta. Serving clients globally. Rooted in the FlyNerd mission of
-                                empowering diverse minds in tech and STEM.
-                            </p>
-                        </div>
-
-                        {/* Visual Placeholder - Founder area */}
-                        <div className="relative">
-                            <div className="aspect-square rounded-3xl bg-gradient-to-br from-[var(--gold-500)]/20 to-[var(--teal-500)]/20 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="w-32 h-32 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] mx-auto mb-6 flex items-center justify-center">
-                                        <svg className="w-16 h-16 text-[var(--gold-400)]" viewBox="0 0 120 50" fill="none">
-                                            <rect x="5" y="12" width="40" height="25" rx="4" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                                            <rect x="75" y="12" width="40" height="25" rx="4" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                                            <path d="M45 24 Q60 18 75 24" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-sm text-[var(--text-muted)]">
-                                        Founder photo coming soon
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <section className="pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
+                <div className="section-container relative">
+                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(232,185,35,0.08)_0%,transparent_70%)] -z-10" />
+                    
+                    <div className="max-w-4xl mx-auto text-center">
+                        <span className="section-label">Our Philosophy</span>
+                        <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold tracking-tight mt-4 mb-6 leading-[1.1]">
+                            We don't build websites.<br />
+                            <span className="gradient-text">We build digital employees.</span>
+                        </h1>
+                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed max-w-3xl mx-auto mb-10">
+                            Based strictly on revenue and efficiency. We take the friction out of local business operations by deploying AI systems that answer calls, book appointments, and capture leads while you sleep.
+                        </p>
                     </div>
                 </div>
             </section>
 
             {/* Founder Story */}
-            <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
+            <section className="py-24 lg:py-32 bg-[var(--bg-elevated)] border-y border-[var(--glass-border)]">
                 <div className="section-container">
-                    <div className="max-w-3xl mx-auto">
-                        <span className="section-label">The Founder</span>
-                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mt-4 mb-8">
-                            15+ Years Building Systems That Scale
-                        </h2>
-
-                        <div className="prose prose-lg prose-invert">
-                            <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-6">
-                                The founder of FlyNerd Tech is a seasoned <strong className="text-white">Solutions Architect</strong> with
-                                over 15 years of experience in technology, marketing operations, and business systems design.
-                            </p>
-
-                            <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                                Having worked across enterprise tech, startups, and agency environments, they&apos;ve seen what works
-                                and what doesn&apos;t when it comes to implementing technology that actually moves the needle.
-                            </p>
-
-                            <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                                The mission: <strong className="text-[var(--gold-400)]">democratize AI-powered automation</strong> for
-                                small and midsize businesses. Too often, these tools are reserved for companies with million-dollar
-                                budgets. FlyNerd Tech exists to change that.
-                            </p>
-
-                            <p className="text-[var(--text-secondary)] leading-relaxed">
-                                Beyond client work, there&apos;s a deeper purpose: <strong className="text-white">empowering diverse minds
-                                    in tech and STEM</strong>. The FlyNerd brand—from apparel to agency—is about celebrating intellectual
-                                style and proving that brilliance comes in all forms.
-                            </p>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                        
+                        {/* Visual Placeholder - Founder area */}
+                        <div className="lg:col-span-4 relative group">
+                            <div className="aspect-[4/5] rounded-3xl bg-[var(--bg-base)] border border-[var(--glass-border)] flex flex-col items-center justify-center p-8 text-center relative overflow-hidden transition-all duration-500 group-hover:border-[var(--gold-500)]/50">
+                                <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                
+                                <div className="w-24 h-24 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] mx-auto mb-6 flex items-center justify-center shadow-lg shadow-[var(--gold-500)]/10">
+                                    <Award className="text-[var(--gold-400)]" size={32} />
+                                </div>
+                                <h3 className="text-xl font-semibold mb-1">The Founder</h3>
+                                <p className="text-sm text-[var(--gold-400)] font-medium mb-4">Lead Solutions Architect</p>
+                                <p className="text-xs text-[var(--text-muted)] mt-auto pt-8 border-t border-[var(--glass-border)] w-full">
+                                    (Replace this component with your professional headshot inside app/about/page.tsx)
+                                </p>
+                            </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 mt-10">
-                            <Link href="/contact" className="btn btn-primary">
-                                Work With Us
-                                <ArrowUpRight size={18} />
-                            </Link>
-                            <a
-                                href="https://flynerdofficial.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-ghost"
-                            >
-                                Explore FlyNerd Official
-                                <ArrowUpRight size={18} />
-                            </a>
+                        {/* Content */}
+                        <div className="lg:col-span-8">
+                            <span className="text-[var(--gold-400)] font-semibold tracking-wider uppercase text-sm mb-4 block">
+                                15+ Years of Engineering Excellence
+                            </span>
+                            <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-8 leading-tight">
+                                Bringing Fortune 500 automation directly to local business owners.
+                            </h2>
+
+                            <div className="space-y-6 text-lg text-[var(--text-secondary)] leading-relaxed">
+                                <p>
+                                    Our founder didn't start by making pretty website templates. They spent <strong className="text-white">over 15 years as a Solutions Architect</strong>—designing complex technology, marketing operations, and business systems for massive enterprises.
+                                </p>
+                                
+                                <p>
+                                    But a frustrating pattern emerged: The most powerful AI and automation tools were being gatekept by million-dollar enterprise budgets, while local businesses—the backbone of the economy—were stuck overpaying for static, dead-end websites that didn't drive actual revenue.
+                                </p>
+
+                                <p>
+                                    <strong className="text-white">FlyNerd Tech was born to bridge that gap.</strong> We exist to democratize AI. We take the same elite, conversion-focused architecture used by tech giants, and deploy it for local roofers, legal firms, and salons at a fraction of the cost.
+                                </p>
+
+                                <div className="p-6 mt-8 rounded-2xl bg-[var(--gold-500)]/5 border border-[var(--gold-500)]/20 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-[var(--gold-400)]" />
+                                    <p className="text-white italic text-base">
+                                        "A website should not be a digital brochure. It should be your highest-performing employee. It should answer questions instantly, qualify leads perfectly, and book calendar appointments tirelessly. If it's not doing that, it's just a digital paperweight."
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </section>
 
-            {/* Values */}
+            {/* Principles */}
             <section className="py-24 lg:py-32">
                 <div className="section-container">
-                    <div className="text-center mb-16">
-                        <span className="section-label">Our Values</span>
+                    <div className="text-center mb-16 max-w-2xl mx-auto">
+                        <span className="section-label">Our Guiding Principles</span>
                         <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">
-                            How We <span className="gradient-text">Think</span>
+                            How We <span className="gradient-text">Execute</span>
                         </h2>
+                        <p className="text-[var(--text-secondary)] mt-4">
+                            We don't guess. We architect. Here is the operational DNA behind every FlyNerd Tech deployment.
+                        </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {values.map((value, i) => (
-                            <div key={i} className="text-center">
-                                <div className="w-16 h-16 rounded-2xl bg-[var(--gold-500)]/10 flex items-center justify-center text-[var(--gold-400)] mx-auto mb-6">
-                                    <value.icon size={28} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                        {principles.map((value, i) => (
+                            <div key={i} className="glass-card rounded-2xl p-8 flex gap-6 items-start group hover:-translate-y-1 transition-transform duration-300">
+                                <div className="w-14 h-14 rounded-xl bg-[var(--gold-500)]/10 flex items-center justify-center text-[var(--gold-400)] flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <value.icon size={26} />
                                 </div>
-                                <h3 className="text-lg font-semibold mb-3">{value.title}</h3>
-                                <p className="text-sm text-[var(--text-secondary)]">{value.description}</p>
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-2 group-hover:text-[var(--gold-400)] transition-colors">{value.title}</h3>
+                                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{value.description}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* FlyNerd Ethos */}
+            {/* FlyNerd Ethos & Roots */}
             <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-light leading-tight mb-8">
-                            <span className="text-[var(--gold-400)] font-semibold">F</span>reethinking{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">L</span>ifestyle{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">Y</span>earners{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">N</span>avigating{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">E</span>very{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">R</span>elevant{" "}
-                            <span className="text-[var(--gold-400)] font-semibold">D</span>omain
-                        </h2>
-                        <p className="text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
-                            At FlyNerd, our mission is to inspire and elevate creative intellectuals. We are
-                            dedicated to pushing the boundaries of creativity and innovation, fostering a
-                            community that celebrates and nurtures intellectual style and inclusion.
-                        </p>
+                    <div className="max-w-4xl mx-auto text-center grid gap-8">
+                        <div>
+                            <span className="section-label">The Roots</span>
+                            <h2 className="text-[clamp(1.8rem,3vw,2.5rem)] font-semibold mt-4 mb-6">
+                                Atlanta Based. Unapologetically Melanin.
+                            </h2>
+                            <p className="text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mx-auto">
+                                FlyNerd Tech serves clients globally, but our roots are proudly in Atlanta, GA. Beyond building revenue-generating systems for our clients, our deeper mission is <strong className="text-white">empowering diverse minds in tech and STEM.</strong>
+                            </p>
+                        </div>
+
+                        <div className="p-8 rounded-3xl bg-[var(--bg-base)] border border-[var(--glass-border)] mt-4">
+                            <h3 className="text-xl font-light leading-tight mb-4 opacity-80">
+                                <span className="text-[var(--gold-400)] font-semibold">F</span>reethinking{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">L</span>ifestyle{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">Y</span>earners{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">N</span>avigating{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">E</span>very{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">R</span>elevant{" "}
+                                <span className="text-[var(--gold-400)] font-semibold">D</span>omain
+                            </h3>
+                            <p className="text-[var(--text-muted)] text-sm">
+                                The FlyNerd brand—from apparel to agency—celebrates intellectual style and proves that brilliance comes in all forms.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -175,17 +171,26 @@ export default function AboutPage() {
             {/* CTA */}
             <section className="py-24 lg:py-32">
                 <div className="section-container">
-                    <div className="max-w-2xl mx-auto text-center">
-                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
-                            Ready to Build Together?
-                        </h2>
-                        <p className="text-lg text-[var(--text-secondary)] mb-8">
-                            Let&apos;s talk about what AI automation could do for your business.
-                        </p>
-                        <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
-                            Book a Strategy Call
-                            <ArrowUpRight size={20} />
-                        </Link>
+                    <div className="glass-card max-w-4xl mx-auto rounded-3xl p-10 lg:p-16 text-center relative overflow-hidden border border-[var(--gold-500)]/20">
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--gold-500)]/5 to-transparent" />
+                        
+                        <div className="relative z-10">
+                            <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
+                                Start working <span className="italic font-light">on</span> your business, <br className="hidden md:block"/> not <span className="italic font-light">in</span> it.
+                            </h2>
+                            <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl mx-auto">
+                                Let's build your first digital employee. Book a free strategy call directly with our Solutions Architecture team.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Link href="/apply?package=build" className="btn btn-primary text-lg px-8 py-4 bg-[var(--gold-500)] text-black hover:bg-[var(--gold-400)]">
+                                    Start AI Website Build
+                                    <ArrowUpRight size={20} />
+                                </Link>
+                                <Link href="/contact" className="btn btn-ghost text-lg px-8 py-4">
+                                    Book Strategy Call
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
