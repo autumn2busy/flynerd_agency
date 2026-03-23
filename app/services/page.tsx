@@ -1,142 +1,132 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowUpRight, Search, Workflow, Bot, Mail, ShieldCheck, TrendingUp, CheckCircle } from "lucide-react";
+import { ArrowUpRight, Zap, Sparkles, Cpu, Globe, FileText, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Services",
-    description: "FlyNerd Tech services: automation audits, workflow builds, AI concierge launches, email revenue sprints, and ongoing optimization retainers.",
+    title: "Automation Services | FlyNerd Tech",
+    description: "AI automation, CRM operations, AI agents, and workflow systems for businesses ready to scale. Supporting services to complement your AI-powered website.",
 };
 
 const services = [
     {
-        slug: "automation-audit",
-        icon: Search,
-        title: "Automation Audit + Roadmap",
-        tagline: "Find your fastest ROI",
-        description: "A structured discovery and systems audit that identifies your top opportunities and maps a 30-day implementation plan.",
+        slug: "ai-automation",
+        icon: Zap,
+        title: "AI Automation & Workflow Design",
+        tagline: "Work smarter, not harder",
+        description: "Intelligent systems that handle the repetitive work while you focus on what matters. Custom automations built for your exact business needs.",
         features: [
-            "60-90 minute discovery",
-            "Stack + process audit",
-            "Quick-win matrix",
-            "30-day roadmap",
-            "Implementation priorities",
+            "Custom workflow automation",
+            "Process optimization audits",
+            "Tool integration (Make.com, Zapier, n8n)",
+            "AI-powered decision logic",
+            "Performance monitoring dashboards",
         ],
-        startingAt: "$495",
-        popular: true,
+        startingAt: "Custom",
     },
     {
-        slug: "quickstart-build",
-        icon: Workflow,
-        title: "Quickstart Workflow Build",
-        tagline: "One workflow, fully shipped",
-        description: "Fixed-scope implementation of a high-impact workflow, from trigger to handoff. Ideal for lead response and ops handoffs.",
+        slug: "marketing-operations",
+        icon: Sparkles,
+        title: "Marketing Operations & CRM",
+        tagline: "The foundation that scales",
+        description: "CRM cleanup, lifecycle journeys, and attribution readiness. We build the marketing infrastructure that scales with your growth.",
         features: [
-            "1 workflow end-to-end",
-            "Up to 3 integrations",
-            "Logic + failover handling",
-            "QA + testing",
-            "Team handoff docs",
+            "CRM data cleanup & migration",
+            "Lifecycle journey mapping",
+            "Lead scoring automation",
+            "Attribution modeling",
+            "Marketing analytics setup",
         ],
-        startingAt: "$1,250",
+        startingAt: "$2,500",
         featured: true,
     },
+
     {
-        slug: "ai-concierge",
-        icon: Bot,
-        title: "AI Concierge Agent Launch",
-        tagline: "Qualify leads 24/7",
-        description: "Deploy a chat/lead qualification agent with knowledge base, routing logic, and human handoff so leads never go cold.",
+        slug: "ai-agents",
+        icon: Cpu,
+        title: "AI Agents & Integrations",
+        tagline: "24/7 intelligent assistants",
+        description: "Chatbots, support copilots, and content assistants that work around the clock. Seamlessly integrated with Shopify, Wix, Slack, and more.",
         features: [
-            "Chat/channel deployment",
-            "Knowledge base setup",
-            "Qualification flows",
-            "CRM + notifications sync",
-            "Human escalation path",
+            "Custom chatbot development",
+            "Support ticket automation",
+            "Lead qualification agents",
+            "Content generation assistants",
+            "Multi-platform integration",
         ],
-        startingAt: "$2,400",
+        startingAt: "$1,500",
     },
     {
-        slug: "email-revenue-sprint",
-        icon: Mail,
-        title: "Email Revenue Sprint",
-        tagline: "Campaigns that close",
-        description: "Audience segmentation and a 3-5 email sequence with triggers, A/B testing, and reporting to generate pipeline quickly.",
+        slug: "website-design",
+        icon: Globe,
+        title: "Website Design for Conversion",
+        tagline: "Beautiful sites that perform",
+        description: "Conversion-focused websites with SEO foundations built in. Clean, fast, and designed to turn visitors into customers.",
         features: [
-            "Segmentation strategy",
-            "3-5 email sequence",
-            "Trigger automation",
-            "A/B test setup",
-            "Performance summary",
+            "Custom design & development",
+            "SEO-first architecture",
+            "Conversion optimization",
+            "Analytics integration",
+            "Performance optimization",
         ],
-        startingAt: "$900",
+        startingAt: "$3,000",
     },
     {
-        slug: "care-plan",
-        icon: ShieldCheck,
-        title: "Monthly Care Plan",
-        tagline: "Keep systems healthy",
-        description: "Monitoring, maintenance, and 2 monthly improvement tickets to protect uptime and continuously optimize results.",
+        slug: "content-systems",
+        icon: FileText,
+        title: "Content Systems & Repurposing",
+        tagline: "Create once, distribute everywhere",
+        description: "Newsletter, blog, and repurposing workflows. AI-powered efficiency that multiplies your content impact.",
         features: [
-            "Monitoring + issue triage",
-            "2 improvement tickets / month",
-            "Monthly system checkup",
-            "Performance summary",
-            "Priority async support",
+            "Content strategy development",
+            "Newsletter automation",
+            "Blog workflow setup",
+            "Repurposing pipelines",
+            "AI content assistance",
         ],
-        startingAt: "$750/mo",
-    },
-    {
-        slug: "growth-partner",
-        icon: TrendingUp,
-        title: "Growth Ops Partner",
-        tagline: "For multi-system teams",
-        description: "Strategic and technical partner for clients with multiple workflows and agents that need ongoing iteration and expansion.",
-        features: [
-            "Everything in Care Plan",
-            "Multi-system optimization",
-            "Quarterly roadmap",
-            "Advanced experiments",
-            "Cross-channel reporting",
-        ],
-        startingAt: "$1,800/mo",
+        startingAt: "$1,000",
     },
 ];
 
 export default function ServicesPage() {
     return (
         <>
+            {/* Hero */}
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl">
-                        <span className="section-label">Our Services</span>
+                        <span className="section-label">Automation Services</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-                            Productized AI <span className="gradient-text">Offers</span>
+                            The systems <span className="gradient-text">behind the site.</span>
                         </h1>
-                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-                            Built for solo-operator speed and business-owner clarity. Fixed scopes, clear outcomes,
-                            and implementation paths that grow with your company.
+                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-4">
+                            Every FlyNerd AI website includes a built-in booking agent and local SEO foundation.
+                            These services go deeper — for businesses that want to automate operations,
+                            marketing, and lead pipelines beyond the site itself.
+                        </p>
+                        <p className="text-sm text-[var(--text-muted)]">
+                            Looking for the AI-powered website?{" "}
+                            <a href="/ai-website" className="text-[var(--gold-400)] hover:underline">
+                                See the full product →
+                            </a>
                         </p>
                     </div>
                 </div>
             </section>
 
+            {/* Services Grid */}
             <section className="pb-24 lg:pb-32">
                 <div className="section-container">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {services.map((service) => (
                             <Link
                                 key={service.slug}
-                                href={`/contact?package=${service.slug}`}
-                                className={`glass-card rounded-2xl p-8 lg:p-10 group relative overflow-hidden ${service.featured ? "lg:col-span-2 lg:flex lg:gap-12" : ""}`}
+                                href={`/services/${service.slug}`}
+                                className={`glass-card rounded-2xl p-8 lg:p-10 group relative overflow-hidden ${service.featured ? "lg:col-span-2 lg:flex lg:gap-12" : ""
+                                    }`}
                             >
-                                {service.popular && (
-                                    <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-3 py-1 rounded-full">
-                                        Most Booked
-                                    </span>
-                                )}
                                 {service.featured && (
                                     <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--gold-400)] bg-[var(--gold-500)]/10 px-3 py-1 rounded-full">
-                                        Core Offer
+                                        Most Popular
                                     </span>
                                 )}
 
@@ -148,7 +138,9 @@ export default function ServicesPage() {
                                     <h2 className="text-2xl font-semibold mb-4 group-hover:text-[var(--gold-400)] transition-colors">
                                         {service.title}
                                     </h2>
-                                    <p className="text-[var(--text-secondary)] leading-relaxed mb-6">{service.description}</p>
+                                    <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                                        {service.description}
+                                    </p>
                                 </div>
 
                                 <div className={service.featured ? "lg:w-1/2" : ""}>
@@ -166,7 +158,7 @@ export default function ServicesPage() {
                                             Starting at <span className="text-white font-semibold">{service.startingAt}</span>
                                         </span>
                                         <span className="flex items-center gap-2 text-sm text-[var(--gold-400)] opacity-0 group-hover:opacity-100 transition-opacity">
-                                            Book this offer <ArrowUpRight size={16} />
+                                            Learn more <ArrowUpRight size={16} />
                                         </span>
                                     </div>
                                 </div>
@@ -176,15 +168,18 @@ export default function ServicesPage() {
                 </div>
             </section>
 
+            {/* CTA */}
             <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
                     <div className="max-w-2xl mx-auto text-center">
-                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">Start with the Audit</h2>
+                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
+                            Not Sure Where to Start?
+                        </h2>
                         <p className="text-lg text-[var(--text-secondary)] mb-8">
-                            Not sure where to begin? We&apos;ll identify the highest-leverage system to build first and give you a practical execution plan.
+                            Book a free strategy call and we&apos;ll help you identify the highest-impact opportunities for your business.
                         </p>
-                        <Link href="/contact?package=automation-audit" className="btn btn-primary text-lg px-10 py-4">
-                            Book Automation Audit
+                        <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
+                            Book a Strategy Call
                             <ArrowUpRight size={20} />
                         </Link>
                     </div>
