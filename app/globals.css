@@ -60,6 +60,23 @@
     --radius-sm: 2px;
     --radius-lg: 6px;
     --radius-full: 4px;
+
+    /* Atlanta Energy — Extended Palette */
+    --atlanta-red: #dc2626;
+    --atlanta-red-glow: rgba(220, 38, 38, 0.4);
+    --electric-teal: #10b981;
+    --electric-teal-glow: rgba(16, 185, 129, 0.4);
+    --electric-teal-dim: #059669;
+
+    /* Updated background scale — deeper blacks */
+    --bg-deep: #070709;
+    --bg-base: #0a0a0c;
+    --bg-elevated: #0d0d10;
+    --bg-card: rgba(255, 255, 255, 0.025);
+    --bg-card-hover: rgba(255, 255, 255, 0.04);
+
+    /* Space Grotesk for display headings */
+    --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   }
 }
 
@@ -88,6 +105,16 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display, var(--font-space-grotesk), 'Space Grotesk', sans-serif);
+  letter-spacing: -0.02em;
 }
 
 /* Selection */
