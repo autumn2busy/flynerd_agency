@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowUpRight, CheckCircle, ShieldCircle, Loader2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle, ShieldCheck, Loader2 } from "lucide-react";
 
 function ApplyForm() {
     const searchParams = useSearchParams();
@@ -138,7 +138,7 @@ function ApplyForm() {
                         )}
                     </button>
                     <p className="flex items-center justify-center gap-1.5 mt-4 text-xs text-[var(--text-muted)]">
-                        <ShieldCircle size={14} /> Safely redirected to Stripe Checkout
+                        <ShieldCheck size={14} /> Safely redirected to Stripe Checkout
                     </p>
                 </div>
             </form>
