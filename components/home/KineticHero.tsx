@@ -25,10 +25,21 @@ export default function KineticHero() {
 
     return (
         <section className="min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
-            {/* Video / image background */}
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/hero-lightbulb.jpg')" }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/65 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/80 via-transparent to-[#0a0a0c]" />
+            {/* Hero video background */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ filter: "brightness(0.55) saturate(1.2)" }}
+            >
+                <source src="/hero-video.mp4" type="video/mp4" />
+                {/* Fallback for browsers that don't support video */}
+                <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/hero-lightbulb.jpg')" }} />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/60 via-transparent to-[#0a0a0c]" />
 
             {/* Atlanta red ambient */}
             <div className="absolute bottom-0 left-0 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(220,38,38,0.08)_0%,transparent_70%)] pointer-events-none" />
