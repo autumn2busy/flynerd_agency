@@ -16,10 +16,19 @@ import { passwordProtectDeployment } from "@/lib/vercel";
 // Can also be called with { leadId } to expire a single lead immediately.
 // ─────────────────────────────────────────────────────────────────────────────
 
+export async function GET(req: Request) {
+  return POST(req);
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}));
     const { leadId } = body;
+
+    // Prevent double-execution: only run automated sweeps on the demo project
+    if (process.env.IS_MAIN_SITE === "true" && !leadId) {
+      return NextResponse.json({ message: "Cron skipped on main site project (IS_MAIN_SITE=true).", count: 0 });
+    }
 
     const whereClause = leadId
       ? { id: leadId }

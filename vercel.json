@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/agents/expire",
+      "schedule": "0 * * * *"
+    }
+  ]
+}
