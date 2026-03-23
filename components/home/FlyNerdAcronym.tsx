@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -17,107 +17,126 @@ const letters = [
 
 export default function FlyNerdAcronym() {
     const ref = useRef<HTMLDivElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+    const inView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
         <section
             ref={ref}
-            className="py-32 lg:py-44 relative overflow-hidden"
+            className="min-h-screen flex flex-col justify-center relative overflow-hidden"
             style={{ background: "#070709" }}
         >
             {/* Decorative top border */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#E8B923]/30 to-transparent" />
 
-            {/* Large background text */}
-            <div
-                className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-                aria-hidden
-            >
-                <span
-                    className="text-[22vw] font-black tracking-tighter leading-none"
-                    style={{ color: "rgba(255,255,255,0.015)", letterSpacing: "-0.05em" }}
-                >
-                    FLYNERD
-                </span>
-            </div>
+            {/* Ambient pools */}
+            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(232,185,35,0.05)_0%,transparent_70%)] pointer-events-none" />
+            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(220,38,38,0.04)_0%,transparent_70%)] pointer-events-none" />
 
-            {/* Ambient color pools */}
-            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(232,185,35,0.04)_0%,transparent_70%)] pointer-events-none" />
-            <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(220,38,38,0.04)_0%,transparent_70%)] pointer-events-none" />
-
-            <div className="section-container relative z-10">
+            <div className="section-container relative z-10 py-20 lg:py-0">
                 {/* Section label */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={inView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-20"
+                    className="text-center mb-12 lg:mb-16"
                 >
                     <span className="text-xs font-bold tracking-[0.4em] uppercase text-[#dc2626]">
                         Who We Are
                     </span>
                 </motion.div>
 
-                {/* Acronym stack */}
-                <div className="max-w-4xl mx-auto space-y-4 lg:space-y-5">
+                {/* Giant acronym — each letter takes up major space */}
+                <div className="max-w-6xl mx-auto">
                     {letters.map(({ letter, word, color }, i) => (
                         <motion.div
-                            key={letter}
-                            initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                            animate={inView ? { opacity: 1, x: 0 } : {}}
-                            transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                            className="flex items-center gap-6 lg:gap-10 group cursor-default"
+                            key={letter + i}
+                            initial={{ opacity: 0, clipPath: i % 2 === 0 ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)" }}
+                            animate={inView ? { opacity: 1, clipPath: "inset(0 0% 0 0%)" } : {}}
+                            transition={{
+                                duration: 0.6,
+                                delay: i * 0.08,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className="flex items-baseline gap-3 lg:gap-6 group cursor-default overflow-hidden"
+                            style={{ marginBottom: i < letters.length - 1 ? "-0.15em" : "0" }}
                         >
-                            {/* Large letter */}
-                            <div
-                                className="flex-shrink-0 w-14 h-14 lg:w-20 lg:h-20 rounded-xl lg:rounded-2xl flex items-center justify-center font-black text-2xl lg:text-4xl transition-all duration-300 group-hover:scale-110"
+                            {/* Massive letter */}
+                            <span
+                                className="font-[800] leading-[0.85] tracking-[-0.06em] transition-all duration-500 select-none"
                                 style={{
-                                    background: `${color}12`,
-                                    border: `1.5px solid ${color}30`,
+                                    fontSize: "clamp(4rem, 14vw, 12rem)",
                                     color: color,
-                                    boxShadow: `inset 0 1px 0 ${color}20`,
+                                    textShadow: `0 0 80px ${color}30`,
+                                    fontFamily: "var(--font-display)",
                                 }}
                             >
                                 {letter}
-                            </div>
+                            </span>
 
-                            {/* Word */}
+                            {/* Word — ghost that reveals on hover */}
                             <span
-                                className="text-[clamp(1.8rem,5vw,4rem)] font-black tracking-tight leading-none transition-colors duration-300"
-                                style={{ color: "rgba(255,255,255,0.08)" }}
-                                onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.9)"; }}
-                                onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.08)"; }}
+                                className="text-[clamp(1.2rem,4vw,3.5rem)] font-[800] tracking-[-0.04em] leading-none transition-all duration-500 select-none"
+                                style={{
+                                    color: "rgba(255,255,255,0.06)",
+                                    fontFamily: "var(--font-display)",
+                                }}
+                                onMouseEnter={(e) => {
+                                    (e.target as HTMLElement).style.color = "rgba(255,255,255,0.85)";
+                                    (e.target as HTMLElement).style.textShadow = `0 0 40px ${color}20`;
+                                }}
+                                onMouseLeave={(e) => {
+                                    (e.target as HTMLElement).style.color = "rgba(255,255,255,0.06)";
+                                    (e.target as HTMLElement).style.textShadow = "none";
+                                }}
                             >
                                 {word}
                             </span>
-
-                            {/* Divider line */}
-                            <motion.div
-                                initial={{ scaleX: 0 }}
-                                animate={inView ? { scaleX: 1 } : {}}
-                                transition={{ duration: 0.8, delay: i * 0.1 + 0.3 }}
-                                className="flex-1 h-px origin-left hidden lg:block"
-                                style={{ background: `linear-gradient(90deg, ${color}30, transparent)` }}
-                            />
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Manifesto line */}
+                {/* Manifesto — bold statement, not a footnote */}
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: letters.length * 0.1 + 0.2 }}
-                    className="text-center mt-20 space-y-6"
+                    transition={{ duration: 0.8, delay: letters.length * 0.08 + 0.3 }}
+                    className="text-center mt-16 lg:mt-20 space-y-6"
                 >
-                    <p className="text-white/35 text-lg italic max-w-2xl mx-auto leading-relaxed">
-                        "Where intelligence meets influence.{" "}
-                        <span className="text-[#E8B923]/70">Brilliance deserves style.</span>{" "}
-                        Unapologetically melanin."
+                    <p
+                        className="text-[clamp(1.25rem,3vw,2rem)] font-[700] text-white/90 max-w-3xl mx-auto leading-snug tracking-tight"
+                        style={{ fontFamily: "var(--font-display)" }}
+                    >
+                        Where intelligence meets influence.{" "}
+                        <span className="bg-gradient-to-r from-[#B8860B] via-[#E8B923] to-[#FFD93D] bg-clip-text text-transparent">
+                            Brilliance deserves style.
+                        </span>{" "}
+                        <br className="hidden md:block" />
+                        Unapologetically melanin.
                     </p>
-                    <p className="text-white/20 text-sm tracking-widest uppercase">
-                        Atlanta-based · Global energy
-                    </p>
+
+                    <div className="flex items-center justify-center gap-4">
+                        <span
+                            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full"
+                            style={{
+                                background: "rgba(220,38,38,0.1)",
+                                border: "1px solid rgba(220,38,38,0.2)",
+                                color: "#dc2626",
+                            }}
+                        >
+                            Atlanta-based
+                        </span>
+                        <span
+                            className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full"
+                            style={{
+                                background: "rgba(232,185,35,0.08)",
+                                border: "1px solid rgba(232,185,35,0.2)",
+                                color: "#E8B923",
+                            }}
+                        >
+                            Global energy
+                        </span>
+                    </div>
+
                     <Link
                         href="/about"
                         className="inline-flex items-center gap-2 text-sm font-semibold text-[#E8B923]/70 hover:text-[#E8B923] transition-colors"

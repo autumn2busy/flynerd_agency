@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Outfit, Syne } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -119,7 +119,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased font-sans`}>
+      <body className={`${outfit.variable} ${syne.variable} antialiased font-sans`}>
+        {/* Film grain overlay — premium texture */}
+        <div className="film-grain" />
+
         {/* Animated Background */}
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <div className="bg-orb w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(232,185,35,0.15)_0%,transparent_70%)] -top-[300px] -right-[200px] absolute" />
