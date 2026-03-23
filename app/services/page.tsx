@@ -1,18 +1,10 @@
 import Link from "next/link";
 import { Metadata } from "next";
-<<<<<<< HEAD
-import { ArrowUpRight, Zap, Sparkles, Cpu, Globe, FileText, CheckCircle } from "lucide-react";
-
-export const metadata: Metadata = {
-    title: "Automation Services | FlyNerd Tech",
-    description: "AI automation, CRM operations, AI agents, and workflow systems for businesses ready to scale. Supporting services to complement your AI-powered website.",
-=======
 import { ArrowUpRight, Search, Workflow, Bot, Mail, ShieldCheck, TrendingUp, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Services",
     description: "FlyNerd Tech services: automation audits, workflow builds, AI concierge launches, email revenue sprints, and ongoing optimization retainers.",
->>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
 };
 
 const services = [
@@ -29,31 +21,9 @@ const services = [
             "30-day roadmap",
             "Implementation priorities",
         ],
-<<<<<<< HEAD
-        startingAt: "Custom",
-    },
-    {
-        slug: "marketing-operations",
-        icon: Sparkles,
-        title: "Marketing Operations & CRM",
-        tagline: "The foundation that scales",
-        description: "CRM cleanup, lifecycle journeys, and attribution readiness. We build the marketing infrastructure that scales with your growth.",
-        features: [
-            "CRM data cleanup & migration",
-            "Lifecycle journey mapping",
-            "Lead scoring automation",
-            "Attribution modeling",
-            "Marketing analytics setup",
-        ],
-        startingAt: "$2,500",
-        featured: true,
-    },
-
-=======
         startingAt: "$495",
         popular: true,
     },
->>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
     {
         slug: "quickstart-build",
         icon: Workflow,
@@ -138,28 +108,13 @@ export default function ServicesPage() {
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl">
-                        <span className="section-label">Automation Services</span>
+                        <span className="section-label">Our Services</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-<<<<<<< HEAD
-                            The systems <span className="gradient-text">behind the site.</span>
-                        </h1>
-                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-4">
-                            Every FlyNerd AI website includes a built-in booking agent and local SEO foundation.
-                            These services go deeper — for businesses that want to automate operations,
-                            marketing, and lead pipelines beyond the site itself.
-                        </p>
-                        <p className="text-sm text-[var(--text-muted)]">
-                            Looking for the AI-powered website?{" "}
-                            <a href="/ai-website" className="text-[var(--gold-400)] hover:underline">
-                                See the full product →
-                            </a>
-=======
                             Productized AI <span className="gradient-text">Offers</span>
                         </h1>
                         <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
                             Built for solo-operator speed and business-owner clarity. Fixed scopes, clear outcomes,
                             and implementation paths that grow with your company.
->>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                         </p>
                     </div>
                 </div>
@@ -174,14 +129,11 @@ export default function ServicesPage() {
                                 href={`/contact?package=${service.slug}`}
                                 className={`glass-card rounded-2xl p-8 lg:p-10 group relative overflow-hidden ${service.featured ? "lg:col-span-2 lg:flex lg:gap-12" : ""}`}
                             >
-<<<<<<< HEAD
-=======
                                 {service.popular && (
                                     <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-3 py-1 rounded-full">
                                         Most Booked
                                     </span>
                                 )}
->>>>>>> c309ff18481a6cdf3c9f8c087901480827326fe2
                                 {service.featured && (
                                     <span className="absolute top-4 right-4 text-xs font-semibold text-[var(--gold-400)] bg-[var(--gold-500)]/10 px-3 py-1 rounded-full">
                                         Core Offer
