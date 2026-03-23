@@ -76,11 +76,11 @@ export async function POST(req: Request) {
     } else if (packageName === "agent") {
       stripeUrl = process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact";
     } else if (packageName === "care-plan") {
-      stripeUrl = process.env.STRIPE_LINK_CARE_PLAN || "/contact";
+      stripeUrl = process.env.STRIPE_LINK_MONTHLY_CARE || "/contact";
     } else if (packageName === "growth-partner") {
-      stripeUrl = process.env.STRIPE_LINK_GROWTH_PARTNER || "/contact";
+      stripeUrl = process.env.STRIPE_LINK_GROWTH_OPS || "/contact";
     } else if (packageName === "audit") {
-      stripeUrl = process.env.STRIPE_LINK_AUDIT || "/contact";
+      stripeUrl = process.env.STRIPE_LINK_AUDIT_DEPOSIT || "/contact";
     }
 
     // If Stripe Links are missing in ENV, alert the frontend
