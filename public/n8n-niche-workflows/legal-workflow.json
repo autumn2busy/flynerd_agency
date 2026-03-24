@@ -1,0 +1,84 @@
+{
+  "name": "FlyNerd Sub-Workflow: Legal",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "You are the empathetic Lead Intake Agent for {{ $json.businessName }} in Atlanta. The market is litigious - if we don't respond in 60s, they leave. 1. Validate their frustration/pain with empathy. 2. Ask 2 qualifying questions: Is there an active police report? Was there medical treatment? 3. Mention that {{ $json.neighborhood }} cases are high priority."
+            },
+            {
+              "role": "user",
+              "content": "Case Inquiry: {{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "groq",
+      "name": "Groq AI Agent",
+      "type": "n8n-nodes-base.groq",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "update",
+        "dealId": "={{ $json.dealId }}",
+        "updateFields": {
+          "note": "={{ $node[\"Groq AI Agent\"].json[\"choices\"][0][\"message\"][\"content\"] }}"
+        }
+      },
+      "id": "ac-update",
+      "name": "Update AC Deal",
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        750,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Groq AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update AC Deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

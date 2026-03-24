@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 const coreFive = [
-    { title: "AI Booking Agent", body: "A 24/7 front-desk agent trained on your services, pricing, and availability. Not a form. Not a script. Reasons. Books.", accent: "#E8B923" },
+    { title: "AI Booking Agent", body: "24/7 lead capture and qualification. Missed-call replacement for your website that books, reasons, and follows up.", accent: "#E8B923" },
     { title: "AI-Generated Design", body: "Your palette, copy, and layout come from your real Yelp data — not a template. Every site is unique to the business.", accent: "#10b981" },
     { title: "7-Day Launch", body: "Automated pipelines mean we don't wait on content approvals. We build from data we already have.", accent: "#E8B923" },
     { title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times — the technical foundation local search rewards.", accent: "#10b981" },

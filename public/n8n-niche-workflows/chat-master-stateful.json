@@ -1,0 +1,116 @@
+{
+  "name": "FlyNerd - Chat Master (Stateful & RAG)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Chat Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT content, metadata FROM documents WHERE metadata->>'leadId' = '{{ $node[\"Chat Webhook\"].json[\"body\"][\"leadId\"] }}' ORDER BY embedding <=> ({{ $node[\"Chat Webhook\"].json[\"body\"][\"embedding\"] }}) LIMIT 3;"
+      },
+      "id": "supabase-rag",
+      "name": "Supabase Knowledge Lookup",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        450,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "=You are a professional AI Assistant for {{ $node[\"Chat Webhook\"].json[\"body\"][\"businessName\"] }}. \n\nContext from Knowledge Base:\n{{ $node[\"Supabase Knowledge Lookup\"].json.map(d => d.content).join('\\n') }}\n\nStrict Rules:\n1. ONLY use the provided context to answer.\n2. If unsure, offer to book a call.\n3. Be concise and helpful."
+            }
+          ]
+        },
+        "options": {
+          "memory": {
+            "memoryType": "n8n-nodes-base.windowBufferMemory",
+            "sessionId": "={{ $node[\"Chat Webhook\"].json[\"body\"][\"sessionId\"] }}",
+            "contextWindowLength": 5
+          }
+        }
+      },
+      "id": "groq",
+      "name": "Groq Agent (Stateful)",
+      "type": "n8n-nodes-base.groq",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"answer\": \"{{ $node[\"Groq Agent (Stateful)\"].json[\"choices\"][0][\"message\"][\"content\"] }}\",\n  \"sessionId\": \"{{ $node[\"Chat Webhook\"].json[\"body\"][\"sessionId\"] }}\"\n}"
+      },
+      "id": "respond",
+      "name": "Respond to Widget",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        950,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Chat Webhook": {
+      "main": [
+        [
+          {
+            "node": "Supabase Knowledge Lookup",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Groq Agent (Stateful)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Knowledge Lookup": {
+      "main": [
+        [
+          {
+            "node": "Groq Agent (Stateful)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Agent (Stateful)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Widget",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -3,226 +3,180 @@ import Link from "next/link";
 import { ArrowUpRight, Check, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Pricing | FlyNerd Tech",
-    description: "AI-powered website pricing from $1,250. Quickstart Build, AI Concierge Bundle, and Growth Ops retainers. 7-day launch guarantee.",
+    title: "Pricing",
+    description: "Productized pricing for a lean AI automation agency. Clear scopes, fixed outcomes, and scalable monthly support.",
 };
 
-const websitePackages = [
+const pricingTiers = [
     {
-        name: "Quickstart Build",
-        tag: "Local service businesses",
-        setup: "$1,250",
-        monthly: "$197/mo",
-        description: "A high-conversion AI-powered site built from your real reputation. Live in 7 days.",
+        name: "Starter",
+        subtitle: "Automation Audit",
+        price: "$495",
+        period: "one-time",
+        description: "A focused systems audit and 30-day roadmap to identify your highest-impact automation opportunities.",
         features: [
-            "Custom niche design (AI-informed)",
-            "AI booking & support agent",
-            "Local SEO architecture",
-            "Vercel high-speed hosting",
-            "7-day launch guarantee",
-            "Monthly maintenance included",
+            "60-minute strategy call",
+            "Current stack and workflow audit",
+            "Bottleneck and ROI prioritization",
+            "Custom 30-day implementation roadmap",
+            "Tool recommendations (AI + automation)",
+            "Async follow-up Q&A for 7 days",
+            "Audit fee credited toward Build package",
         ],
-        cta: "Start — Pay $625 Deposit",
-        href: "/apply?package=build",
-        note: "Final $625 due on delivery",
+        cta: "Book Audit",
+        href: "/contact?package=starter",
+        popular: true,
     },
     {
-        name: "AI Concierge Bundle",
-        tag: "High lead volume + operations",
-        setup: "$2,400",
-        monthly: "$750/mo",
-        description: "The full system — website plus advanced AI agents, CRM automation, and monthly optimization.",
+        name: "Build",
+        subtitle: "Quickstart Workflow Build",
+        price: "$1,250",
+        period: "one-time",
+        description: "One high-impact automation built end-to-end with documentation and team handoff.",
         features: [
-            "Everything in Quickstart Build",
-            "Advanced AI agents (custom knowledge base)",
-            "CRM automation (ActiveCampaign)",
-            "Lead qualification + smart routing",
-            "2 improvement tickets/month",
-            "Quarterly roadmap review",
+            "Everything in Starter applied to implementation",
+            "1 production-ready workflow (fixed scope)",
+            "Core tool integrations (CRM, email, forms, sheets)",
+            "QA + launch checklist",
+            "Loom walkthrough + SOP documentation",
+            "14 days post-launch support",
+            "Option to upgrade into monthly optimization",
         ],
-        cta: "Launch — Pay $1,200 Deposit",
-        href: "/apply?package=agent",
-        note: "Final $1,200 due on launch",
-        featured: true,
+        cta: "Start Build",
+        href: "/contact?package=build",
     },
-];
-
-const retainers = [
     {
-        name: "Monthly Care Plan",
+        name: "Optimize",
+        subtitle: "Monthly Care Plan",
         price: "$750",
         period: "/month",
-        description: "Keep your systems healthy, accurate, and improving every month.",
+        description: "Ongoing maintenance, monitoring, and iterative improvements to keep your systems performing.",
         features: [
-            "System monitoring + issue triage",
-            "Up to 2 improvement tickets/month",
-            "Monthly performance report",
-            "Monthly optimization review",
+            "System monitoring and health checks",
+            "2 improvement tickets per month",
+            "Bug fixes and reliability tuning",
+            "Monthly performance summary",
             "Priority async support",
-            "SLA response windows",
+            "Quarterly roadmap refresh",
+            "Best for 1-3 core automations",
         ],
-        cta: "Join Care Plan",
-        href: "/apply?package=care-plan",
-    },
-    {
-        name: "Growth Ops Partner",
-        price: "$1,800",
-        period: "/month",
-        description: "A strategic operations partner for teams running multiple workflows and agents.",
-        features: [
-            "Everything in Care Plan",
-            "Multi-workflow optimization",
-            "Quarterly roadmap planning",
-            "Advanced automation experiments",
-            "Cross-channel reporting",
-            "Slack + priority support",
-        ],
-        cta: "Apply Now",
-        href: "/apply?package=growth-partner",
+        cta: "Choose Optimize",
+        href: "/contact?package=optimize",
         featured: true,
     },
+    {
+        name: "Scale",
+        subtitle: "Growth Partner Retainer",
+        price: "$1,800",
+        period: "/month",
+        description: "For teams ready for multi-workflow execution, agent rollouts, and proactive growth operations.",
+        features: [
+            "Everything in Optimize",
+            "Up to 6 active workflow initiatives",
+            "AI lead qualification or support agent rollout",
+            "Advanced CRM automation and lifecycle journeys",
+            "Biweekly strategy calls",
+            "Faster turnaround SLAs",
+            "Ideal for growing teams with active campaigns",
+        ],
+        cta: "Apply for Scale",
+        href: "/contact?package=scale",
+    },
 ];
-
-const audit = {
-    name: "Automation Audit + Roadmap",
-    price: "$495",
-    description: "Not sure where to start? This is the right first step. A 60-90 minute discovery session with a full 30-day implementation roadmap.",
-    features: [
-        "60-90 minute strategy session",
-        "Systems + tools audit",
-        "3 quick-win opportunities identified",
-        "30-day implementation roadmap",
-        "Priority score by impact/effort",
-        "Credit toward any build package",
-    ],
-    cta: "Book Audit",
-    href: "/apply?package=audit",
-};
 
 const faqs = [
     {
-        q: "How does the deposit structure work?",
-        a: "Website packages are split 50/50. You pay half to secure your project start date. The remainder is due on delivery — when you've seen the site and approved it.",
+        question: "Why is the Starter package paid?",
+        answer: "The audit includes strategy, technical diagnostics, and a tailored roadmap you can execute with or without us. It prevents guesswork and keeps implementation focused.",
     },
     {
-        q: "What's the difference between the website monthly and the Care Plan?",
-        a: "The $197/mo (Quickstart) and $750/mo (Concierge) are hosting + maintenance for your AI website. The Care Plan and Growth Partner are separate operational retainers for businesses that want ongoing system improvements beyond the site.",
+        question: "Can the audit fee be applied to implementation?",
+        answer: "Yes. If you move forward within 30 days, your Starter fee is credited toward the Build package.",
     },
     {
-        q: "Do I need the Automation Audit first?",
-        a: "Not required for AI website builds — we gather everything we need from your Yelp data. The Audit is ideal if you want a broader automation roadmap for your business operations.",
+        question: "Do you offer custom scopes?",
+        answer: "Yes, for clients with complex requirements. We still start with a paid audit so custom work is grounded in a clear implementation plan.",
     },
     {
-        q: "Can I start with one workflow or one agent?",
-        a: "Yes. Most clients start with the Quickstart Build, see results, then expand into the AI Concierge Bundle or Care Plan.",
+        question: "How fast can we launch?",
+        answer: "Most Build projects launch within 1-2 weeks after kickoff. Timeline depends on integrations, access readiness, and review speed.",
     },
     {
-        q: "Are retainers month-to-month?",
-        a: "Yes. Monthly plans cancel anytime from your portal at portal.flynerd.tech. We earn your business every month.",
+        question: "Who is this best for?",
+        answer: "Small and midsize teams that want meaningful automation outcomes without hiring a full in-house operations team.",
     },
     {
-        q: "Do you build custom automation systems?",
-        a: "Yes — the AI Concierge Bundle and Growth Partner both include custom automation work. If you want your own scouting, outreach, or AI pipeline, book a strategy call and we'll scope it.",
+        question: "Do monthly plans require long-term contracts?",
+        answer: "No. Optimize and Scale are month-to-month with 30 days notice.",
     },
 ];
 
 export default function PricingPage() {
     return (
         <>
-            {/* ── Hero ──────────────────────────────────────────────────────────── */}
+            {/* Hero */}
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl mx-auto text-center">
                         <span className="section-label">Pricing</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-                            Clear scope. <span className="gradient-text">Clear outcomes.</span>
+                            Productized <span className="gradient-text">Pricing</span>
                         </h1>
                         <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-                            AI-powered websites built in 7 days, plus automation retainers for businesses ready to scale their operations.
+                            Lean, clear packages designed for fast implementation and measurable outcomes.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {/* ── Website Packages ──────────────────────────────────────────────── */}
-            <section className="pb-24 lg:pb-16">
+            {/* Pricing Grid */}
+            <section className="pb-24 lg:pb-32">
                 <div className="section-container">
-                    <div className="mb-10">
-                        <h2 className="text-2xl font-semibold mb-2">AI-Powered Website Packages</h2>
-                        <p className="text-[var(--text-secondary)]">One-time setup + monthly hosting & maintenance.</p>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl">
-                        {websitePackages.map((pkg) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {pricingTiers.map((tier) => (
                             <div
-                                key={pkg.name}
-                                className={`glass-card rounded-2xl p-8 flex flex-col relative ${pkg.featured ? "ring-2 ring-[var(--gold-500)]" : ""}`}
+                                key={tier.name}
+                                className={`glass-card rounded-2xl p-8 relative ${tier.featured ? "ring-2 ring-[var(--gold-500)] lg:scale-105" : ""
+                                    }`}
                             >
-                                {pkg.featured && (
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full whitespace-nowrap">
-                                        Most Popular
+                                {tier.popular && (
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
+                                        Popular
                                     </span>
                                 )}
-                                <div className="mb-2">
-                                    <p className="text-xs text-[var(--amber-400)] font-medium uppercase tracking-wider">{pkg.tag}</p>
-                                    <h3 className="text-xl font-semibold mt-1">{pkg.name}</h3>
-                                </div>
-                                <div className="mb-4 flex items-baseline gap-2">
-                                    <span className="text-4xl font-bold">{pkg.setup}</span>
-                                    <span className="text-[var(--text-muted)] text-sm">setup + {pkg.monthly}</span>
-                                </div>
-                                <p className="text-sm text-[var(--text-secondary)] mb-6">{pkg.description}</p>
-                                <ul className="space-y-3 mb-6 flex-1">
-                                    {pkg.features.map((f, i) => (
-                                        <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
-                                            <Check size={15} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                            {f}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <Link href={pkg.href} className={`btn w-full mb-3 ${pkg.featured ? "btn-primary" : "btn-ghost"}`}>
-                                    {pkg.cta} <ArrowUpRight size={16} />
-                                </Link>
-                                <p className="text-xs text-[var(--text-muted)] text-center">{pkg.note}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ── Retainers ─────────────────────────────────────────────────────── */}
-            <section className="py-16 lg:py-24 bg-[var(--bg-elevated)]">
-                <div className="section-container">
-                    <div className="mb-10">
-                        <h2 className="text-2xl font-semibold mb-2">Automation Retainers</h2>
-                        <p className="text-[var(--text-secondary)]">Month-to-month. Cancel anytime from portal.flynerd.tech.</p>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl">
-                        {retainers.map((pkg) => (
-                            <div
-                                key={pkg.name}
-                                className={`glass-card rounded-2xl p-8 flex flex-col relative ${pkg.featured ? "ring-2 ring-[var(--gold-500)]" : ""}`}
-                            >
-                                {pkg.featured && (
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full whitespace-nowrap">
+                                {tier.featured && (
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
                                         Best Value
                                     </span>
                                 )}
-                                <h3 className="text-xl font-semibold mb-2">{pkg.name}</h3>
-                                <div className="mb-4">
-                                    <span className="text-4xl font-bold">{pkg.price}</span>
-                                    <span className="text-[var(--text-muted)] ml-1">{pkg.period}</span>
+
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold">{tier.name}</h3>
+                                    <p className="text-sm text-[var(--gold-400)]">{tier.subtitle}</p>
                                 </div>
-                                <p className="text-sm text-[var(--text-secondary)] mb-6">{pkg.description}</p>
-                                <ul className="space-y-3 mb-8 flex-1">
-                                    {pkg.features.map((f, i) => (
+
+                                <div className="mb-6">
+                                    <span className="text-4xl font-bold">{tier.price}</span>
+                                    <span className="text-[var(--text-muted)] ml-1">{tier.period}</span>
+                                </div>
+
+                                <p className="text-sm text-[var(--text-secondary)] mb-6">{tier.description}</p>
+
+                                <ul className="space-y-3 mb-8">
+                                    {tier.features.map((feature, i) => (
                                         <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
-                                            <Check size={15} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                            {f}
+                                            <Check size={16} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
+                                            {feature}
                                         </li>
                                     ))}
                                 </ul>
-                                <Link href={pkg.href} className={`btn w-full ${pkg.featured ? "btn-primary" : "btn-ghost"}`}>
-                                    {pkg.cta} <ArrowUpRight size={16} />
+
+                                <Link
+                                    href={tier.href}
+                                    className={`btn w-full ${tier.featured ? "btn-primary" : "btn-ghost"}`}
+                                >
+                                    {tier.cta}
+                                    <ArrowUpRight size={16} />
                                 </Link>
                             </div>
                         ))}
@@ -230,72 +184,43 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            {/* ── Audit ─────────────────────────────────────────────────────────── */}
-            <section className="py-16 lg:py-24">
-                <div className="section-container">
-                    <div className="max-w-4xl">
-                        <div className="mb-10">
-                            <h2 className="text-2xl font-semibold mb-2">Not Sure Where to Start?</h2>
-                            <p className="text-[var(--text-secondary)]">The Automation Audit is the lowest-risk way to get a clear picture.</p>
-                        </div>
-                        <div className="glass-card rounded-2xl p-8 lg:flex lg:gap-12 items-start max-w-3xl">
-                            <div className="lg:flex-1 mb-6 lg:mb-0">
-                                <h3 className="text-xl font-semibold mb-2">{audit.name}</h3>
-                                <div className="mb-4">
-                                    <span className="text-4xl font-bold">{audit.price}</span>
-                                    <span className="text-[var(--text-muted)] ml-2 text-sm">one-time</span>
-                                </div>
-                                <p className="text-sm text-[var(--text-secondary)] mb-6">{audit.description}</p>
-                                <Link href={audit.href} className="btn btn-primary">
-                                    {audit.cta} <ArrowUpRight size={16} />
-                                </Link>
-                            </div>
-                            <ul className="lg:flex-1 space-y-3">
-                                {audit.features.map((f, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
-                                        <Check size={15} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                        {f}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ── FAQ ───────────────────────────────────────────────────────────── */}
+            {/* FAQs */}
             <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
                     <div className="text-center mb-16">
                         <span className="section-label">FAQ</span>
-                        <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">Common Questions</h2>
+                        <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">
+                            Common Questions
+                        </h2>
                     </div>
+
                     <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
                         {faqs.map((faq, i) => (
                             <div key={i} className="glass-card rounded-xl p-6">
                                 <div className="flex items-start gap-3 mb-3">
                                     <HelpCircle size={18} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                    <h3 className="font-semibold text-sm">{faq.q}</h3>
+                                    <h3 className="font-semibold">{faq.question}</h3>
                                 </div>
-                                <p className="text-sm text-[var(--text-secondary)] pl-7 leading-relaxed">{faq.a}</p>
+                                <p className="text-sm text-[var(--text-secondary)] pl-7">{faq.answer}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* ── CTA ───────────────────────────────────────────────────────────── */}
+            {/* CTA */}
             <section className="py-24 lg:py-32">
                 <div className="section-container">
                     <div className="max-w-2xl mx-auto text-center">
                         <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
-                            Still have questions?
+                            Still Have Questions?
                         </h2>
                         <p className="text-lg text-[var(--text-secondary)] mb-8">
-                            Book a free 20-minute strategy call. Honest advice about what would actually move the needle for your business.
+                            Start with a paid audit so we can map exactly what to automate first, why it matters, and how to implement it.
                         </p>
                         <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
-                            Book a Free Call <ArrowUpRight size={20} />
+                            Book the Starter Audit
+                            <ArrowUpRight size={20} />
                         </Link>
                     </div>
                 </div>

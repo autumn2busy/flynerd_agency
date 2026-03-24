@@ -118,8 +118,7 @@ export default function KineticHero() {
                             transition={{ duration: 0.6, ease: "easeOut" }}
                             className="text-[clamp(1rem,2.2vw,1.25rem)] text-white/55 leading-relaxed mb-4 max-w-2xl mx-auto"
                         >
-                            We build AI-powered websites for local businesses that book appointments,
-                            answer questions, and qualify leads — 24 hours a day.
+                            A site that turns visitors into appointments with after-hours booking and follow-up — 24 hours a day.
                         </motion.p>
                     )}
                 </AnimatePresence>

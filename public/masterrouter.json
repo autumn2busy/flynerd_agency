@@ -1,0 +1,179 @@
+{
+    "name": "FlyNerd - Master Router",
+    "nodes": [
+        {
+            "parameters": {
+                "event": "deal_stage_changed"
+            },
+            "id": "trigger-ac",
+            "name": "AC Deal Trigger",
+            "type": "n8n-nodes-base.activeCampaignTrigger",
+            "position": [
+                250,
+                300
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "dataType": "string",
+                "value1": "={{ $node[\"AC Deal Trigger\"].json[\"deal\"][\"fields\"][\"LEADNICHE\"] }}",
+                "rules": {
+                    "rules": [
+                        {
+                            "operation": "equal",
+                            "value2": "hvac",
+                            "nextStep": 1
+                        },
+                        {
+                            "operation": "equal",
+                            "value2": "medical",
+                            "nextStep": 2
+                        },
+                        {
+                            "operation": "equal",
+                            "value2": "legal",
+                            "nextStep": 3
+                        },
+                        {
+                            "operation": "equal",
+                            "value2": "film",
+                            "nextStep": 4
+                        },
+                        {
+                            "operation": "equal",
+                            "value2": "logistics",
+                            "nextStep": 5
+                        }
+                    ]
+                }
+            },
+            "id": "switch-niche",
+            "name": "Switch by Niche",
+            "type": "n8n-nodes-base.switch",
+            "position": [
+                450,
+                300
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "workflowId": "HVAC_SUB_ID"
+            },
+            "id": "execute-hvac",
+            "name": "Execute HVAC",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "position": [
+                650,
+                100
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "workflowId": "MED_SUB_ID"
+            },
+            "id": "execute-med",
+            "name": "Execute Medical",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "position": [
+                650,
+                200
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "workflowId": "LAW_SUB_ID"
+            },
+            "id": "execute-law",
+            "name": "Execute Legal",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "position": [
+                650,
+                300
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "workflowId": "FILM_SUB_ID"
+            },
+            "id": "execute-film",
+            "name": "Execute Film",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "position": [
+                650,
+                400
+            ],
+            "typeVersion": 1
+        },
+        {
+            "parameters": {
+                "workflowId": "LOG_SUB_ID"
+            },
+            "id": "execute-log",
+            "name": "Execute Logistics",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "position": [
+                650,
+                500
+            ],
+            "typeVersion": 1
+        }
+    ],
+    "connections": {
+        "AC Deal Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Switch by Niche",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Switch by Niche": {
+            "main": [
+                [
+                    {
+                        "node": "Execute HVAC",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Execute Medical",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Execute Legal",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Execute Film",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Execute Logistics",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {}
+}

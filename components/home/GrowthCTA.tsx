@@ -37,9 +37,9 @@ export default function GrowthCTA() {
                 </p>
                 <ul className="space-y-3 mb-10">
                   {[
-                    "Your own Scout agent (finds leads matching your ICP)",
+                    "Your own Scout agent (24/7 lead capture and qualification)",
                     "Your own Intel agent (analyzes and scores prospects)",
-                    "Automated personalized outreach at scale",
+                    "Pre-qualified leads dropped directly into your CRM",
                     "Built on n8n, ActiveCampaign, and Vercel",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-white/60 text-sm">

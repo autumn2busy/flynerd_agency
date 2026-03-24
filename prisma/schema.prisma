@@ -8,13 +8,13 @@ datasource db {
 }
 
 model AgencyLead {
-  id                  String   @id @default(uuid())
+  id                  String    @id @default(uuid())
   businessName        String
   niche               String
   contactEmail        String?
   contactPhone        String?
-  placeId             String   @unique
-  status              String   @default("PROSPECT")
+  placeId             String    @unique
+  status              String    @default("PROSPECT")
   scoutData           Json?
   intelScore          Int?
   intelData           Json?
@@ -22,7 +22,7 @@ model AgencyLead {
   walkthroughVideoUrl String?
   outreachHistory     Json?
   paymentLink         String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   validUntil          DateTime?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
 }

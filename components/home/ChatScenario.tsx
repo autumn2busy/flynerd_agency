@@ -234,7 +234,7 @@ export default function ChatScenario() {
                     {/* Left — Copy + tabs */}
                     <div className="text-center lg:text-left">
                         <span className="inline-block text-xs font-bold tracking-[0.3em] uppercase text-[#dc2626] mb-4">
-                            {mode === "live" ? "Try It Now — Live AI" : "2 AM. No Staff. No Problem."}
+                            {mode === "live" ? "Try It Now — Live AI" : "24/7 Lead Capture. After-Hours Booking."}
                         </span>
                         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-[800] tracking-tight text-white leading-[1.05] mb-4">
                             {mode === "live" ? (
@@ -248,7 +248,7 @@ export default function ChatScenario() {
                                 <>
                                     Watch your{" "}
                                     <span className="bg-gradient-to-r from-[#B8860B] via-[#E8B923] to-[#FFD93D] bg-clip-text text-transparent">
-                                        digital employee
+                                        missed-call replacement
                                     </span>{" "}
                                     work.
                                 </>
@@ -257,7 +257,7 @@ export default function ChatScenario() {
                         <p className="text-white/40 mb-8 text-base max-w-md mx-auto lg:mx-0 leading-relaxed">
                             {mode === "live"
                                 ? "This isn't a recording. Type a real question and see what your site's AI agent could do — live."
-                                : "Real conversations. Real bookings. No humans required."}
+                                : "Turn visitors into appointments automatically. No humans required."}
                         </p>
 
                         {/* Mode tabs */}

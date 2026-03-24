@@ -1,0 +1,84 @@
+{
+  "name": "FlyNerd Sub-Workflow: Film",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "You are the AI Coordinator for {{ $json.businessName }} in the Atlanta film hub. Your production managers are drowning in emails. 1. Handle crew FAQs about the shoot or logistics. 2. Assist with vendor onboarding and invoice tracking. 3. Reduce coordinate time so the team can focus on the lens."
+            },
+            {
+              "role": "user",
+              "content": "Production Inquiry: {{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "groq",
+      "name": "Groq AI Agent",
+      "type": "n8n-nodes-base.groq",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "update",
+        "dealId": "={{ $json.dealId }}",
+        "updateFields": {
+          "note": "={{ $node[\"Groq AI Agent\"].json[\"choices\"][0][\"message\"][\"content\"] }}"
+        }
+      },
+      "id": "ac-update",
+      "name": "Update AC Deal",
+      "type": "n8n-nodes-base.activeCampaign",
+      "typeVersion": 1,
+      "position": [
+        750,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Groq AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update AC Deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
