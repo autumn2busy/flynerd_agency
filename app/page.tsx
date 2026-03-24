@@ -1,17 +1,23 @@
 import Link from "next/link";
-import { ArrowUpRight, Zap, Cpu, BarChart3, Clock, Globe, ChevronRight, CheckCircle, Users } from "lucide-react";
+import { ArrowUpRight, Zap, Cpu, BarChart3, Clock, Globe, ChevronRight, CheckCircle } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
-  description: "FlyNerd Tech builds AI-powered websites that work as digital employees — 24/7 booking, lead qualification, and local SEO. Atlanta-based, deployed in 7 days.",
+  description: "FlyNerd Tech builds AI-powered websites that work as digital employees, with 24/7 booking, lead qualification, and local SEO. Atlanta-based, deployed in 7 days.",
 };
 
 const differentiators = [
   {
     feature: "Philosophy",
-    generic: "Digital Brochure",
-    flynerd: "Digital Employee",
+    generic: "Digital brochure",
+    flynerd: "Digital employee",
+    highlight: false,
+  },
+  {
+    feature: "Lead handling",
+    generic: "Form + email alert",
+    flynerd: "24/7 lead capture + qualification",
     highlight: true,
   },
   {
@@ -23,12 +29,12 @@ const differentiators = [
   {
     feature: "Functionality",
     generic: "Static contact form",
-    flynerd: "AI books, answers, qualifies 24/7",
+    flynerd: "After-hours booking + CRM-ready leads",
     highlight: false,
   },
   {
     feature: "Launch speed",
-    generic: "4–6 weeks",
+    generic: "4 to 6 weeks",
     flynerd: "7-day guarantee",
     highlight: false,
   },
@@ -44,7 +50,7 @@ const coreFive = [
   {
     icon: Cpu,
     title: "AI Booking & Support Agent",
-    description: "Not a contact form. A 24/7 front-desk agent that knows your pricing, services, and availability — and books appointments while you sleep.",
+    description: "A 24/7 front-desk agent that knows your services, answers common questions, qualifies leads, and helps book appointments while you sleep.",
   },
   {
     icon: Globe,
@@ -59,7 +65,7 @@ const coreFive = [
   {
     icon: BarChart3,
     title: "Local SEO & Speed",
-    description: "Headless Next.js architecture means sub-second load times and optimized schema markup for local search — the two factors that matter most for local rankings.",
+    description: "Headless Next.js architecture means sub-second load times and optimized schema markup for local search, the two factors that matter most for local rankings.",
   },
   {
     icon: Zap,
@@ -77,7 +83,7 @@ const packages = [
     description: "A high-conversion site built from your real reputation, live in 7 days.",
     features: [
       "Custom niche design from your brand palette",
-      "AI booking agent (trained on your services)",
+      "AI booking agent trained on your services",
       "Local SEO architecture",
       "High-speed Vercel hosting",
       "Monthly maintenance included",
@@ -90,11 +96,11 @@ const packages = [
     price: "$2,400",
     monthly: "+ $750/mo",
     target: "High lead volume businesses",
-    description: "The full system — website plus advanced AI agents, CRM automation, and ongoing optimization.",
+    description: "The full system, website plus advanced AI agents, CRM automation, and ongoing optimization.",
     features: [
       "Everything in Quickstart Build",
-      "Advanced AI support agents (custom knowledge base)",
-      "Pre-qualified leads dropped directly into your CRM",
+      "Advanced AI support agents with a custom knowledge base",
+      "Pre-qualified leads dropped directly into your CRM (ActiveCampaign)",
       "Lead qualification + routing",
       "Monthly iterative improvements",
     ],
@@ -107,17 +113,17 @@ const packages = [
 const useCases = [
   {
     niche: "HVAC & Home Services",
-    scenario: "It's 2 AM. A customer's AC breaks. They Google 'emergency HVAC Atlanta.' Your AI agent answers their 'Emergency surcharge?' question and books an 8 AM slot. You wake up to a confirmed appointment.",
+    scenario: "It's 2 AM. A customer's AC breaks. They Google 'emergency HVAC Atlanta.' Your AI agent answers their 'Emergency surcharge?' question and helps book an 8 AM slot. You wake up to a confirmed appointment.",
     icon: "🔧",
   },
   {
     niche: "Salons & Med Spas",
-    scenario: "A client wants to book a specific stylist for Saturday. Your AI agent checks availability, confirms the slot, and sends a reminder — without your receptionist touching a single thing.",
+    scenario: "A client wants to book a specific stylist for Saturday. Your AI agent checks availability, confirms the slot, and sends a reminder, without your receptionist touching a single thing.",
     icon: "✂️",
   },
   {
     niche: "Law Firms",
-    scenario: "A potential client finds your site at 10 PM after a stressful day. Your AI agent qualifies their case type, answers basic process questions, and books a consultation for Monday morning.",
+    scenario: "A potential client finds your site at 10 PM after a stressful day. Your AI agent qualifies their case type, answers basic process questions, and helps book a consultation for Monday morning.",
     icon: "⚖️",
   },
 ];
@@ -126,9 +132,9 @@ const automationService = {
   title: "Want this system for your own business?",
   description: "The same Scout → Intel → Builder pipeline we use to deliver client sites can be deployed for your business to automate your own lead generation. This is a custom implementation starting with the AI Concierge Bundle.",
   items: [
-    "Your own Scout agent (finds leads matching your ICP)",
-    "Your own Intel agent (analyzes and scores prospects)",
-    "Automated personalized outreach at scale",
+    "Your own Scout agent for 24/7 lead capture and qualification",
+    "Your own Intel agent that analyzes and scores prospects",
+    "Pre-qualified leads dropped directly into your CRM (ActiveCampaign)",
     "Built on n8n, ActiveCampaign, and Vercel",
   ],
 };
@@ -163,7 +169,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-[clamp(1rem,2.2vw,1.35rem)] text-[var(--text-secondary)] leading-relaxed mb-4 max-w-3xl mx-auto">
-            We build AI-powered websites for local businesses that turn visitors into appointments with 24/7 lead capture and qualification.
+            We build AI-powered websites for local businesses that capture, qualify, and turn visitors into booked appointments 24/7.
           </p>
 
           <p className="text-sm text-[var(--text-muted)] mb-10 tracking-wide">
@@ -192,15 +198,44 @@ export default function HomePage() {
       {/* ── The Problem ───────────────────────────────────────────────────── */}
       <section className="py-24 lg:py-32">
         <div className="section-container">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <span className="section-label">The Gap</span>
-              <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-semibold mt-4 mb-6">
-                Wix sends you an email.<br />
-                <span className="gradient-text">We book the appointment.</span>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto mt-6 mb-8">
+                <div className="glass-card rounded-2xl p-6 text-left border border-[var(--glass-border)]">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)] mb-3">
+                    Typical website
+                  </p>
+                  <p className="text-2xl md:text-[1.85rem] font-semibold leading-tight text-white">
+                    Captures a message.
+                  </p>
+                  <p className="text-base text-[var(--text-secondary)] mt-3 leading-relaxed">
+                    Then leaves you chasing the lead with an email notification and a contact form.
+                  </p>
+                </div>
+
+                <div className="glass-card rounded-2xl p-6 text-left border border-[var(--gold-500)]/30 bg-[var(--gold-500)]/5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--amber-400)] mb-3">
+                    FlyNerd site
+                  </p>
+                  <p className="text-2xl md:text-[1.85rem] font-bold leading-tight">
+                    <span className="gradient-text">Captures, qualifies, and helps book the lead.</span>
+                  </p>
+                  <p className="text-base text-[var(--text-secondary)] mt-3 leading-relaxed">
+                    It acts like a missed-call replacement for your website, so visitors get answers and a next step right away.
+                  </p>
+                </div>
+              </div>
+
+              <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-semibold mb-6">
+                Static forms lose after-hours leads.
+                <br />
+                <span className="gradient-text">Smart websites help close the gap.</span>
               </h2>
-              <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-                At 2 AM when a customer&apos;s AC breaks and they find your site — a static form loses the job. We provide a missed-call replacement for your website that books it.
+
+              <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
+                At 2 AM, when a customer&apos;s AC breaks and they land on your site, a static form loses the job. We turn your website into a missed-call replacement that answers questions, qualifies the lead, and helps book the appointment before a competitor calls back.
               </p>
             </div>
 
@@ -208,7 +243,7 @@ export default function HomePage() {
             <div className="glass-card rounded-2xl overflow-hidden">
               <div className="grid grid-cols-3 bg-[var(--bg-elevated)] px-6 py-4 border-b border-[var(--glass-border)]">
                 <div className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Feature</div>
-                <div className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider text-center">Wix / Generic</div>
+                <div className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider text-center">Typical Site</div>
                 <div className="text-sm font-semibold text-[var(--amber-400)] uppercase tracking-wider text-center">FlyNerd Tech</div>
               </div>
               {differentiators.map((row, i) => (
@@ -381,7 +416,7 @@ export default function HomePage() {
               Ready for a website that <span className="gradient-text">works while you sleep?</span>
             </h2>
             <p className="text-lg text-[var(--text-secondary)] mb-10">
-              Book a free 20-minute strategy call. We'll show you exactly what an AI-powered site would look like for your business — no pressure, no templates.
+              Book a free 20-minute strategy call. We&apos;ll show you exactly what an AI-powered site would look like for your business, no pressure, no templates.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">

@@ -25,7 +25,6 @@ export default function KineticHero() {
 
     return (
         <section className="min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
-            {/* Hero video background */}
             <video
                 autoPlay
                 loop
@@ -38,21 +37,17 @@ export default function KineticHero() {
                 <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/hero-lightbulb.jpg')" }} />
             </video>
 
-            {/* Heavy gradient overlays for contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/70 via-transparent to-[#0a0a0c]" />
             <div className="absolute inset-0 bg-[#0a0a0c]/20" />
 
-            {/* Atlanta red ambient */}
             <div className="absolute bottom-0 left-0 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(220,38,38,0.08)_0%,transparent_70%)] pointer-events-none" />
-            {/* Teal ambient right */}
             <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-[radial-gradient(ellipse,rgba(16,185,129,0.07)_0%,transparent_70%)] pointer-events-none" />
 
             <div className="absolute inset-0 opacity-15">
                 <div className="grid-lines" />
             </div>
 
-            {/* Floating stat badges */}
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -73,7 +68,6 @@ export default function KineticHero() {
             </motion.div>
 
             <div className="relative z-10 max-w-5xl px-6 pt-24">
-                {/* Eyebrow */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -87,7 +81,6 @@ export default function KineticHero() {
                     <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#E8B923]" />
                 </motion.div>
 
-                {/* Kinetic headline — dramatic size */}
                 <h1 className="text-[clamp(3.5rem,10vw,7.5rem)] font-[800] leading-[0.9] tracking-[-0.045em] mb-8 flex flex-wrap justify-center gap-x-[0.22em] gap-y-2">
                     {words.map((word, i) => (
                         <AnimatePresence key={i}>
@@ -109,16 +102,15 @@ export default function KineticHero() {
                     ))}
                 </h1>
 
-                {/* Subheadline */}
                 <AnimatePresence>
                     {subVisible && (
                         <motion.p
                             initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="text-[clamp(1rem,2.2vw,1.25rem)] text-white/55 leading-relaxed mb-4 max-w-2xl mx-auto"
+                            className="text-[clamp(1rem,2.2vw,1.25rem)] text-white/55 leading-relaxed mb-4 max-w-3xl mx-auto"
                         >
-                            A site that turns visitors into appointments with after-hours booking and follow-up — 24 hours a day.
+                            A site that turns visitors into appointments with after-hours booking, follow-up, and 24/7 lead capture built in.
                         </motion.p>
                     )}
                 </AnimatePresence>
@@ -140,7 +132,6 @@ export default function KineticHero() {
                     )}
                 </AnimatePresence>
 
-                {/* CTAs with press feel */}
                 <AnimatePresence>
                     {ctaVisible && (
                         <motion.div
@@ -168,7 +159,6 @@ export default function KineticHero() {
                 </AnimatePresence>
             </div>
 
-            {/* Scroll indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

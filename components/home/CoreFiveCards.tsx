@@ -6,10 +6,10 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 const coreFive = [
-    { title: "AI Booking Agent", body: "24/7 lead capture and qualification. Missed-call replacement for your website that books, reasons, and follows up.", accent: "#E8B923" },
-    { title: "AI-Generated Design", body: "Your palette, copy, and layout come from your real Yelp data — not a template. Every site is unique to the business.", accent: "#10b981" },
+    { title: "AI Booking Agent", body: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, follows up, and helps convert more leads.", accent: "#E8B923" },
+    { title: "AI-Generated Design", body: "Your palette, copy, and layout come from your real Yelp data, not a template. Every site is unique to the business.", accent: "#10b981" },
     { title: "7-Day Launch", body: "Automated pipelines mean we don't wait on content approvals. We build from data we already have.", accent: "#E8B923" },
-    { title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times — the technical foundation local search rewards.", accent: "#10b981" },
+    { title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times, the technical foundation local search rewards.", accent: "#10b981" },
     { title: "Managed Monthly", body: "Hosting, SSL, and AI updates bundled in. Your site stays sharp, secure, and current.", accent: "#dc2626" },
 ];
 
@@ -27,7 +27,7 @@ export default function CoreFiveCards() {
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     className="text-center mb-16"
                 >
-                    <span className="inline-block text-xs font-bold tracking-[0.3em] uppercase text-[#10b981] mb-4">What&apos;s Included</span>
+                    <span className="inline-block text-xs font-bold tracking-[0.3em] uppercase text-[#10b981] mb-4">What's Included</span>
                     <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-black tracking-tight text-white">
                         Every FlyNerd site includes{" "}
                         <span className="bg-gradient-to-r from-[#B8860B] via-[#E8B923] to-[#FFD93D] bg-clip-text text-transparent">

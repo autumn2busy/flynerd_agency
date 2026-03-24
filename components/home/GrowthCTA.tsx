@@ -33,13 +33,13 @@ export default function GrowthCTA() {
                 </h2>
                 <p className="text-white/50 mb-8 max-w-2xl leading-relaxed">
                   The same Scout → Intel → Builder pipeline we use to deliver client sites can be deployed
-                  for your business — finding your own leads, building personalized demos, and closing automatically.
+                  for your business, capturing leads 24/7, qualifying them automatically, building personalized demos, and routing the right opportunities into your CRM.
                 </p>
                 <ul className="space-y-3 mb-10">
                   {[
-                    "Your own Scout agent (24/7 lead capture and qualification)",
-                    "Your own Intel agent (analyzes and scores prospects)",
-                    "Pre-qualified leads dropped directly into your CRM",
+                    "Your own Scout agent for 24/7 lead capture and qualification",
+                    "Your own Intel agent that analyzes and scores prospects",
+                    "Pre-qualified leads dropped directly into your CRM (ActiveCampaign)",
                     "Built on n8n, ActiveCampaign, and Vercel",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-white/60 text-sm">
