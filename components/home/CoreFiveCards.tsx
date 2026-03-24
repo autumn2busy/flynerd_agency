@@ -7,10 +7,10 @@ import { ChevronRight } from "lucide-react";
 
 const coreFive = [
     { title: "AI Booking Agent", body: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, follows up, and helps convert more leads.", accent: "#E8B923" },
-    { title: "AI-Generated Design", body: "Your palette, copy, and layout come from your real Yelp data, not a template. Every site is unique to the business.", accent: "#10b981" },
-    { title: "7-Day Launch", body: "Automated pipelines mean we don't wait on content approvals. We build from data we already have.", accent: "#E8B923" },
-    { title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times, the technical foundation local search rewards.", accent: "#10b981" },
-    { title: "Managed Monthly", body: "Hosting, SSL, and AI updates bundled in. Your site stays sharp, secure, and current.", accent: "#dc2626" },
+    { title: "AI Personalization", body: "Your brand palette, copy, and layout come from your real reputation and reviews — not a template. Every site is unique to the business.", accent: "#10b981" },
+    { title: "7-Day Launch", body: "Automated pipelines mean we don't wait weeks for approvals or content. We build from data we already have and deliver fast.", accent: "#E8B923" },
+    { title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times — the technical foundation local search rewards.", accent: "#10b981" },
+    { title: "Managed Monthly", body: "Hosting, SSL, security, and minor AI updates included. Your site stays fast, secure, and current.", accent: "#dc2626" },
 ];
 
 export default function CoreFiveCards() {

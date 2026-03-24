@@ -49,28 +49,28 @@ const differentiators = [
 const coreFive = [
   {
     icon: Cpu,
-    title: "AI Booking & Support Agent",
-    description: "A 24/7 front-desk agent that knows your services, answers common questions, qualifies leads, and helps book appointments while you sleep.",
+    title: "AI Booking Agent",
+    description: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, follows up, and helps convert more leads.",
   },
   {
     icon: Globe,
-    title: "AI-Generated Personalization",
-    description: "Every design is informed by your real reputation. Our Intel Agent reads your reviews and selects brand palettes and copy based on what customers actually say about you.",
+    title: "AI Personalization",
+    description: "Your brand palette, copy, and layout come from your real reputation and reviews — not a template. Every site is unique to the business.",
   },
   {
     icon: Clock,
-    title: "7-Day Launch Guarantee",
-    description: "We leverage AI builders and automated deployment pipelines to go from zero to live site in days, not months.",
+    title: "7-Day Launch",
+    description: "Automated pipelines mean we don't wait weeks for approvals or content. We build from data we already have and deliver fast.",
   },
   {
     icon: BarChart3,
-    title: "Local SEO & Speed",
-    description: "Headless Next.js architecture means sub-second load times and optimized schema markup for local search, the two factors that matter most for local rankings.",
+    title: "Local SEO Stack",
+    description: "Next.js headless with schema markup and sub-second load times — the technical foundation local search rewards.",
   },
   {
     icon: Zap,
-    title: "Managed Growth",
-    description: "Hosting, security, and continuous AI improvements are bundled into the monthly subscription. Your site gets smarter over time.",
+    title: "Managed Monthly",
+    description: "Hosting, SSL, security, and minor AI updates are included in your monthly plan. Your site stays fast, secure, and current.",
   },
 ];
 

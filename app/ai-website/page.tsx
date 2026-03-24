@@ -147,12 +147,11 @@ export default function AIWebsitePage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                         {[
-                            { icon: Cpu, title: "AI Booking & Support Agent", body: "A 24/7 front-desk agent trained on your services, pricing, and availability. Not a form. Not a chatbot script. An agent that reasons and books." },
-                            { icon: Globe, title: "AI-Generated Personalization", body: "Your design, palette, and copy are generated from your real Yelp reviews and reputation — not a template. Every site is unique to the business." },
-                            { icon: Clock, title: "7-Day Launch Guarantee", body: "Automated pipelines mean we don't wait weeks for approvals or content. We build from data we already have and deliver fast." },
-                            { icon: BarChart3, title: "Local SEO Architecture", body: "Next.js headless stack with schema markup, sub-second load times, and mobile-first structure — the technical foundation local search rewards." },
+                            { icon: Cpu, title: "AI Booking Agent", body: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, follows up, and helps convert more leads." },
+                            { icon: Globe, title: "AI Personalization", body: "Your brand palette, copy, and layout come from your real reputation and reviews — not a template. Every site is unique to the business." },
+                            { icon: Clock, title: "7-Day Launch", body: "Automated pipelines mean we don't wait weeks for approvals or content. We build from data we already have and deliver fast." },
+                            { icon: BarChart3, title: "Local SEO Stack", body: "Next.js headless with schema markup and sub-second load times — the technical foundation local search rewards." },
                             { icon: Shield, title: "Managed Monthly", body: "Hosting, SSL, security, and minor AI updates are included in your monthly plan. Your site stays fast, secure, and current." },
-                            { icon: Zap, title: "Built to Convert", body: "Every design decision is oriented toward one outcome: turning a visitor into a booked customer. Not awards. Not impressions. Conversions." },
                         ].map((item, i) => (
                             <div key={i} className="glass-card rounded-2xl p-8 group">
                                 <div className="w-12 h-12 rounded-xl bg-[var(--gold-500)]/10 flex items-center justify-center text-[var(--gold-400)] mb-5 group-hover:scale-110 transition-transform">
