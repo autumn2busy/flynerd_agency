@@ -15,84 +15,77 @@ export default function KineticHero() {
 
     useEffect(() => {
         const timers: ReturnType<typeof setTimeout>[] = [];
+
         words.forEach((_, i) => {
-            timers.push(setTimeout(() => setVisibleWords(i), 300 + i * 140));
+            timers.push(setTimeout(() => setVisibleWords(i), 240 + i * 110));
         });
-        timers.push(setTimeout(() => setSubVisible(true), 300 + words.length * 140 + 200));
-        timers.push(setTimeout(() => setCtaVisible(true), 300 + words.length * 140 + 600));
+
+        timers.push(setTimeout(() => setSubVisible(true), 240 + words.length * 110 + 120));
+        timers.push(setTimeout(() => setCtaVisible(true), 240 + words.length * 110 + 360));
+
         return () => timers.forEach(clearTimeout);
     }, []);
 
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <section className="min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden bg-[#0a0a0c]">
+            {/* Fallback image */}
+            <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: "url('/hero-lightbulb.jpg')" }}
+            />
+
+            {/* Video layer */}
             <video
                 autoPlay
                 loop
                 muted
                 playsInline
+                poster="/hero-lightbulb.jpg"
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ filter: "brightness(0.45) saturate(1.3)" }}
+                style={{ filter: "brightness(0.42) saturate(1.08)" }}
             >
                 <source src="/Animated_hero_video_202603231332.mp4" type="video/mp4" />
-                <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/hero-lightbulb.jpg')" }} />
             </video>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/70 via-transparent to-[#0a0a0c]" />
-            <div className="absolute inset-0 bg-[#0a0a0c]/20" />
+            {/* Overlays */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(10,10,12,0.92)_0%,rgba(10,10,12,0.58)_45%,rgba(10,10,12,0.28)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(10,10,12,0.78)_0%,transparent_35%,rgba(10,10,12,0.82)_100%)]" />
 
-            <div className="absolute bottom-0 left-0 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(220,38,38,0.08)_0%,transparent_70%)] pointer-events-none" />
-            <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-[radial-gradient(ellipse,rgba(16,185,129,0.07)_0%,transparent_70%)] pointer-events-none" />
+            {/* Ambient tone. Kept intentional, not noisy */}
+            <div className="absolute inset-x-0 bottom-0 h-[260px] bg-[radial-gradient(ellipse_at_bottom,rgba(232,185,35,0.10)_0%,transparent_72%)] pointer-events-none" />
+            <div className="absolute top-1/4 right-0 w-[360px] h-[360px] bg-[radial-gradient(circle,rgba(16,185,129,0.05)_0%,transparent_70%)] pointer-events-none" />
 
-            <div className="absolute inset-0 opacity-15">
+            {/* Grid */}
+            <div className="absolute inset-0 opacity-[0.08]">
                 <div className="grid-lines" />
             </div>
 
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 2.2, duration: 0.6 }}
-                className="absolute left-6 top-1/3 hidden lg:flex flex-col items-start gap-1 border border-[#E8B923]/20 bg-black/50 backdrop-blur-xl px-4 py-3 rounded-xl"
-            >
-                <span className="text-2xl font-bold text-[#E8B923]">7</span>
-                <span className="text-xs text-white/50 uppercase tracking-wider">Days to live</span>
-            </motion.div>
-            <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 2.4, duration: 0.6 }}
-                className="absolute right-6 top-1/3 hidden lg:flex flex-col items-end gap-1 border border-[#10b981]/20 bg-black/50 backdrop-blur-xl px-4 py-3 rounded-xl"
-            >
-                <span className="text-2xl font-bold text-[#10b981]">24/7</span>
-                <span className="text-xs text-white/50 uppercase tracking-wider">AI Active</span>
-            </motion.div>
-
             <div className="relative z-10 max-w-5xl px-6 pt-24">
                 <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.45 }}
                     className="mb-8 flex items-center justify-center gap-3"
                 >
-                    <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#E8B923]" />
-                    <span className="text-xs font-bold tracking-[0.35em] uppercase text-[#E8B923]">
+                    <div className="h-px w-10 bg-gradient-to-r from-transparent to-[var(--amber-500)]" />
+                    <span className="section-label !mb-0 !text-[var(--amber-400)]">
                         AI-Powered Websites · Atlanta
                     </span>
-                    <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#E8B923]" />
+                    <div className="h-px w-10 bg-gradient-to-l from-transparent to-[var(--amber-500)]" />
                 </motion.div>
 
-                <h1 className="text-[clamp(3.5rem,10vw,7.5rem)] font-[800] leading-[0.9] tracking-[-0.045em] mb-8 flex flex-wrap justify-center gap-x-[0.22em] gap-y-2">
+                <h1 className="text-[clamp(3.2rem,9vw,6.8rem)] font-[800] leading-[0.92] tracking-[-0.04em] mb-8 flex flex-wrap justify-center gap-x-[0.2em] gap-y-2">
                     {words.map((word, i) => (
                         <AnimatePresence key={i}>
                             {visibleWords >= i && (
                                 <motion.span
-                                    initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
-                                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                    initial={{ opacity: 0, y: 18 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
                                     className={
                                         highlightWords.includes(word)
-                                            ? "bg-gradient-to-r from-[#B8860B] via-[#E8B923] to-[#FFD93D] bg-clip-text text-transparent"
-                                            : "text-white"
+                                            ? "gradient-text"
+                                            : "text-[var(--text-primary)]"
                                     }
                                 >
                                     {word}
@@ -105,12 +98,13 @@ export default function KineticHero() {
                 <AnimatePresence>
                     {subVisible && (
                         <motion.p
-                            initial={{ opacity: 0, y: 16 }}
+                            initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="text-[clamp(1rem,2.2vw,1.25rem)] text-white/55 leading-relaxed mb-4 max-w-3xl mx-auto"
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            className="text-[clamp(1.02rem,2.1vw,1.22rem)] text-[rgba(245,245,247,0.78)] leading-relaxed mb-5 max-w-3xl mx-auto"
                         >
-                            A site that turns visitors into appointments with after-hours booking, follow-up, and 24/7 lead capture built in.
+                            A site that turns visitors into appointments with after-hours booking,
+                            follow-up, and 24/7 lead capture built in.
                         </motion.p>
                     )}
                 </AnimatePresence>
@@ -120,13 +114,13 @@ export default function KineticHero() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                            className="text-sm text-white/30 mb-10 tracking-widest uppercase"
+                            transition={{ delay: 0.12, duration: 0.45 }}
+                            className="text-sm text-[rgba(245,245,247,0.58)] mb-10 tracking-[0.18em] uppercase"
                         >
-                            Live in <span className="text-[#E8B923] font-bold">7 days</span>
-                            <span className="mx-3 text-white/15">·</span>
-                            From <span className="text-[#E8B923] font-bold">$1,250</span>
-                            <span className="mx-3 text-white/15">·</span>
+                            Live in <span className="text-[var(--amber-400)] font-semibold">7 days</span>
+                            <span className="mx-3 text-[rgba(245,245,247,0.22)]">·</span>
+                            From <span className="text-[var(--amber-400)] font-semibold">$1,250</span>
+                            <span className="mx-3 text-[rgba(245,245,247,0.22)]">·</span>
                             Managed monthly
                         </motion.p>
                     )}
@@ -135,25 +129,36 @@ export default function KineticHero() {
                 <AnimatePresence>
                     {ctaVisible && (
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            transition={{ duration: 0.45, ease: "easeOut" }}
                             className="flex flex-col sm:flex-row items-center justify-center gap-4"
                         >
-                            <Link
-                                href="/ai-website"
-                                className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-bold text-black overflow-hidden transition-all active:scale-[0.97] active:brightness-95 hover:shadow-[0_20px_60px_rgba(232,185,35,0.3)]"
-                                style={{ background: "linear-gradient(135deg, #B8860B 0%, #E8B923 50%, #FFD93D 100%)" }}
-                            >
-                                <span className="relative z-10">See How It Works</span>
-                                <ArrowUpRight size={18} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            <Link href="/ai-website" className="btn btn-primary px-8 py-4 text-base">
+                                See How It Works
+                                <ArrowUpRight size={18} />
                             </Link>
-                            <Link
-                                href="/pricing"
-                                className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white border border-white/12 bg-white/5 backdrop-blur-sm hover:border-white/25 hover:bg-white/10 transition-all active:scale-[0.97]"
-                            >
+
+                            <Link href="/pricing" className="btn btn-ghost px-8 py-4 text-base">
                                 View Pricing
                             </Link>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    {ctaVisible && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.12, duration: 0.45 }}
+                            className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-[rgba(245,245,247,0.52)]"
+                        >
+                            <span>24/7 lead capture</span>
+                            <span className="text-[rgba(245,245,247,0.18)]">•</span>
+                            <span>After-hours booking</span>
+                            <span className="text-[rgba(245,245,247,0.18)]">•</span>
+                            <span>CRM-ready leads</span>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -162,13 +167,13 @@ export default function KineticHero() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 3, duration: 0.8 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 z-10"
+                transition={{ delay: 2.2, duration: 0.7 }}
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[rgba(245,245,247,0.34)] z-10"
             >
-                <div className="w-5 h-8 border border-[#E8B923]/30 flex items-start justify-center p-1">
-                    <div className="w-0.5 h-2 bg-[#E8B923]/60 animate-bounce" />
+                <div className="w-5 h-8 border border-[rgba(232,185,35,0.24)] flex items-start justify-center p-1 rounded-full">
+                    <div className="w-0.5 h-2 bg-[rgba(232,185,35,0.7)] animate-bounce" />
                 </div>
-                <span className="text-[9px] tracking-[0.25em] uppercase">Scroll</span>
+                <span className="text-[9px] tracking-[0.22em] uppercase">Scroll</span>
             </motion.div>
         </section>
     );
