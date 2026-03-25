@@ -1,12 +1,16 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+function getEnv(name: 'SUPABASE_URL' | 'SUPABASE_SERVICE_ROLE_KEY'): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing ${name}`);
+  }
+  return value;
 }
+
+const SUPABASE_URL = getEnv('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = getEnv('SUPABASE_SERVICE_ROLE_KEY');
 
 type InputItem = {
   niche: string;
@@ -46,14 +50,15 @@ async function embedText(text: string): Promise<number[]> {
 }
 
 async function upsertBatch(rows: unknown[]) {
+  const headers = new Headers();
+  headers.set('Content-Type', 'application/json');
+  headers.set('apikey', SUPABASE_SERVICE_ROLE_KEY);
+  headers.set('Authorization', `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`);
+  headers.set('Prefer', 'resolution=merge-duplicates,return=minimal');
+
   const response = await fetch(`${SUPABASE_URL}/rest/v1/kb_items?on_conflict=niche,question`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      apikey: SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-      Prefer: 'resolution=merge-duplicates,return=minimal',
-    },
+    headers,
     body: JSON.stringify(rows),
   });
 
