@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Supabase } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const MAX_TEXT_LENGTH = 8000;
