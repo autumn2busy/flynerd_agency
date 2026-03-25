@@ -1,0 +1,77 @@
+[
+  {
+    "key": "water_damage_restoration",
+    "topics": [
+      "emergency_response",
+      "inspection_process",
+      "drying_process",
+      "equipment_used",
+      "mold_risk",
+      "insurance_billing",
+      "service_areas",
+      "scheduling",
+      "pricing_expectations",
+      "safety"
+    ]
+  },
+  {
+    "key": "senior_home_care",
+    "topics": [
+      "services",
+      "caregiver_qualifications",
+      "scheduling",
+      "care_plans",
+      "pricing_expectations",
+      "payment_options",
+      "safety",
+      "onboarding",
+      "service_areas",
+      "cancellations"
+    ]
+  },
+  {
+    "key": "personal_injury_law",
+    "topics": [
+      "case_types",
+      "fees",
+      "consultation_process",
+      "timelines",
+      "evidence",
+      "medical_care_steps",
+      "insurance_interactions",
+      "settlement_basics",
+      "what_to_expect",
+      "service_area"
+    ]
+  },
+  {
+    "key": "hvac",
+    "topics": [
+      "services",
+      "emergency",
+      "repair_vs_replace",
+      "maintenance_plans",
+      "financing",
+      "scheduling",
+      "service_areas",
+      "pricing_expectations",
+      "warranties",
+      "troubleshooting_basics"
+    ]
+  },
+  {
+    "key": "plumbing",
+    "topics": [
+      "emergency",
+      "leak_burst_pipe",
+      "drain_clog",
+      "water_heater",
+      "sewer_line",
+      "pricing_expectations",
+      "scheduling",
+      "service_areas",
+      "warranties",
+      "maintenance_tips"
+    ]
+  }
+]

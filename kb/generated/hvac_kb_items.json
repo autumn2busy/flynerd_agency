@@ -1,0 +1,602 @@
+[
+  {
+    "niche": "hvac",
+    "topic": "services",
+    "title": "Services 1",
+    "question": "Services: common question 1?",
+    "answer": "For hvac, we handle services with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "services",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "services",
+    "title": "Services 2",
+    "question": "What should I expect during services?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "services",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "services",
+    "title": "Services 3",
+    "question": "Safety/limits for services?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "services",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "services",
+    "title": "Services 4",
+    "question": "Services: common question 4?",
+    "answer": "For hvac, we handle services with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "services",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "services",
+    "title": "Services 5",
+    "question": "What should I expect during services?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "services",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "emergency",
+    "title": "Emergency 1",
+    "question": "Emergency: common question 1?",
+    "answer": "For hvac, we handle emergency with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "emergency",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "emergency",
+    "title": "Emergency 2",
+    "question": "What should I expect during emergency?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "emergency",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "emergency",
+    "title": "Emergency 3",
+    "question": "Safety/limits for emergency?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "emergency",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "emergency",
+    "title": "Emergency 4",
+    "question": "Emergency: common question 4?",
+    "answer": "For hvac, we handle emergency with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "emergency",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "emergency",
+    "title": "Emergency 5",
+    "question": "What should I expect during emergency?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "emergency",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "repair_vs_replace",
+    "title": "Repair Vs Replace 1",
+    "question": "Repair Vs Replace: common question 1?",
+    "answer": "For hvac, we handle repair vs replace with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "repair_vs_replace",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "repair_vs_replace",
+    "title": "Repair Vs Replace 2",
+    "question": "What should I expect during repair vs replace?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "repair_vs_replace",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "repair_vs_replace",
+    "title": "Repair Vs Replace 3",
+    "question": "Safety/limits for repair vs replace?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "repair_vs_replace",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "repair_vs_replace",
+    "title": "Repair Vs Replace 4",
+    "question": "Repair Vs Replace: common question 4?",
+    "answer": "For hvac, we handle repair vs replace with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "repair_vs_replace",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "repair_vs_replace",
+    "title": "Repair Vs Replace 5",
+    "question": "What should I expect during repair vs replace?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "repair_vs_replace",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "maintenance_plans",
+    "title": "Maintenance Plans 1",
+    "question": "Maintenance Plans: common question 1?",
+    "answer": "For hvac, we handle maintenance plans with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "maintenance_plans",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "maintenance_plans",
+    "title": "Maintenance Plans 2",
+    "question": "What should I expect during maintenance plans?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "maintenance_plans",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "maintenance_plans",
+    "title": "Maintenance Plans 3",
+    "question": "Safety/limits for maintenance plans?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "maintenance_plans",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "maintenance_plans",
+    "title": "Maintenance Plans 4",
+    "question": "Maintenance Plans: common question 4?",
+    "answer": "For hvac, we handle maintenance plans with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "maintenance_plans",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "maintenance_plans",
+    "title": "Maintenance Plans 5",
+    "question": "What should I expect during maintenance plans?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "maintenance_plans",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "financing",
+    "title": "Financing 1",
+    "question": "Financing: common question 1?",
+    "answer": "For hvac, we handle financing with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "financing",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "financing",
+    "title": "Financing 2",
+    "question": "What should I expect during financing?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "financing",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "financing",
+    "title": "Financing 3",
+    "question": "Safety/limits for financing?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "financing",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "financing",
+    "title": "Financing 4",
+    "question": "Financing: common question 4?",
+    "answer": "For hvac, we handle financing with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "financing",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "financing",
+    "title": "Financing 5",
+    "question": "What should I expect during financing?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "financing",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "scheduling",
+    "title": "Scheduling 1",
+    "question": "Scheduling: common question 1?",
+    "answer": "For hvac, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "scheduling",
+    "title": "Scheduling 2",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "scheduling",
+    "title": "Scheduling 3",
+    "question": "Safety/limits for scheduling?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "scheduling",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "scheduling",
+    "title": "Scheduling 4",
+    "question": "Scheduling: common question 4?",
+    "answer": "For hvac, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "scheduling",
+    "title": "Scheduling 5",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "service_areas",
+    "title": "Service Areas 1",
+    "question": "Service Areas: common question 1?",
+    "answer": "For hvac, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "service_areas",
+    "title": "Service Areas 2",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "service_areas",
+    "title": "Service Areas 3",
+    "question": "Safety/limits for service areas?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "service_areas",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "service_areas",
+    "title": "Service Areas 4",
+    "question": "Service Areas: common question 4?",
+    "answer": "For hvac, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "service_areas",
+    "title": "Service Areas 5",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 1",
+    "question": "Pricing Expectations: common question 1?",
+    "answer": "For hvac, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 2",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 3",
+    "question": "Safety/limits for pricing expectations?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "pricing_expectations",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 4",
+    "question": "Pricing Expectations: common question 4?",
+    "answer": "For hvac, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 5",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "warranties",
+    "title": "Warranties 1",
+    "question": "Warranties: common question 1?",
+    "answer": "For hvac, we handle warranties with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "warranties",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "warranties",
+    "title": "Warranties 2",
+    "question": "What should I expect during warranties?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "warranties",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "warranties",
+    "title": "Warranties 3",
+    "question": "Safety/limits for warranties?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "warranties",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "warranties",
+    "title": "Warranties 4",
+    "question": "Warranties: common question 4?",
+    "answer": "For hvac, we handle warranties with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "warranties",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "warranties",
+    "title": "Warranties 5",
+    "question": "What should I expect during warranties?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "warranties",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "troubleshooting_basics",
+    "title": "Troubleshooting Basics 1",
+    "question": "Troubleshooting Basics: common question 1?",
+    "answer": "For hvac, we handle troubleshooting basics with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "troubleshooting_basics",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "troubleshooting_basics",
+    "title": "Troubleshooting Basics 2",
+    "question": "What should I expect during troubleshooting basics?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "troubleshooting_basics",
+      "process",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "troubleshooting_basics",
+    "title": "Troubleshooting Basics 3",
+    "question": "Safety/limits for troubleshooting basics?",
+    "answer": "For gas odor, CO alarms, or burning smell, leave the area and call utility or emergency services. We avoid definitive diagnosis until inspection.",
+    "tags": [
+      "troubleshooting_basics",
+      "guardrail",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "troubleshooting_basics",
+    "title": "Troubleshooting Basics 4",
+    "question": "Troubleshooting Basics: common question 4?",
+    "answer": "For hvac, we handle troubleshooting basics with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "troubleshooting_basics",
+      "faq",
+      "hvac"
+    ]
+  },
+  {
+    "niche": "hvac",
+    "topic": "troubleshooting_basics",
+    "title": "Troubleshooting Basics 5",
+    "question": "What should I expect during troubleshooting basics?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for hvac services.",
+    "tags": [
+      "troubleshooting_basics",
+      "process",
+      "hvac"
+    ]
+  }
+]

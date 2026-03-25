@@ -1,0 +1,602 @@
+[
+  {
+    "niche": "personal_injury_law",
+    "topic": "case_types",
+    "title": "Case Types 1",
+    "question": "Case Types: common question 1?",
+    "answer": "For personal injury law, we handle case types with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "case_types",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "case_types",
+    "title": "Case Types 2",
+    "question": "What should I expect during case types?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "case_types",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "case_types",
+    "title": "Case Types 3",
+    "question": "Safety/limits for case types?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "case_types",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "case_types",
+    "title": "Case Types 4",
+    "question": "Case Types: common question 4?",
+    "answer": "For personal injury law, we handle case types with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "case_types",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "case_types",
+    "title": "Case Types 5",
+    "question": "What should I expect during case types?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "case_types",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "fees",
+    "title": "Fees 1",
+    "question": "Fees: common question 1?",
+    "answer": "For personal injury law, we handle fees with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "fees",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "fees",
+    "title": "Fees 2",
+    "question": "What should I expect during fees?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "fees",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "fees",
+    "title": "Fees 3",
+    "question": "Safety/limits for fees?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "fees",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "fees",
+    "title": "Fees 4",
+    "question": "Fees: common question 4?",
+    "answer": "For personal injury law, we handle fees with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "fees",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "fees",
+    "title": "Fees 5",
+    "question": "What should I expect during fees?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "fees",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "consultation_process",
+    "title": "Consultation Process 1",
+    "question": "Consultation Process: common question 1?",
+    "answer": "For personal injury law, we handle consultation process with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "consultation_process",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "consultation_process",
+    "title": "Consultation Process 2",
+    "question": "What should I expect during consultation process?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "consultation_process",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "consultation_process",
+    "title": "Consultation Process 3",
+    "question": "Safety/limits for consultation process?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "consultation_process",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "consultation_process",
+    "title": "Consultation Process 4",
+    "question": "Consultation Process: common question 4?",
+    "answer": "For personal injury law, we handle consultation process with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "consultation_process",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "consultation_process",
+    "title": "Consultation Process 5",
+    "question": "What should I expect during consultation process?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "consultation_process",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "timelines",
+    "title": "Timelines 1",
+    "question": "Timelines: common question 1?",
+    "answer": "For personal injury law, we handle timelines with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "timelines",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "timelines",
+    "title": "Timelines 2",
+    "question": "What should I expect during timelines?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "timelines",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "timelines",
+    "title": "Timelines 3",
+    "question": "Safety/limits for timelines?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "timelines",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "timelines",
+    "title": "Timelines 4",
+    "question": "Timelines: common question 4?",
+    "answer": "For personal injury law, we handle timelines with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "timelines",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "timelines",
+    "title": "Timelines 5",
+    "question": "What should I expect during timelines?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "timelines",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "evidence",
+    "title": "Evidence 1",
+    "question": "Evidence: common question 1?",
+    "answer": "For personal injury law, we handle evidence with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "evidence",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "evidence",
+    "title": "Evidence 2",
+    "question": "What should I expect during evidence?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "evidence",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "evidence",
+    "title": "Evidence 3",
+    "question": "Safety/limits for evidence?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "evidence",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "evidence",
+    "title": "Evidence 4",
+    "question": "Evidence: common question 4?",
+    "answer": "For personal injury law, we handle evidence with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "evidence",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "evidence",
+    "title": "Evidence 5",
+    "question": "What should I expect during evidence?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "evidence",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "medical_care_steps",
+    "title": "Medical Care Steps 1",
+    "question": "Medical Care Steps: common question 1?",
+    "answer": "For personal injury law, we handle medical care steps with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "medical_care_steps",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "medical_care_steps",
+    "title": "Medical Care Steps 2",
+    "question": "What should I expect during medical care steps?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "medical_care_steps",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "medical_care_steps",
+    "title": "Medical Care Steps 3",
+    "question": "Safety/limits for medical care steps?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "medical_care_steps",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "medical_care_steps",
+    "title": "Medical Care Steps 4",
+    "question": "Medical Care Steps: common question 4?",
+    "answer": "For personal injury law, we handle medical care steps with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "medical_care_steps",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "medical_care_steps",
+    "title": "Medical Care Steps 5",
+    "question": "What should I expect during medical care steps?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "medical_care_steps",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "insurance_interactions",
+    "title": "Insurance Interactions 1",
+    "question": "Insurance Interactions: common question 1?",
+    "answer": "For personal injury law, we handle insurance interactions with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "insurance_interactions",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "insurance_interactions",
+    "title": "Insurance Interactions 2",
+    "question": "What should I expect during insurance interactions?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "insurance_interactions",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "insurance_interactions",
+    "title": "Insurance Interactions 3",
+    "question": "Safety/limits for insurance interactions?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "insurance_interactions",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "insurance_interactions",
+    "title": "Insurance Interactions 4",
+    "question": "Insurance Interactions: common question 4?",
+    "answer": "For personal injury law, we handle insurance interactions with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "insurance_interactions",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "insurance_interactions",
+    "title": "Insurance Interactions 5",
+    "question": "What should I expect during insurance interactions?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "insurance_interactions",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "settlement_basics",
+    "title": "Settlement Basics 1",
+    "question": "Settlement Basics: common question 1?",
+    "answer": "For personal injury law, we handle settlement basics with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "settlement_basics",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "settlement_basics",
+    "title": "Settlement Basics 2",
+    "question": "What should I expect during settlement basics?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "settlement_basics",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "settlement_basics",
+    "title": "Settlement Basics 3",
+    "question": "Safety/limits for settlement basics?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "settlement_basics",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "settlement_basics",
+    "title": "Settlement Basics 4",
+    "question": "Settlement Basics: common question 4?",
+    "answer": "For personal injury law, we handle settlement basics with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "settlement_basics",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "settlement_basics",
+    "title": "Settlement Basics 5",
+    "question": "What should I expect during settlement basics?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "settlement_basics",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "what_to_expect",
+    "title": "What To Expect 1",
+    "question": "What To Expect: common question 1?",
+    "answer": "For personal injury law, we handle what to expect with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "what_to_expect",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "what_to_expect",
+    "title": "What To Expect 2",
+    "question": "What should I expect during what to expect?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "what_to_expect",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "what_to_expect",
+    "title": "What To Expect 3",
+    "question": "Safety/limits for what to expect?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "what_to_expect",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "what_to_expect",
+    "title": "What To Expect 4",
+    "question": "What To Expect: common question 4?",
+    "answer": "For personal injury law, we handle what to expect with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "what_to_expect",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "what_to_expect",
+    "title": "What To Expect 5",
+    "question": "What should I expect during what to expect?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "what_to_expect",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "service_area",
+    "title": "Service Area 1",
+    "question": "Service Area: common question 1?",
+    "answer": "For personal injury law, we handle service area with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_area",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "service_area",
+    "title": "Service Area 2",
+    "question": "What should I expect during service area?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "service_area",
+      "process",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "service_area",
+    "title": "Service Area 3",
+    "question": "Safety/limits for service area?",
+    "answer": "This is general information, not legal advice. We do not estimate case value or promise outcomes; contact an attorney for jurisdiction-specific guidance.",
+    "tags": [
+      "service_area",
+      "guardrail",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "service_area",
+    "title": "Service Area 4",
+    "question": "Service Area: common question 4?",
+    "answer": "For personal injury law, we handle service area with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_area",
+      "faq",
+      "personal_injury_law"
+    ]
+  },
+  {
+    "niche": "personal_injury_law",
+    "topic": "service_area",
+    "title": "Service Area 5",
+    "question": "What should I expect during service area?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for personal injury law services.",
+    "tags": [
+      "service_area",
+      "process",
+      "personal_injury_law"
+    ]
+  }
+]

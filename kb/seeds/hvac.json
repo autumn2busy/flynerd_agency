@@ -1,0 +1,34 @@
+{
+  "company_name": "{{company_name}}",
+  "phone": "{{phone}}",
+  "email": "{{email}}",
+  "service_areas": [
+    "{{city_1}}",
+    "{{city_2}}",
+    "{{zip_1}}"
+  ],
+  "hours": "{{hours}}",
+  "after_hours_policy": "{{after_hours_policy}}",
+  "emergency_policy": "{{emergency_policy}}",
+  "financing_payment_notes": "{{financing_or_payment_notes}}",
+  "warranties_guarantees": "{{warranties_or_guarantees_language}}",
+  "appointment_process": "{{appointment_process}}",
+  "compliance_guardrails": [
+    "{{guardrail_1}}",
+    "{{guardrail_2}}"
+  ],
+  "brand_voice": "{{brand_voice}}",
+  "niche": "hvac",
+  "topics": [
+    "services",
+    "emergency",
+    "repair_vs_replace",
+    "maintenance_plans",
+    "financing",
+    "scheduling",
+    "service_areas",
+    "pricing_expectations",
+    "warranties",
+    "troubleshooting_basics"
+  ]
+}

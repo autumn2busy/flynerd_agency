@@ -1,0 +1,602 @@
+[
+  {
+    "niche": "senior_home_care",
+    "topic": "services",
+    "title": "Services 1",
+    "question": "Services: common question 1?",
+    "answer": "For senior home care, we handle services with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "services",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "services",
+    "title": "Services 2",
+    "question": "What should I expect during services?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "services",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "services",
+    "title": "Services 3",
+    "question": "Safety/limits for services?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "services",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "services",
+    "title": "Services 4",
+    "question": "Services: common question 4?",
+    "answer": "For senior home care, we handle services with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "services",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "services",
+    "title": "Services 5",
+    "question": "What should I expect during services?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "services",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "caregiver_qualifications",
+    "title": "Caregiver Qualifications 1",
+    "question": "Caregiver Qualifications: common question 1?",
+    "answer": "For senior home care, we handle caregiver qualifications with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "caregiver_qualifications",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "caregiver_qualifications",
+    "title": "Caregiver Qualifications 2",
+    "question": "What should I expect during caregiver qualifications?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "caregiver_qualifications",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "caregiver_qualifications",
+    "title": "Caregiver Qualifications 3",
+    "question": "Safety/limits for caregiver qualifications?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "caregiver_qualifications",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "caregiver_qualifications",
+    "title": "Caregiver Qualifications 4",
+    "question": "Caregiver Qualifications: common question 4?",
+    "answer": "For senior home care, we handle caregiver qualifications with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "caregiver_qualifications",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "caregiver_qualifications",
+    "title": "Caregiver Qualifications 5",
+    "question": "What should I expect during caregiver qualifications?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "caregiver_qualifications",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "scheduling",
+    "title": "Scheduling 1",
+    "question": "Scheduling: common question 1?",
+    "answer": "For senior home care, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "scheduling",
+    "title": "Scheduling 2",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "scheduling",
+    "title": "Scheduling 3",
+    "question": "Safety/limits for scheduling?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "scheduling",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "scheduling",
+    "title": "Scheduling 4",
+    "question": "Scheduling: common question 4?",
+    "answer": "For senior home care, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "scheduling",
+    "title": "Scheduling 5",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "care_plans",
+    "title": "Care Plans 1",
+    "question": "Care Plans: common question 1?",
+    "answer": "For senior home care, we handle care plans with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "care_plans",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "care_plans",
+    "title": "Care Plans 2",
+    "question": "What should I expect during care plans?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "care_plans",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "care_plans",
+    "title": "Care Plans 3",
+    "question": "Safety/limits for care plans?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "care_plans",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "care_plans",
+    "title": "Care Plans 4",
+    "question": "Care Plans: common question 4?",
+    "answer": "For senior home care, we handle care plans with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "care_plans",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "care_plans",
+    "title": "Care Plans 5",
+    "question": "What should I expect during care plans?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "care_plans",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 1",
+    "question": "Pricing Expectations: common question 1?",
+    "answer": "For senior home care, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 2",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 3",
+    "question": "Safety/limits for pricing expectations?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "pricing_expectations",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 4",
+    "question": "Pricing Expectations: common question 4?",
+    "answer": "For senior home care, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 5",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "payment_options",
+    "title": "Payment Options 1",
+    "question": "Payment Options: common question 1?",
+    "answer": "For senior home care, we handle payment options with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "payment_options",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "payment_options",
+    "title": "Payment Options 2",
+    "question": "What should I expect during payment options?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "payment_options",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "payment_options",
+    "title": "Payment Options 3",
+    "question": "Safety/limits for payment options?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "payment_options",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "payment_options",
+    "title": "Payment Options 4",
+    "question": "Payment Options: common question 4?",
+    "answer": "For senior home care, we handle payment options with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "payment_options",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "payment_options",
+    "title": "Payment Options 5",
+    "question": "What should I expect during payment options?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "payment_options",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "safety",
+    "title": "Safety 1",
+    "question": "Safety: common question 1?",
+    "answer": "For senior home care, we handle safety with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "safety",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "safety",
+    "title": "Safety 2",
+    "question": "What should I expect during safety?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "safety",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "safety",
+    "title": "Safety 3",
+    "question": "Safety/limits for safety?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "safety",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "safety",
+    "title": "Safety 4",
+    "question": "Safety: common question 4?",
+    "answer": "For senior home care, we handle safety with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "safety",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "safety",
+    "title": "Safety 5",
+    "question": "What should I expect during safety?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "safety",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "onboarding",
+    "title": "Onboarding 1",
+    "question": "Onboarding: common question 1?",
+    "answer": "For senior home care, we handle onboarding with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "onboarding",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "onboarding",
+    "title": "Onboarding 2",
+    "question": "What should I expect during onboarding?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "onboarding",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "onboarding",
+    "title": "Onboarding 3",
+    "question": "Safety/limits for onboarding?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "onboarding",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "onboarding",
+    "title": "Onboarding 4",
+    "question": "Onboarding: common question 4?",
+    "answer": "For senior home care, we handle onboarding with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "onboarding",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "onboarding",
+    "title": "Onboarding 5",
+    "question": "What should I expect during onboarding?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "onboarding",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "service_areas",
+    "title": "Service Areas 1",
+    "question": "Service Areas: common question 1?",
+    "answer": "For senior home care, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "service_areas",
+    "title": "Service Areas 2",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "service_areas",
+    "title": "Service Areas 3",
+    "question": "Safety/limits for service areas?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "service_areas",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "service_areas",
+    "title": "Service Areas 4",
+    "question": "Service Areas: common question 4?",
+    "answer": "For senior home care, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "service_areas",
+    "title": "Service Areas 5",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "cancellations",
+    "title": "Cancellations 1",
+    "question": "Cancellations: common question 1?",
+    "answer": "For senior home care, we handle cancellations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "cancellations",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "cancellations",
+    "title": "Cancellations 2",
+    "question": "What should I expect during cancellations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "cancellations",
+      "process",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "cancellations",
+    "title": "Cancellations 3",
+    "question": "Safety/limits for cancellations?",
+    "answer": "We do not provide medical advice or promise outcomes. For urgent health concerns, call emergency services or the client\u2019s physician immediately.",
+    "tags": [
+      "cancellations",
+      "guardrail",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "cancellations",
+    "title": "Cancellations 4",
+    "question": "Cancellations: common question 4?",
+    "answer": "For senior home care, we handle cancellations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "cancellations",
+      "faq",
+      "senior_home_care"
+    ]
+  },
+  {
+    "niche": "senior_home_care",
+    "topic": "cancellations",
+    "title": "Cancellations 5",
+    "question": "What should I expect during cancellations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for senior home care services.",
+    "tags": [
+      "cancellations",
+      "process",
+      "senior_home_care"
+    ]
+  }
+]
