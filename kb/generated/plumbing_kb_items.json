@@ -1,0 +1,602 @@
+[
+  {
+    "niche": "plumbing",
+    "topic": "emergency",
+    "title": "Emergency 1",
+    "question": "Emergency: common question 1?",
+    "answer": "For plumbing, we handle emergency with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "emergency",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "emergency",
+    "title": "Emergency 2",
+    "question": "What should I expect during emergency?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "emergency",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "emergency",
+    "title": "Emergency 3",
+    "question": "Safety/limits for emergency?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "emergency",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "emergency",
+    "title": "Emergency 4",
+    "question": "Emergency: common question 4?",
+    "answer": "For plumbing, we handle emergency with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "emergency",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "emergency",
+    "title": "Emergency 5",
+    "question": "What should I expect during emergency?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "emergency",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "leak_burst_pipe",
+    "title": "Leak Burst Pipe 1",
+    "question": "Leak Burst Pipe: common question 1?",
+    "answer": "For plumbing, we handle leak burst pipe with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "leak_burst_pipe",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "leak_burst_pipe",
+    "title": "Leak Burst Pipe 2",
+    "question": "What should I expect during leak burst pipe?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "leak_burst_pipe",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "leak_burst_pipe",
+    "title": "Leak Burst Pipe 3",
+    "question": "Safety/limits for leak burst pipe?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "leak_burst_pipe",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "leak_burst_pipe",
+    "title": "Leak Burst Pipe 4",
+    "question": "Leak Burst Pipe: common question 4?",
+    "answer": "For plumbing, we handle leak burst pipe with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "leak_burst_pipe",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "leak_burst_pipe",
+    "title": "Leak Burst Pipe 5",
+    "question": "What should I expect during leak burst pipe?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "leak_burst_pipe",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "drain_clog",
+    "title": "Drain Clog 1",
+    "question": "Drain Clog: common question 1?",
+    "answer": "For plumbing, we handle drain clog with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "drain_clog",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "drain_clog",
+    "title": "Drain Clog 2",
+    "question": "What should I expect during drain clog?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "drain_clog",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "drain_clog",
+    "title": "Drain Clog 3",
+    "question": "Safety/limits for drain clog?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "drain_clog",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "drain_clog",
+    "title": "Drain Clog 4",
+    "question": "Drain Clog: common question 4?",
+    "answer": "For plumbing, we handle drain clog with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "drain_clog",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "drain_clog",
+    "title": "Drain Clog 5",
+    "question": "What should I expect during drain clog?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "drain_clog",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "water_heater",
+    "title": "Water Heater 1",
+    "question": "Water Heater: common question 1?",
+    "answer": "For plumbing, we handle water heater with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "water_heater",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "water_heater",
+    "title": "Water Heater 2",
+    "question": "What should I expect during water heater?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "water_heater",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "water_heater",
+    "title": "Water Heater 3",
+    "question": "Safety/limits for water heater?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "water_heater",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "water_heater",
+    "title": "Water Heater 4",
+    "question": "Water Heater: common question 4?",
+    "answer": "For plumbing, we handle water heater with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "water_heater",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "water_heater",
+    "title": "Water Heater 5",
+    "question": "What should I expect during water heater?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "water_heater",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "sewer_line",
+    "title": "Sewer Line 1",
+    "question": "Sewer Line: common question 1?",
+    "answer": "For plumbing, we handle sewer line with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "sewer_line",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "sewer_line",
+    "title": "Sewer Line 2",
+    "question": "What should I expect during sewer line?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "sewer_line",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "sewer_line",
+    "title": "Sewer Line 3",
+    "question": "Safety/limits for sewer line?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "sewer_line",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "sewer_line",
+    "title": "Sewer Line 4",
+    "question": "Sewer Line: common question 4?",
+    "answer": "For plumbing, we handle sewer line with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "sewer_line",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "sewer_line",
+    "title": "Sewer Line 5",
+    "question": "What should I expect during sewer line?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "sewer_line",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 1",
+    "question": "Pricing Expectations: common question 1?",
+    "answer": "For plumbing, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 2",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 3",
+    "question": "Safety/limits for pricing expectations?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "pricing_expectations",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 4",
+    "question": "Pricing Expectations: common question 4?",
+    "answer": "For plumbing, we handle pricing expectations with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "pricing_expectations",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "pricing_expectations",
+    "title": "Pricing Expectations 5",
+    "question": "What should I expect during pricing expectations?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "pricing_expectations",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "scheduling",
+    "title": "Scheduling 1",
+    "question": "Scheduling: common question 1?",
+    "answer": "For plumbing, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "scheduling",
+    "title": "Scheduling 2",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "scheduling",
+    "title": "Scheduling 3",
+    "question": "Safety/limits for scheduling?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "scheduling",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "scheduling",
+    "title": "Scheduling 4",
+    "question": "Scheduling: common question 4?",
+    "answer": "For plumbing, we handle scheduling with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "scheduling",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "scheduling",
+    "title": "Scheduling 5",
+    "question": "What should I expect during scheduling?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "scheduling",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "service_areas",
+    "title": "Service Areas 1",
+    "question": "Service Areas: common question 1?",
+    "answer": "For plumbing, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "service_areas",
+    "title": "Service Areas 2",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "service_areas",
+    "title": "Service Areas 3",
+    "question": "Safety/limits for service areas?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "service_areas",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "service_areas",
+    "title": "Service Areas 4",
+    "question": "Service Areas: common question 4?",
+    "answer": "For plumbing, we handle service areas with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "service_areas",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "service_areas",
+    "title": "Service Areas 5",
+    "question": "What should I expect during service areas?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "service_areas",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "warranties",
+    "title": "Warranties 1",
+    "question": "Warranties: common question 1?",
+    "answer": "For plumbing, we handle warranties with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "warranties",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "warranties",
+    "title": "Warranties 2",
+    "question": "What should I expect during warranties?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "warranties",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "warranties",
+    "title": "Warranties 3",
+    "question": "Safety/limits for warranties?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "warranties",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "warranties",
+    "title": "Warranties 4",
+    "question": "Warranties: common question 4?",
+    "answer": "For plumbing, we handle warranties with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "warranties",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "warranties",
+    "title": "Warranties 5",
+    "question": "What should I expect during warranties?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "warranties",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "maintenance_tips",
+    "title": "Maintenance Tips 1",
+    "question": "Maintenance Tips: common question 1?",
+    "answer": "For plumbing, we handle maintenance tips with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "maintenance_tips",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "maintenance_tips",
+    "title": "Maintenance Tips 2",
+    "question": "What should I expect during maintenance tips?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "maintenance_tips",
+      "process",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "maintenance_tips",
+    "title": "Maintenance Tips 3",
+    "question": "Safety/limits for maintenance tips?",
+    "answer": "For sewage backups or suspected gas water heater issues, prioritize safety and call a professional. We do not guarantee exact pricing before inspection.",
+    "tags": [
+      "maintenance_tips",
+      "guardrail",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "maintenance_tips",
+    "title": "Maintenance Tips 4",
+    "question": "Maintenance Tips: common question 4?",
+    "answer": "For plumbing, we handle maintenance tips with a clear next-step process. Final recommendations depend on onsite findings and your service area details.",
+    "tags": [
+      "maintenance_tips",
+      "faq",
+      "plumbing"
+    ]
+  },
+  {
+    "niche": "plumbing",
+    "topic": "maintenance_tips",
+    "title": "Maintenance Tips 5",
+    "question": "What should I expect during maintenance tips?",
+    "answer": "Step 1 intake, step 2 verification, step 3 onsite or phone guidance, step 4 written scope, step 5 scheduling and follow-up for plumbing services.",
+    "tags": [
+      "maintenance_tips",
+      "process",
+      "plumbing"
+    ]
+  }
+]
