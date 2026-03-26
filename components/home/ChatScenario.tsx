@@ -82,6 +82,7 @@ export default function ChatScenario() {
     const [messageCount, setMessageCount] = useState(0);
     const [limitReached, setLimitReached] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const MAX_MESSAGES = 5;
@@ -89,7 +90,10 @@ export default function ChatScenario() {
     const accentColor = mode === "live" ? "#E8B923" : scenario.accentColor;
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        chatContainerRef.current?.scrollTo({
+            top: chatContainerRef.current.scrollHeight,
+            behavior: "smooth",
+        });
     }, [liveMessages, visibleMessages]);
 
     const runScenario = useCallback((messages: Message[]) => {
@@ -152,7 +156,7 @@ export default function ChatScenario() {
             ]);
         } finally {
             setIsLoading(false);
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 100);
         }
     };
 
@@ -173,12 +177,21 @@ export default function ChatScenario() {
                             <motion.div key={i} initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }}
                                 transition={{ duration: 0.3, ease: "easeOut" }}
                                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                                <div className="max-w-[80%] px-4 py-3 rounded-2xl text-[15px] leading-relaxed"
-                                    style={msg.role === "user"
-                                        ? { background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.85)", borderBottomRightRadius: "4px" }
-                                        : { background: `${accentColor}18`, color: "rgba(255,255,255,0.85)", border: `1px solid ${accentColor}25`, borderBottomLeftRadius: "4px" }
-                                    }>
-                                    {msg.content}
+                                <div className="max-w-[80%]">
+                                    <div className="px-4 py-3 rounded-2xl text-[15px] leading-relaxed"
+                                        style={msg.role === "user"
+                                            ? { background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.85)", borderBottomRightRadius: "4px" }
+                                            : { background: `${accentColor}18`, color: "rgba(255,255,255,0.85)", border: `1px solid ${accentColor}25`, borderBottomLeftRadius: "4px" }
+                                        }>
+                                        {msg.content}
+                                    </div>
+                                    {msg.role === "assistant" && msg.content.includes("Book a Strategy Call") && (
+                                        <Link href="/contact"
+                                            className="inline-flex items-center gap-1.5 text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] mt-2"
+                                            style={{ background: accentColor, color: "#000" }}>
+                                            Book a Strategy Call <ArrowUpRight size={12} />
+                                        </Link>
+                                    )}
                                 </div>
                             </motion.div>
                         ))}
@@ -297,7 +310,7 @@ export default function ChatScenario() {
                         </div>
 
                         {/* Social proof */}
-                        <div className="hidden lg:flex items-center gap-4 text-xs text-white/25">
+                        <div className="hidden lg:flex items-center gap-4 text-xs text-white/50">
                             <div className="flex -space-x-2">
                                 {["#E8B923", "#10b981", "#dc2626"].map((c, i) => (
                                     <div key={i} className="w-7 h-7 rounded-full border-2 border-[#0d0d10] flex items-center justify-center text-[9px] font-bold"
@@ -375,7 +388,7 @@ export default function ChatScenario() {
                             </div>
 
                             {/* Messages */}
-                            <div className="px-5 py-6 space-y-3.5 min-h-[380px] max-h-[420px] overflow-y-auto">
+                            <div ref={chatContainerRef} className="px-5 py-6 space-y-3.5 min-h-[380px] max-h-[420px] overflow-y-auto">
                                 {renderMessages()}
 
                                 {/* Typing indicator */}
@@ -409,6 +422,10 @@ export default function ChatScenario() {
                                             value={inputValue}
                                             onChange={(e) => setInputValue(e.target.value)}
                                             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                                            onFocus={() => {
+                                                const y = window.scrollY;
+                                                requestAnimationFrame(() => window.scrollTo({ top: y }));
+                                            }}
                                             placeholder="Ask me anything..."
                                             disabled={isLoading}
                                             className="flex-1 bg-white/5 rounded-full px-5 py-3 text-[15px] text-white placeholder:text-white/20 outline-none focus:ring-1 focus:ring-[#E8B923]/30 transition-all disabled:opacity-50"
@@ -434,9 +451,9 @@ export default function ChatScenario() {
                         </motion.div>
 
                         {/* Message counter */}
-                        <p className="text-center text-xs text-white/20 mt-5">
+                        <p className="text-center text-xs text-white/40 mt-5">
                             {mode === "live"
-                                ? `${MAX_MESSAGES - messageCount} messages remaining · Powered by Groq`
+                                ? `${MAX_MESSAGES - messageCount} messages remaining · Powered by Claude`
                                 : "Tap a scenario to replay ↑"}
                         </p>
                     </div>
