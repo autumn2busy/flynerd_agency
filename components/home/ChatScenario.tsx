@@ -114,8 +114,8 @@ export default function ChatScenario() {
     const [sessionId] = useState(generateSessionId);
     const [messageCount, setMessageCount] = useState(0);
     const [limitReached, setLimitReached] = useState(false);
-    const [emailCaptured, setEmailCaptured] = useState(false);
-    const [captureEmail, setCaptureEmail] = useState("");
+    const [leadCaptured, setLeadCaptured] = useState(false);
+    const [captureForm, setCaptureForm] = useState({ firstName: "", businessName: "", websiteUrl: "", email: "", niche: "" });
     const [captureSubmitting, setCaptureSubmitting] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -236,43 +236,70 @@ export default function ChatScenario() {
                     </AnimatePresence>
                     {limitReached && (
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
-                            <div className="max-w-[85%] px-5 py-4 rounded-2xl rounded-bl-sm text-[15px] leading-relaxed space-y-3"
+                            <div className="w-full px-5 py-4 rounded-2xl rounded-bl-sm text-[15px] leading-relaxed space-y-3"
                                 style={{ background: `${accentColor}18`, border: `1px solid ${accentColor}30` }}>
-                                {!emailCaptured ? (
+                                {!leadCaptured ? (
                                     <>
                                         <p className="text-white/85 font-semibold">Want to see this for your business?</p>
+                                        <p className="text-white/50 text-xs">We&apos;ll build you a free personalized demo.</p>
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
-                                            if (!captureEmail.trim() || captureSubmitting) return;
+                                            if (captureSubmitting) return;
                                             setCaptureSubmitting(true);
                                             try {
                                                 await fetch("/api/demo-lead", {
                                                     method: "POST",
                                                     headers: { "Content-Type": "application/json" },
                                                     body: JSON.stringify({
-                                                        email: captureEmail.trim(),
-                                                        niche: "General",
+                                                        firstName: captureForm.firstName.trim(),
+                                                        businessName: captureForm.businessName.trim(),
+                                                        websiteUrl: captureForm.websiteUrl.trim(),
+                                                        email: captureForm.email.trim(),
+                                                        niche: captureForm.niche,
                                                         sessionId,
                                                     }),
                                                 });
                                             } catch { /* never block UI */ }
-                                            setEmailCaptured(true);
+                                            setLeadCaptured(true);
                                             setCaptureSubmitting(false);
-                                        }} className="flex gap-2">
-                                            <input type="email" required value={captureEmail}
-                                                onChange={(e) => setCaptureEmail(e.target.value)}
+                                        }} className="space-y-2">
+                                            <input type="text" required value={captureForm.firstName}
+                                                onChange={(e) => setCaptureForm((f) => ({ ...f, firstName: e.target.value }))}
+                                                placeholder="First name"
+                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                            <input type="text" required value={captureForm.businessName}
+                                                onChange={(e) => setCaptureForm((f) => ({ ...f, businessName: e.target.value }))}
+                                                placeholder="Business name"
+                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                            <input type="url" required value={captureForm.websiteUrl}
+                                                onChange={(e) => setCaptureForm((f) => ({ ...f, websiteUrl: e.target.value }))}
+                                                placeholder="https://yourbusiness.com"
+                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                            <input type="email" required value={captureForm.email}
+                                                onChange={(e) => setCaptureForm((f) => ({ ...f, email: e.target.value }))}
                                                 placeholder="you@company.com"
-                                                className="flex-1 bg-white/5 rounded-full px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                            <select required value={captureForm.niche}
+                                                onChange={(e) => setCaptureForm((f) => ({ ...f, niche: e.target.value }))}
+                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:ring-1 focus:ring-[#E8B923]/30 appearance-none"
+                                                style={{ colorScheme: "dark" }}>
+                                                <option value="" disabled>Select your industry</option>
+                                                <option value="HVAC">HVAC</option>
+                                                <option value="Plumbing">Plumbing</option>
+                                                <option value="Water Damage Restoration">Water Damage Restoration</option>
+                                                <option value="Personal Injury Law">Personal Injury Law</option>
+                                                <option value="Senior Home Care">Senior Home Care</option>
+                                            </select>
                                             <button type="submit" disabled={captureSubmitting}
-                                                className="text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50 whitespace-nowrap"
+                                                className="w-full text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"
                                                 style={{ background: accentColor, color: "#000" }}>
-                                                {captureSubmitting ? "..." : "Get My Free Demo"}
+                                                {captureSubmitting ? "Submitting..." : "Get My Free Demo"}
                                             </button>
                                         </form>
                                     </>
                                 ) : (
                                     <>
-                                        <p className="text-white/85">Impressed? That was just the demo. Imagine this working 24/7 for <em>your</em> business.</p>
+                                        <p className="text-white/85">Your demo request is in. We&apos;ll be in touch within 24 hours — or book a call now to skip the wait.</p>
                                         <Link href="/contact"
                                             className="inline-flex items-center gap-1.5 text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97]"
                                             style={{ background: accentColor, color: "#000" }}>

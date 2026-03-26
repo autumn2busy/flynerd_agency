@@ -99,23 +99,31 @@ export async function subscribeContactToList(contactId: string, listId: string) 
   return res.json();
 }
 
-export async function createDeal(contactId: string, title: string, value: number, pipelineId: string = "1", stageId: string = "1", fields?: Array<{ customFieldId: number; fieldValue: string }>) {
+export async function createDeal(contactId: string, title: string, value: number, pipelineId: string = "1", stageId: string = "1", fields?: Array<{ customFieldId: number; fieldValue: string }>, description?: string) {
+  const payload = {
+    deal: {
+      contact: contactId,
+      title: title,
+      value: value, // in cents (e.g. 250000 for $2,500)
+      currency: "usd",
+      group: pipelineId,
+      stage: stageId,
+      status: 0, // Open
+      ...(fields && { fields }),
+      ...(description && { description }),
+    },
+  };
+  console.log("[AC] createDeal payload:", JSON.stringify(payload, null, 2));
   const res = await fetch(`${AC_CONFIG.apiUrl}/api/3/deals`, {
     method: "POST",
     headers: { "Api-Token": AC_CONFIG.apiKey, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      deal: {
-        contact: contactId,
-        title: title,
-        value: value, // in cents (e.g. 250000 for $2,500)
-        currency: "usd",
-        group: pipelineId,
-        stage: stageId,
-        status: 0, // Open
-        ...(fields && { fields }),
-      },
-    }),
+    body: JSON.stringify(payload),
   });
+  if (!res.ok) {
+    const errBody = await res.text();
+    console.error(`[AC] createDeal failed (${res.status}):`, errBody);
+    return { error: errBody, status: res.status };
+  }
   return res.json();
 }
 
