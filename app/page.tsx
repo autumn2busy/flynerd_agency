@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Zap, Cpu, BarChart3, Clock, Globe, ChevronRight, CheckCircle } from "lucide-react";
 import { Metadata } from "next";
+import ChatScenario from "@/components/home/ChatScenario";
 
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
@@ -283,6 +284,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Chat Scenario ──────────────────────────────────────────────────── */}
+      <ChatScenario />
 
       {/* ── Core Five ─────────────────────────────────────────────────────── */}
       <section className="py-24 lg:py-32">

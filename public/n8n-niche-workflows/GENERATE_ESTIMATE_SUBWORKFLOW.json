@@ -1,0 +1,301 @@
+{
+  "name": "generate_estimate_subworkflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e30d7b21-4f10-482a-a9a5-1d07b3b3558d",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst errors = [];\n\nif (!input.session_id) errors.push('session_id required');\nif (!input.niche) errors.push('niche required');\nif (!input.zip && !['med_spa', 'estate_planning'].includes(input.niche)) errors.push('zip required for this niche');\n\nconst reqs = {\n  hvac: ['issue_type'],\n  roofing: ['damage_type'],\n  water_damage: ['damage_source'],\n  plumbing: ['issue_type'],\n  med_spa: ['treatment_type'],\n  pest_control: ['pest_type'],\n  senior_care: ['care_level'],\n  pi_law: ['injury_type', 'incident_date'],\n  estate_planning: ['planning_goal']\n};\n\nconst required = reqs[input.niche] || [];\nrequired.forEach(field => {\n  if (!input[field]) errors.push(`${field} required`);\n});\n\nreturn { json: { ...input, valid: errors.length === 0, errors } };"
+      },
+      "id": "76ba181a-2ccf-460d-a77c-a492576973e4",
+      "name": "Validate Niche Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "a1f59265-d018-4dc8-a28a-8be52eef2974",
+      "name": "IsValid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.AHA_API_URL }}/serviceability/check",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "niche", "value": "={{ $json.niche }}" },
+            { "name": "zip", "value": "={{ $json.zip }}" },
+            { "name": "issue_type", "value": "={{ $json.issue_type || $json.damage_type || $json.treatment_type || $json.pest_type || $json.care_level || $json.injury_type || $json.planning_goal }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfb7d6e6-90e6-42d4-a7fc-1c88d87ea609",
+      "name": "Check Serviceability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.serviceable }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "1d8cc221-a4df-412e-a131-7b001a1c86bd",
+      "name": "Is Serviceable?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1120, 180]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "schema": "public",
+        "table": "estimate_requests",
+        "columns": "session_id,niche,estimate_type,request_payload_json",
+        "options": {}
+      },
+      "id": "762c9c22-b258-4560-afcb-12e0fa4dc140",
+      "name": "Save Request to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1340, 60]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.AHA_API_URL }}/context/enrich",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('Validate Niche Input').item.json) }}",
+        "options": {}
+      },
+      "id": "1b084964-b659-4581-abd0-1ff1cd60ebfb",
+      "name": "Enrich Context",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1560, 60]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.AHA_API_URL }}/estimate/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"enriched_data\": {{ JSON.stringify($json) }},\n  \"original_input\": {{ JSON.stringify($('Validate Niche Input').item.json) }}\n}",
+        "options": {}
+      },
+      "id": "f5ed128d-19cd-4a37-babe-5cf6d41872ef",
+      "name": "Generate Estimate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1780, 60]
+    },
+    {
+      "parameters": {
+        "resource": "row",
+        "operation": "create",
+        "schema": "public",
+        "table": "estimate_results",
+        "columns": "estimate_request_id,niche,normalized_result_json,raw_api_response_json",
+        "options": {}
+      },
+      "id": "e44d34f0-bcde-4ea5-bbdf-a04cd5eedfd2",
+      "name": "Save Result to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2000, 60],
+      "notes": "You must map the DB inputs manually in n8n UI using expressions."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.AHA_API_URL }}/next-best-action",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"estimate_result\": {{ JSON.stringify($('Generate Estimate').item.json) }},\n  \"original_input\": {{ JSON.stringify($('Validate Niche Input').item.json) }}\n}",
+        "options": {}
+      },
+      "id": "0df81e01-3142-4fdb-9fd8-b4b9b6fca28b",
+      "name": "Get Next Best Action",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2220, 60]
+    },
+    {
+      "parameters": {
+        "jsCode": "const err = $input.first().json;\nreturn { \n  json: {\n    success: false,\n    error: 'Validation failed',\n    details: err.errors.join(', ')\n  }\n};"
+      },
+      "id": "31ad5526-7ad3-4b08-8df0-fbcda3398935",
+      "name": "Return Validation Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 420]
+    },
+    {
+      "parameters": {
+        "jsCode": "const est = $('Generate Estimate').first().json;\nconst action = $('Get Next Best Action').first().json;\n\nreturn {\n  json: {\n    success: true,\n    estimate_data: est,\n    next_action: action,\n    disclaimer: est.disclaimer || 'This is an estimate. Final assessment required.',\n    summary: `Based on your details, the expected range is ${est.estimate_range}. ${action.cta_text}`\n  }\n};"
+      },
+      "id": "d13afcd4-2c09-4089-a29d-42ac7a7d4257",
+      "name": "Format Final Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2440, 60]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate Niche Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Niche Input": {
+      "main": [
+        [
+          {
+            "node": "IsValid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsValid?": {
+      "main": [
+        [
+          {
+            "node": "Check Serviceability",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Serviceability": {
+      "main": [
+        [
+          {
+            "node": "Is Serviceable?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Serviceable?": {
+      "main": [
+        [
+          {
+            "node": "Save Request to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Request to DB": {
+      "main": [
+        [
+          {
+            "node": "Enrich Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich Context": {
+      "main": [
+        [
+          {
+            "node": "Generate Estimate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Estimate": {
+      "main": [
+        [
+          {
+            "node": "Save Result to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Result to DB": {
+      "main": [
+        [
+          {
+            "node": "Get Next Best Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Next Best Action": {
+      "main": [
+        [
+          {
+            "node": "Format Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}

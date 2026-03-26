@@ -1,13 +1,34 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+// Standardized Niche Strings
+const TARGET_NICHES = [
+  "Water Damage Restoration",
+  "Senior Home Care",
+  "Personal Injury Law",
+  "HVAC",
+  "Plumbing"
+];
+
+function normalizeNiche(input: string): string {
+  const normalizedInput = input.trim().toLowerCase();
+  
+  if (normalizedInput.includes("water damage") || normalizedInput.includes("restoration")) return "Water Damage Restoration";
+  if (normalizedInput.includes("senior care") || normalizedInput.includes("home care") || normalizedInput.includes("elderly")) return "Senior Home Care";
+  if (normalizedInput.includes("personal injury") || normalizedInput.includes("pi law") || normalizedInput.includes("accident attorney")) return "Personal Injury Law";
+  if (normalizedInput.includes("hvac") || normalizedInput.includes("heating") || normalizedInput.includes("air conditioning")) return "HVAC";
+  if (normalizedInput.includes("plumber") || normalizedInput.includes("plumbing")) return "Plumbing";
+  
+  return input; // Fallback to original if no match
+}
+
 // POST /api/agents/scout
 export async function POST(req: Request) {
   console.log("[Scout Agent] Received POST request");
   try {
     const body = await req.json();
     console.log("[Scout Agent] Request body:", body);
-    const { niche, location } = body;
+    let { niche, location } = body;
 
     if (!niche || !location) {
       return NextResponse.json(
@@ -15,6 +36,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    niche = normalizeNiche(niche);
+    console.log(`[Scout Agent] Normalized niche: ${niche}`);
 
     const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
     const YELP_API_KEY = process.env.YELP_API_KEY;

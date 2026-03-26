@@ -49,10 +49,12 @@ export async function POST(req: Request) {
     console.log(`[Outreach Agent] Created Deal '${dealTitle}' (ID: ${dealId}) for Contact ${contactId}.`);
 
     if (dealId && lead) {
-      // 2. Map the Deal Custom Fields (IDs 16-20)
-      if (demoSiteUrl) await updateDealField(dealId, "16", demoSiteUrl);
-      if (walkthroughVideoUrl) await updateDealField(dealId, "17", walkthroughVideoUrl);
-      if (lead.niche) await updateDealField(dealId, "18", lead.niche);
+      // 2. Map the Deal Custom Fields (IDs based on AC Audit)
+      // 34: DEMO_SITE_URL, 35: DEMO_VIDEO_URL, 33: LEAD_NICHE, 36: LEAD_PAINPOINT, 37: DEAL_ORGANIZATION_NAME
+      if (demoSiteUrl) await updateDealField(dealId, "34", demoSiteUrl);
+      if (walkthroughVideoUrl) await updateDealField(dealId, "35", walkthroughVideoUrl);
+      if (lead.niche) await updateDealField(dealId, "33", lead.niche);
+      if (businessName) await updateDealField(dealId, "37", businessName);
       if (lead.intelScore !== null) await updateDealField(dealId, "19", lead.intelScore.toString());
       
       const pptList = (lead.intelData as any)?.painPoints;
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
         ? pptList.join(", ")
         : "attracting high-quality and consistent clients online";
         
-      await updateDealField(dealId, "20", painPointsStr);
+      await updateDealField(dealId, "36", painPointsStr);
       console.log(`[Outreach Agent] Pushed Deal custom fields for ${businessName}.`);
     }
 

@@ -1,9 +1,30 @@
 import { NextResponse } from "next/server";
 
+const TARGET_NICHES = [
+  "Water Damage Restoration",
+  "Senior Home Care",
+  "Personal Injury Law",
+  "HVAC",
+  "Plumbing"
+];
+
+function normalizeNiche(input: string): string {
+  if (!input) return "";
+  const normalizedInput = input.trim().toLowerCase();
+  
+  if (normalizedInput.includes("water damage") || normalizedInput.includes("restoration")) return "Water Damage Restoration";
+  if (normalizedInput.includes("senior care") || normalizedInput.includes("home care") || normalizedInput.includes("elderly")) return "Senior Home Care";
+  if (normalizedInput.includes("personal injury") || normalizedInput.includes("pi law") || normalizedInput.includes("accident attorney")) return "Personal Injury Law";
+  if (normalizedInput.includes("hvac") || normalizedInput.includes("heating") || normalizedInput.includes("air conditioning")) return "HVAC";
+  if (normalizedInput.includes("plumber") || normalizedInput.includes("plumbing")) return "Plumbing";
+  
+  return input;
+}
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const {
+    let {
       name,
       email,
       business_name,
@@ -15,6 +36,9 @@ export async function POST(req: Request) {
       timeline,
       budget,
     } = data;
+
+    industry = normalizeNiche(industry);
+
 
     const apiUrl = process.env.ACTIVECAMPAIGN_URL;
     const apiKey = process.env.ACTIVECAMPAIGN_KEY;
@@ -125,7 +149,9 @@ export async function POST(req: Request) {
     // 4. Sync Custom Fields to Deal
     const customFields = [
       { id: 21, value: business_name },
-      { id: 22, value: industry },
+      { id: 37, value: business_name }, // Organization Name for outreach
+      { id: 22, value: industry },      // Legacy Industry field
+      { id: 33, value: industry },      // LEAD_NICHE for outreach
       { id: 23, value: revenue },
       { id: 24, value: challenge },
       { id: 25, value: tools },

@@ -1,0 +1,348 @@
+{
+  "name": "HVAC: chat agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hvac-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-hvac",
+      "name": "Chat Message Received",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        256,
+        432
+      ],
+      "webhookId": "wh-hvac-001"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst body = $input.item.json.body || $input.item.json || {};\nconst chatInput = (body.chatInput || body.message || body.text || '').trim();\nlet metadata = body.metadata || {};\nif (typeof metadata === 'string') {\n  try { metadata = JSON.parse(metadata); } catch(e) { metadata = {}; }\n}\nconst sessionKey = (\n  metadata.sessionId || metadata.session_id ||\n  body.sessionId || body.session_id ||\n  `chat_${Date.now()}_${Math.random().toString(36).slice(2,7)}`\n);\nconst files = body.files || [];\nreturn {\n  json: {\n    chatInput,\n    sessionKey,\n    metadata,\n    files,\n    hasFiles: files.length > 0,\n    utmSource:   metadata.utm_source   || body.utm_source   || null,\n    utmMedium:   metadata.utm_medium   || body.utm_medium   || null,\n    utmCampaign: metadata.utm_campaign || body.utm_campaign || null,\n    sourceUrl:   metadata.source_url   || body.source_url   || null,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "normalize-hvac",
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a professional HVAC service assistant. Your goals:\n\n1. ANSWER QUESTIONS using kb_lookup for: services, warranties, financing, maintenance, repair vs replacement, emergency availability, service area.\n\n2. TRIAGE visitors into: Repair, Maintenance, Emergency, Replacement/Estimate, or General Question.\n\n3. COLLECT LEAD INFO progressively \u2014 don't ask everything at once:\n   - First: issue type and equipment type\n   - Then: service address or ZIP\n   - Then: name and phone (only after intent is clear)\n   - Optional: email, preferred time window\n\n4. EMERGENCY DETECTION \u2014 act immediately on:\n   - Gas smell near any HVAC unit \u2192 safety instructions + notify_emergency + capture contact\n   - No heat with vulnerable occupants (elderly, infants, medical) \u2192 emergency routing\n   - Suspected CO (carbon monoxide) \u2192 evacuate instruction + notify_emergency\n   - System completely down in extreme heat/cold\n   Protocol: safety first, then notify_emergency tool, then capture contact info.\n\n5. SAVE LEADS using lead_upsert when: booking/estimate intent exists, ZIP + issue + any contact info collected, or emergency detected. Save early \u2014 partial data is fine.\n\n6. AFTER-HOURS: use business_hours tool. Non-emergency \u2192 set next-day callback expectation. Emergency \u2192 route immediately.\n\nFIELD NAMES (exact): session_key, zip, preferred_time_window, system_down (boolean).\nRESPONSE STYLE: 3-5 sentences max. Empathetic, clear CTA. Never fabricate pricing."
+        }
+      },
+      "id": "agent-hvac",
+      "name": "HVAC Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        800,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "maxTokensToSample": 1000,
+          "temperature": 0.3
+        }
+      },
+      "id": "groq-hvac",
+      "name": "Groq LLM",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        560,
+        720
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "REPLACE_GROQ_CRED_ID",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Normalize Input').item.json.sessionKey }}",
+        "contextWindowLength": 10
+      },
+      "id": "memory-hvac",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        720,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search the HVAC knowledge base for FAQ answers. Use for: services, pricing ranges, warranties, financing, service area, emergency availability, process questions, and company-specific information. Pass the customer question as the query.",
+        "operation": "getAll",
+        "tableId": "kb_items",
+        "returnAll": true,
+        "filterType": "manual",
+        "filtersUI": {
+          "values": [
+            {
+              "keyName": "niche",
+              "condition": "eq",
+              "keyValue": "hvac"
+            }
+          ]
+        }
+      },
+      "id": "kb-hvac",
+      "name": "KB Lookup Tool",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        880,
+        720
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_SUPABASE_CRED_ID",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Create or update a lead record. Call when: booking/estimate intent detected, ZIP + issue + any contact info collected, or emergency. Pass a JSON object with these fields: session_key (required, chat session identifier), businessName, stage (New/Qualified/Emergency/Estimate Requested/Booked/Follow-Up Needed/Lost), issue_type (repair/replacement/maintenance/new_installation/emergency_no_heat/emergency_no_cooling/gas_smell/co_concern/other), equipment_type (central_ac/heat_pump/furnace/mini_split/boiler/air_handler/thermostat/ductwork/unknown), urgency (emergency/urgent/standard/scheduled), system_down (boolean), name, phone, email, service_address, zip, preferred_time_window (morning/afternoon/evening/weekend/asap), priority (high/medium/low), consent_to_contact (boolean), chat_summary.",
+        "jsCode": "const query = $input.item.json.query || $input.item.json.input || '{}';\nlet data;\ntry { data = typeof query === 'string' ? JSON.parse(query) : query; } catch(e) { data = {}; }\n\nconst sessionKey = data.session_key || $('Normalize Input').item.json.sessionKey;\nif (!sessionKey) return { error: 'session_key is required' };\n\nconst body = {\n  p_session_key: sessionKey,\n  p_business_name: data.businessName || data.business_name || null,\n  p_niche: 'HVAC',\n  p_stage: data.stage || 'New',\n  p_lead_type: 'inbound_chat',\n  p_issue_type: data.issue_type || null,\n  p_equipment_type: data.equipment_type || null,\n  p_urgency: data.urgency || null,\n  p_system_down: data.system_down || false,\n  p_name: data.name || null,\n  p_phone: data.phone || null,\n  p_email: data.email || null,\n  p_service_address: data.service_address || null,\n  p_zip: data.zip || null,\n  p_preferred_time_window: data.preferred_time_window || null,\n  p_priority: data.priority || null,\n  p_consent_to_contact: data.consent_to_contact || false,\n  p_chat_summary: data.chat_summary || null,\n  p_place_id: data.placeId || null\n};\n\nconst supabaseUrl = $env.SUPABASE_URL;\nconst supabaseKey = $env.SUPABASE_SERVICE_KEY;\n\nconst resp = await fetch(supabaseUrl + '/rest/v1/rpc/upsert_lead', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'apikey': supabaseKey,\n    'Authorization': 'Bearer ' + supabaseKey,\n    'Prefer': 'return=representation'\n  },\n  body: JSON.stringify(body)\n});\n\nconst result = await resp.json();\nif (!resp.ok) throw new Error('Upsert failed: ' + JSON.stringify(result));\nreturn { success: true, lead: result };"
+      },
+      "id": "lead-hvac",
+      "name": "Lead Upsert Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Log a chat message to conversation history. Call after each user and assistant turn. Fields: session_key, role (user or assistant), content.",
+        "tableId": "lead_messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_key",
+              "fieldValue": "={{ $fromAI('session_key', 'Session identifier', 'string') }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "={{ $fromAI('role', 'user or assistant', 'string') }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $fromAI('content', 'Message text', 'string') }}"
+            }
+          ]
+        }
+      },
+      "id": "log-hvac",
+      "name": "Log Message Tool",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        720
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_SUPABASE_CRED_ID",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Check current business hours (Mon-Fri 8am-6pm, Sat 9am-2pm). Returns: is_business_hours, day_of_week, next_available, message.",
+        "jsCode": "\nconst now = new Date();\nconst day = now.getDay(), hour = now.getHours();\nlet open = false, next = 'Monday at 8:00 AM';\nif (day >= 1 && day <= 5) {\n  open = hour >= 8 && hour < 18;\n  next = open ? 'Now' : (hour < 8 ? 'Today at 8:00 AM' : 'Tomorrow at 8:00 AM');\n} else if (day === 6) {\n  open = hour >= 9 && hour < 14;\n  next = open ? 'Now' : 'Monday at 8:00 AM';\n}\nreturn {\n  is_business_hours: open,\n  current_time: now.toISOString(),\n  day_of_week: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day],\n  next_available: next,\n  message: open ? 'Within business hours.' : `After hours. Next available: ${next}. Emergency line available 24/7.`\n};"
+      },
+      "id": "biz-hours-hvac",
+      "name": "Business Hours Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1360,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Send emergency alert email to dispatch. Use for: active safety hazards, system failure in extreme conditions, or situations requiring immediate response. Include: issue type, customer location, urgency reason, contact info if collected.",
+        "fromEmail": "dispatch@company.com",
+        "toEmail": "={{ $env.EMERGENCY_DISPATCH_EMAIL }}",
+        "subject": "={ $fromAI('subject', 'Emergency subject', 'string', 'EMERGENCY: HVAC Service Required') }",
+        "html": "={{ $fromAI('message', 'Full emergency details', 'string') }}",
+        "options": {}
+      },
+      "id": "emergency-hvac",
+      "name": "Emergency Notification Tool",
+      "type": "n8n-nodes-base.emailSendTool",
+      "typeVersion": 2.1,
+      "position": [
+        1520,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"output\": \"={{ $json.output }}\"}",
+        "options": {}
+      },
+      "id": "respond-hvac",
+      "name": "Return Chat Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1100,
+        432
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat Message Received": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Input": {
+      "main": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KB Lookup Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Upsert Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Message Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business Hours Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Emergency Notification Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HVAC Agent": {
+      "main": [
+        [
+          {
+            "node": "Return Chat Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "67fff6fedb2560bb0cc951bbef12209da21d57f116f06769290d3af2f8aff3c2"
+  },
+  "tags": [
+    {
+      "name": "flynerd ai agency"
+    }
+  ]
+}

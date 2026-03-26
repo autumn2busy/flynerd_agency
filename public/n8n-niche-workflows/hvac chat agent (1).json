@@ -1,0 +1,629 @@
+{
+  "name": "hvac chat agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a professional HVAC service assistant. Your goals:\n\n1. ANSWER QUESTIONS using kb_lookup for: services, warranties, financing, maintenance, repair vs replacement, emergency availability, service area.\n\n2. TRIAGE visitors into: Repair, Maintenance, Emergency, Replacement/Estimate, or General Question.\n\n3. COLLECT LEAD INFO progressively — don't ask everything at once:\n   - First: issue type and equipment type\n   - Then: service address or ZIP\n   - Then: name and phone (only after intent is clear)\n   - Optional: email, preferred time window\n\n4. EMERGENCY DETECTION — act immediately on:\n   - Gas smell near any HVAC unit → safety instructions + notify_emergency + capture contact\n   - No heat with vulnerable occupants (elderly, infants, medical) → emergency routing\n   - Suspected CO (carbon monoxide) → evacuate instruction + notify_emergency\n   - System completely down in extreme heat/cold\n   Protocol: safety first, then notify_emergency tool, then capture contact info.\n\n5. SAVE LEADS using lead_upsert when: booking/estimate intent exists, ZIP + issue + any contact info collected, or emergency detected. Save early — partial data is fine.\n\n6. AFTER-HOURS: use business_hours tool. Non-emergency → set next-day callback expectation. Emergency → route immediately.\n\nIMPORTANT TOOL RULES:\n- When calling KB_Lookup_Tool1, pass ONLY the expected query field. Do NOT include 'id' or any other JSON properties.\n- When calling Call 'hvac_estimate_subworkflow', pass precisely: session_key, zip, and issue_type.\n\nFIELD NAMES (exact): session_key, zip, preferred_time_window, system_down (boolean).\nRESPONSE STYLE: 3-5 sentences max. Empathetic, clear CTA. Never fabricate pricing."
+        }
+      },
+      "id": "b880c241-2d0d-472c-ba1f-4f9b69b547bf",
+      "name": "HVAC Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1264,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "maxTokensToSample": 1000,
+          "temperature": 0.3
+        }
+      },
+      "id": "51d554ee-290f-4867-8de7-1b7478ec0b9f",
+      "name": "Groq LLM1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        128
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "7bUk4MlO6NI4ZWgB",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "id": "4b783609-d23e-44ed-9bee-5deb088ea09e",
+      "name": "Conversation Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1184,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search the HVAC knowledge base for FAQ answers. Use for: services, pricing ranges, warranties, financing, service area, emergency availability, process questions, and company-specific information. Pass the customer question as the query.",
+        "operation": "getAll",
+        "tableId": "kb_items",
+        "returnAll": true
+      },
+      "id": "75abe952-0b81-41bf-ae4d-6faa35cfb5a3",
+      "name": "KB Lookup Tool1",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Create or update a lead record. Call when: booking/estimate intent detected, ZIP + issue + any contact info collected, or emergency. Pass a JSON object with these fields: session_key (required, chat session identifier), businessName, stage (New/Qualified/Emergency/Estimate Requested/Booked/Follow-Up Needed/Lost), issue_type (repair/replacement/maintenance/new_installation/emergency_no_heat/emergency_no_cooling/gas_smell/co_concern/other), equipment_type (central_ac/heat_pump/furnace/mini_split/boiler/air_handler/thermostat/ductwork/unknown), urgency (emergency/urgent/standard/scheduled), system_down (boolean), name, phone, email, service_address, zip, preferred_time_window (morning/afternoon/evening/weekend/asap), priority (high/medium/low), consent_to_contact (boolean), chat_summary.",
+        "jsCode": "const query = $input.item.json.query || $input.item.json.input || '{}';\nlet data;\ntry { data = typeof query === 'string' ? JSON.parse(query) : query; } catch(e) { data = {}; }\n\n// Pull session ID directly from the Chat trigger\nconst sessionKey = data.session_key || $('When chat message received').item.json.sessionId;\nif (!sessionKey) return { error: 'session_key is required' };\n\nconst body = {\n  p_session_key: sessionKey,\n  p_business_name: data.businessName || null,\n  p_niche: 'HVAC',\n  p_stage: data.stage || 'New',\n  p_lead_type: 'inbound_chat',\n  p_issue_type: data.issue_type || null,\n  p_equipment_type: data.equipment_type || null,\n  p_urgency: data.urgency || null,\n  p_system_down: data.system_down || false,\n  p_name: data.name || null,\n  p_phone: data.phone || null,\n  p_email: data.email || null,\n  p_service_address: data.service_address || null,\n  p_zip: data.zip || null,\n  p_preferred_time_window: data.preferred_time_window || null,\n  p_priority: data.priority || null,\n  p_consent_to_contact: data.consent_to_contact || false,\n  p_chat_summary: data.chat_summary || null,\n  p_place_id: data.placeId || null\n};\n\n// Use your n8n Cloud $vars exactly as named in your screenshot!\nconst supabaseUrl = $vars.SUPABASE_URL;\nconst supabaseKey = $vars.SUPABASE_SERVICE_ROLE_KEY;\n\nif (!supabaseUrl || !supabaseUrl.startsWith('http')) return { error: 'Supabase URL is missing or invalid in vars' };\n\ntry {\n  // Use n8n's native high-speed HTTP client with a 5 second timeout\n  const result = await $helpers.httpRequest({\n    method: 'POST',\n    url: supabaseUrl + '/rest/v1/rpc/upsert_lead',\n    headers: {\n      'Content-Type': 'application/json',\n      'apikey': supabaseKey,\n      'Authorization': 'Bearer ' + supabaseKey\n    },\n    body: body,\n    timeout: 5000 \n  });\n  return { success: true, lead: result };\n} catch (error) {\n  return { error: 'Upsert connection failed', details: error.message };\n}\n"
+      },
+      "id": "e2ac3a25-cd9a-48aa-892b-4956f97efb1d",
+      "name": "Lead Upsert Tool1",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1504,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Log a chat message to conversation history. Call after each user and assistant turn. Fields: session_key, role (user or assistant), content.",
+        "tableId": "lead_messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_key",
+              "fieldValue": "={{ $fromAI('session_key', 'Session identifier', 'string') }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "={{ $fromAI('role', 'user or assistant', 'string') }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $fromAI('content', 'Message text', 'string') }}"
+            }
+          ]
+        }
+      },
+      "id": "5408987c-f720-495a-b50c-fe9576703861",
+      "name": "Log Message Tool1",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Check current business hours (Mon-Fri 8am-6pm, Sat 9am-2pm). Returns: is_business_hours, day_of_week, next_available, message.",
+        "jsCode": "\nconst now = new Date();\nconst day = now.getDay(), hour = now.getHours();\nlet open = false, next = 'Monday at 8:00 AM';\nif (day >= 1 && day <= 5) {\n  open = hour >= 8 && hour < 18;\n  next = open ? 'Now' : (hour < 8 ? 'Today at 8:00 AM' : 'Tomorrow at 8:00 AM');\n} else if (day === 6) {\n  open = hour >= 9 && hour < 14;\n  next = open ? 'Now' : 'Monday at 8:00 AM';\n}\nreturn {\n  is_business_hours: open,\n  current_time: now.toISOString(),\n  day_of_week: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day],\n  next_available: next,\n  message: open ? 'Within business hours.' : `After hours. Next available: ${next}. Emergency line available 24/7.`\n};"
+      },
+      "id": "4b885f88-d23a-46eb-8eb7-c25f9e73d5b7",
+      "name": "Business Hours Tool1",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1824,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "support@flynerd.tech",
+        "subject": "emergency dispatch",
+        "message": "emergency dispatch",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        2112,
+        96
+      ],
+      "id": "2caa855c-57d1-46d2-8476-15e201dae2dc",
+      "name": "Send a message in Gmail",
+      "webhookId": "f34c5d46-ccff-4c60-aaf6-f044642dc666",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DUtfdRfgeVkw2SvD",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Generate estimate tool. ALWAYS pass a JSON object containing session_key, zip, and issue_type.",
+        "workflowId": {
+          "__rl": true,
+          "value": "J2YFMo9j3eyGBlxN",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/J2YFMo9j3eyGBlxN",
+          "cachedResultName": "hvac chat agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "name": "session_key",
+              "type": "string",
+              "description": "The current chat session key"
+            },
+            {
+              "name": "zip",
+              "type": "string",
+              "description": "The user's ZIP code"
+            },
+            {
+              "name": "issue_type",
+              "type": "string",
+              "description": "The type of HVAC issue"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1952,
+        144
+      ],
+      "id": "58bb2f31-143f-42a2-b194-b0b8b9469678",
+      "name": "Call 'hvac_estimate_subworkflow'"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "allowFileUploads": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        1024,
+        -160
+      ],
+      "id": "759d8edd-77b8-4936-98a4-9707696570d9",
+      "name": "When chat message received",
+      "webhookId": "e8b16b22-6d81-46b2-9223-5e1b2b62b633"
+    },
+    {
+      "parameters": {},
+      "id": "8caa5d90-4ec1-46af-8081-2ad1f8a788ff",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        336,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let input = $input.first().json;\n\n// FIX: If the AI Agent sends the data encoded as a string, parse it automatically\nif (input.input && typeof input.input === 'string') {\n    try {\n        input = JSON.parse(input.input);\n    } catch(e) {}\n}\n\nconst errors = [];\nif (!input.session_key) errors.push('session_key required');\nif (!input.zip) errors.push('zip required');\nif (!input.issue_type) errors.push('issue_type required');\n\nreturn { json: { ...input, niche: 'hvac', valid: errors.length === 0, errors } };\n"
+      },
+      "id": "78b03539-f6eb-4452-9bcb-44cce111aeb7",
+      "name": "Validate HVAC Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "edf867c5-ffed-4699-9056-7afe9ee478a5",
+      "name": "IsValid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        784,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const err = $input.first().json;\nreturn { \n  json: {\n    success: false,\n    error: 'Validation failed',\n    details: err.errors.join(', ')\n  }\n};"
+      },
+      "id": "6e161734-7c51-4051-bea6-f2d406393ee3",
+      "name": "Return Validation Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst zip = input.zip || '';\n\n// Add your serviceable ZIP codes here if you want to restrict service\nconst allowedZips = []; // Empty array means all ZIPs allowed for now\n\nlet serviceable = true;\nif (allowedZips.length > 0 && !allowedZips.includes(zip)) {\n  serviceable = false;\n}\n\nreturn {\n  json: {\n    ...input,\n    serviceable: serviceable,\n    service_message: serviceable ? 'In service area' : 'Out of service area'\n  }\n};\n"
+      },
+      "id": "c24646b8-90f4-44ad-927e-51ab439c801f",
+      "name": "Check Serviceability (Internal)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.serviceable }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "4d05b442-eb08-45de-938d-1818d690f744",
+      "name": "Is Serviceable?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "estimate_requests",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "=={{ $json.session_key }}"
+            },
+            {
+              "fieldId": "niche",
+              "fieldValue": "=={{ $json.niche }}"
+            },
+            {
+              "fieldId": "request_payload_json",
+              "fieldValue": "=={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "cfae9535-1462-451f-b9b8-b899b82a24b1",
+      "name": "Save Request to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        432
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst issue = (input.issue_type || '').toLowerCase();\nconst equip = (input.equipment_type || '').toLowerCase();\nconst urgency = (input.urgency || '').toLowerCase();\n\nlet low = 0;\nlet high = 0;\nlet action = '';\nlet cta = '';\nlet disclaimer = \"This is a preliminary estimate range. Actual costs depend on an on-site diagnostic.\";\n\n// 1. REPLACEMENT LOGIC\nif (issue.includes('replace') || issue.includes('install') || issue.includes('new')) {\n    low = 4500;\n    high = 8500;\n    if (equip.includes('mini_split') || equip.includes('ductless')) {\n       low = 3500; high = 6500;\n    }\n    action = 'schedule_consultation';\n    cta = 'I highly recommend we schedule a free, no-obligation replacement consultation.';\n}\n// 2. MAINTENANCE LOGIC\nelse if (issue.includes('maintain') || issue.includes('tune') || issue.includes('clean')) {\n    low = 89;\n    high = 149;\n    action = 'schedule_maintenance';\n    cta = 'We can easily schedule a system tune-up and inspection for you.';\n    disclaimer = \"Standard maintenance pricing. Filters and required repairs are extra.\";\n}\n// 3. REPAIR/DIAGNOSTIC LOGIC (Default)\nelse {\n    low = 150;\n    high = 600;\n    action = 'schedule_diagnostic';\n    cta = 'A technician needs to diagnose this on-site. The dispatch fee is typically $89, which is waived if you proceed with repairs.';\n}\n\n// 4. EMERGENCY MULTIPLIER\nif (urgency.includes('emergency') || input.system_down === true) {\n    action = 'dispatch_emergency';\n    cta = 'Since this is an emergency, our on-call tech will be dispatched out as soon as possible.';\n    low = Math.round(low * 1.5);\n    high = Math.round(high * 1.5);\n    disclaimer = \"Emergency/After-hours dispatch rates apply. Final cost requires field assessment.\";\n}\n\nreturn {\n  json: {\n    ...input,\n    estimate_low: low,\n    estimate_high: high,\n    estimate_range: `$${low} - $${high}`,\n    action: action,\n    disclaimer: disclaimer,\n    next_message: cta\n  }\n};\n"
+      },
+      "id": "56b10372-4d00-4340-a5b3-43cc101b5a97",
+      "name": "Calculate HVAC Pricing (Internal)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "estimate_requests",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "niche",
+              "fieldValue": "=={{ $json.niche }}"
+            },
+            {}
+          ]
+        }
+      },
+      "id": "3e837ef7-3781-48ef-b470-50750e3bfb3e",
+      "name": "Save Result to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        432
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = $input.first().json;\n\nreturn {\n  json: {\n    success: true,\n    estimate_data: {\n        low: result.estimate_low,\n        high: result.estimate_high,\n        range: result.estimate_range,\n        action: result.action\n    },\n    disclaimer: result.disclaimer,\n    summary: `Based on what you've told me, you can expect costs around ${result.estimate_range}. ${result.next_message}`\n  }\n};"
+      },
+      "id": "0fa092cd-0a05-4f50-90c1-b23ef86d0f74",
+      "name": "Format Final Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        432
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HVAC Agent1": {
+      "main": [
+        []
+      ]
+    },
+    "Groq LLM1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KB Lookup Tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Upsert Tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Message Tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business Hours Tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'hvac_estimate_subworkflow'": {
+      "ai_tool": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HVAC Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate HVAC Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate HVAC Input": {
+      "main": [
+        [
+          {
+            "node": "IsValid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsValid?": {
+      "main": [
+        [
+          {
+            "node": "Check Serviceability (Internal)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Serviceability (Internal)": {
+      "main": [
+        [
+          {
+            "node": "Is Serviceable?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Serviceable?": {
+      "main": [
+        [
+          {
+            "node": "Save Request to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Request to DB": {
+      "main": [
+        [
+          {
+            "node": "Calculate HVAC Pricing (Internal)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate HVAC Pricing (Internal)": {
+      "main": [
+        [
+          {
+            "node": "Save Result to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Result to DB": {
+      "main": [
+        [
+          {
+            "node": "Format Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7c2679bd-99a4-4bea-923a-7932ac4857c9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "67fff6fedb2560bb0cc951bbef12209da21d57f116f06769290d3af2f8aff3c2"
+  },
+  "id": "J2YFMo9j3eyGBlxN",
+  "tags": [
+    {
+      "updatedAt": "2026-03-25T21:40:37.487Z",
+      "createdAt": "2026-03-25T21:40:37.487Z",
+      "id": "0omPy6JzkYTgd0Hu",
+      "name": "flynerd ai agency"
+    }
+  ]
+}

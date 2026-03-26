@@ -1,0 +1,293 @@
+{
+  "name": "water_damage_estimate_subworkflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "be157c1d-c62b-4492-b725-570e314c3dff",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        208,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let input = $input.first().json;\nif (input.input && typeof input.input === 'string') { try { input = JSON.parse(input.input); } catch(e) {} }\nconst errors = [];\nif (!input.session_key) errors.push('session_key required');\nif (!input.zip || !/^\\d{5}$/.test(input.zip)) errors.push('A valid 5-digit ZIP code is required.');\nif (!input.issue_type) errors.push('issue_type required');\nreturn { json: { ...input, niche: 'water_damage', valid: errors.length === 0, errors } };"
+      },
+      "id": "b125ba23-5cad-4023-b3b7-485924260b31",
+      "name": "Validate Water Damage Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "856f3dc4-9e35-4355-b474-de2df55d23bb",
+      "name": "IsValid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        656,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const err = $input.first().json;\nreturn { \n  json: {\n    success: false,\n    error: 'Validation failed',\n    details: err.errors.join(', ')\n  }\n};"
+      },
+      "id": "e62a45ae-3933-44e0-9458-370a3643f52e",
+      "name": "Return Validation Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        976
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst zip = input.zip || '';\n\n// Add your serviceable ZIP codes here if you want to restrict service\nconst allowedZips = []; // Empty array means all ZIPs allowed for now\n\nlet serviceable = true;\nif (allowedZips.length > 0 && !allowedZips.includes(zip)) {\n  serviceable = false;\n}\n\nreturn {\n  json: {\n    ...input,\n    serviceable: serviceable,\n    service_message: serviceable ? 'In service area' : 'Out of service area'\n  }\n};\n"
+      },
+      "id": "889dbff2-f289-4591-b9fd-d966a93b1376",
+      "name": "Check Serviceability (Internal)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        736
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.serviceable }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "41ec5484-34e1-4095-95c7-4ec6ab81dbef",
+      "name": "Is Serviceable?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        736
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "estimate_requests",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "=={{ $json.session_key }}"
+            },
+            {
+              "fieldId": "niche",
+              "fieldValue": "=={{ $json.niche }}"
+            },
+            {
+              "fieldId": "request_payload_json",
+              "fieldValue": "=={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "0c94aca7-ed07-4a1d-a012-389c6afdec54",
+      "name": "Save Request to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        608
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst issue = (input.issue_type || '').toLowerCase();\nlet low=500, high=1500, action='schedule_diagnostic', cta='We should schedule an assessment to check moisture levels.';\nlet disclaimer = \"Estimates vary heavily based on square footage and category of water.\";\n\nif (issue.includes('flood') || issue.includes('sewage') || issue.includes('emergency')) {\n    low = 2500; high = 5000; action = 'dispatch_emergency';\n    cta = 'Water damage spreads quickly. Our mitigation team can be dispatched immediately.';\n} else if (issue.includes('restoration') || issue.includes('mold') || issue.includes('full')) {\n    low = 5000; high = 20000; action = 'schedule_consultation';\n    cta = 'For full restoration, we will need to schedule a comprehensive site evaluation.';\n}\nreturn { json: { ...input, estimate_low: low, estimate_high: high, estimate_range: \"$\" + low + \" - $\" + high, action, disclaimer, next_message: cta } };"
+      },
+      "id": "bc7532b4-d923-4e4f-8a65-276ee8a69b2a",
+      "name": "Calculate Water Damage Pricing (Internal)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "estimate_requests",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "niche",
+              "fieldValue": "=={{ $json.niche }}"
+            }
+          ]
+        }
+      },
+      "id": "6ed4fa41-4b82-44af-84e8-48d30187037b",
+      "name": "Save Result to DB",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        608
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "KTJh7KMge2l7hvlh",
+          "name": "Supabase AgencyLead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = $input.first().json;\n\nreturn {\n  json: {\n    success: true,\n    estimate_data: {\n        low: result.estimate_low,\n        high: result.estimate_high,\n        range: result.estimate_range,\n        action: result.action\n    },\n    disclaimer: result.disclaimer,\n    summary: `Based on what you've told me, you can expect costs around ${result.estimate_range}. ${result.next_message}`\n  }\n};"
+      },
+      "id": "ba82660e-aba8-4094-b3df-9fc52f23c6bf",
+      "name": "Format Final Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        608
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate Water Damage Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Water Damage Input": {
+      "main": [
+        [
+          {
+            "node": "IsValid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IsValid?": {
+      "main": [
+        [
+          {
+            "node": "Check Serviceability (Internal)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Serviceability (Internal)": {
+      "main": [
+        [
+          {
+            "node": "Is Serviceable?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Serviceable?": {
+      "main": [
+        [
+          {
+            "node": "Save Request to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Request to DB": {
+      "main": [
+        [
+          {
+            "node": "Calculate Water Damage Pricing (Internal)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Water Damage Pricing (Internal)": {
+      "main": [
+        [
+          {
+            "node": "Save Result to DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Result to DB": {
+      "main": [
+        [
+          {
+            "node": "Format Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "673e9670-ce88-45e2-9a0e-a81c6c2e46d0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "67fff6fedb2560bb0cc951bbef12209da21d57f116f06769290d3af2f8aff3c2"
+  },
+  "id": "wkflw_water_damage_101",
+  "tags": []
+}

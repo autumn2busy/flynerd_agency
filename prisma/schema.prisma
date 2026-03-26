@@ -11,9 +11,12 @@ model AgencyLead {
   id                  String    @id @default(uuid())
   businessName        String
   niche               String
+  location            String?
   contactEmail        String?
   contactPhone        String?
-  placeId             String    @unique
+  placeId             String?   @unique
+  leadSource          String    @default("COLD") // COLD or INBOUND
+  sessionId           String?
   status              String    @default("PROSPECT")
   scoutData           Json?
   intelScore          Int?
@@ -25,4 +28,5 @@ model AgencyLead {
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
   validUntil          DateTime?
+  lastInteraction     DateTime?
 }
