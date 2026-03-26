@@ -117,6 +117,7 @@ export default function ChatScenario() {
     const [leadCaptured, setLeadCaptured] = useState(false);
     const [captureForm, setCaptureForm] = useState({ firstName: "", businessName: "", websiteUrl: "", email: "", niche: "" });
     const [captureSubmitting, setCaptureSubmitting] = useState(false);
+    const [nicheDropdownOpen, setNicheDropdownOpen] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -281,18 +282,35 @@ export default function ChatScenario() {
                                                 onChange={(e) => setCaptureForm((f) => ({ ...f, email: e.target.value }))}
                                                 placeholder="you@company.com"
                                                 className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
-                                            <select required value={captureForm.niche}
-                                                onChange={(e) => setCaptureForm((f) => ({ ...f, niche: e.target.value }))}
-                                                className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-white outline-none focus:ring-1 focus:ring-[#E8B923]/30 appearance-none"
-                                                style={{ colorScheme: "dark" }}>
-                                                <option value="" disabled>Select your industry</option>
-                                                <option value="HVAC">HVAC</option>
-                                                <option value="Plumbing">Plumbing</option>
-                                                <option value="Water Damage Restoration">Water Damage Restoration</option>
-                                                <option value="Personal Injury Law">Personal Injury Law</option>
-                                                <option value="Senior Home Care">Senior Home Care</option>
-                                                <option value="Other">Other</option>
-                                            </select>
+                                            <div className="relative">
+                                                <button type="button"
+                                                    onClick={() => setNicheDropdownOpen((o) => !o)}
+                                                    className="w-full bg-white/5 rounded-lg px-4 py-2.5 text-sm text-left outline-none focus:ring-1 focus:ring-[#E8B923]/30 flex items-center justify-between"
+                                                    style={{ color: captureForm.niche ? "#fff" : "rgba(255,255,255,0.3)" }}>
+                                                    {captureForm.niche || "Select your industry"}
+                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={`transition-transform ${nicheDropdownOpen ? "rotate-180" : ""}`}>
+                                                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </button>
+                                                {nicheDropdownOpen && (
+                                                    <ul className="absolute z-30 mt-1 w-full rounded-lg overflow-hidden border border-white/10"
+                                                        style={{ background: "#1a1a1a" }}>
+                                                        {["HVAC", "Plumbing", "Water Damage Restoration", "Personal Injury Law", "Senior Home Care", "Other"].map((opt) => (
+                                                            <li key={opt}>
+                                                                <button type="button"
+                                                                    onClick={() => { setCaptureForm((f) => ({ ...f, niche: opt })); setNicheDropdownOpen(false); }}
+                                                                    className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-white/10 transition-colors">
+                                                                    {opt}
+                                                                </button>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                                <input type="text" required tabIndex={-1} value={captureForm.niche}
+                                                    onChange={() => {}}
+                                                    className="absolute inset-0 opacity-0 pointer-events-none"
+                                                    aria-hidden="true" />
+                                            </div>
                                             <button type="submit" disabled={captureSubmitting}
                                                 className="w-full text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"
                                                 style={{ background: accentColor, color: "#000" }}>
