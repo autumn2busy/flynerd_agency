@@ -183,7 +183,9 @@ export default function ChatScenario() {
                                             ? { background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.85)", borderBottomRightRadius: "4px" }
                                             : { background: `${accentColor}18`, color: "rgba(255,255,255,0.85)", border: `1px solid ${accentColor}25`, borderBottomLeftRadius: "4px" }
                                         }>
-                                        {msg.content}
+                                        {msg.role === "assistant" && msg.content.includes("Book a Strategy Call")
+                                            ? msg.content.replace(/\*{0,2}Book a Strategy Call\*{0,2}/g, "").trim()
+                                            : msg.content}
                                     </div>
                                     {msg.role === "assistant" && msg.content.includes("Book a Strategy Call") && (
                                         <Link href="/contact"
