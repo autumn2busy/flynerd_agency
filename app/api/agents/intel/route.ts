@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import Groq from "groq-sdk";
+import Anthropic from "@anthropic-ai/sdk";
+import { buildIntelPrompt, INTEL_PROMPT_VERSION } from "@/lib/prompts";
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // POST /api/agents/intel
 export async function POST(req: Request) {
@@ -71,7 +70,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Prepare reviews for OpenAI analysis
+    // 2. Prepare reviews for analysis
     let reviewsText = "No reviews available.";
     if (reviews.length > 0) {
       reviewsText = reviews
@@ -80,31 +79,25 @@ export async function POST(req: Request) {
     }
 
     // 3. AI Analysis (Intel Agent Core)
-    const prompt = `
-    Analyze the following reviews and rating for "${businessName}" (${rating} stars).
-    The business currently has NO official website.
-    
-    1. Determine a "Web Opportunity Score" from 0 to 100 on how badly they need a website and how likely they are to buy one based on their reputation.
-    2. Extract up to 3 key pain points or customer complaints from these reviews that a professional website could help solve (e.g., "hard to find contact info", "unclear pricing formatting").
-
-    Return the analysis strictly in the following JSON format:
-    {
-      "opportunityScore": 85,
-      "painPoints": ["Customer couldn't find...", "No pricing visible..."],
-      "reputationSummary": "A brief 1-sentence summary of their online reputation."
-    }
-
-    Reviews:
-    ${reviewsText}
-    `;
-
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [{ role: "user", content: prompt }],
-      response_format: { type: "json_object" },
+    const systemPrompt = buildIntelPrompt({
+      businessName: businessName || "Unknown",
+      rating,
+      reviewCount: userRatingCount || reviews.length,
+      contextHint: "No official website detected.",
+      reviewsText,
     });
 
-    const aiAnalysisRaw = completion.choices[0]?.message?.content || "{}";
+    const completion = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 1024,
+      system: systemPrompt,
+      messages: [{ role: "user", content: "Analyze this business and return the JSON." }],
+    });
+
+    const aiAnalysisRaw =
+      completion.content[0]?.type === "text"
+        ? completion.content[0].text.trim()
+        : "{}";
     const aiAnalysis = JSON.parse(aiAnalysisRaw);
 
     // 4. Update the DB: AgencyLead
