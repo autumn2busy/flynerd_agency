@@ -19,6 +19,7 @@ type ChatMessage = {
 const scenarios = [
     {
         niche: "HVAC",
+        label: "HVAC",
         time: "2:14 AM",
         icon: "🔧",
         accentColor: "#dc2626",
@@ -32,31 +33,63 @@ const scenarios = [
         ] as Message[],
     },
     {
-        niche: "Med Spa",
-        time: "11:47 PM",
-        icon: "💆",
-        accentColor: "#10b981",
+        niche: "Plumbing",
+        label: "Plumbing",
+        time: "11:32 PM",
+        icon: "🪠",
+        accentColor: "#3b82f6",
         messages: [
-            { from: "customer", text: "Do you have availability for a HydraFacial this Saturday?", delay: 0 },
-            { from: "ai", text: "We have Saturday at 10 AM or 2 PM available. Which works better for you?", delay: 1200 },
-            { from: "customer", text: "10 AM! How long does it take?", delay: 2200 },
-            { from: "ai", text: "About 60 minutes. I've reserved 10 AM for you — can I get your name to confirm?", delay: 3400 },
-            { from: "customer", text: "Maya Johnson", delay: 4200 },
-            { from: "ai", text: "✓ Confirmed for Maya — Saturday 10 AM HydraFacial. See you then! 🌿", delay: 5200 },
+            { from: "customer", text: "My kitchen sink is backed up and water is pooling. Can someone come tonight?", delay: 0 },
+            { from: "ai", text: "We can get a technician out first thing tomorrow at 7 AM. Is the water contained or spreading?", delay: 1200 },
+            { from: "customer", text: "It's contained in the sink for now. 7 AM works.", delay: 2400 },
+            { from: "ai", text: "Got it. Is this a single drain backup or are other drains slow too?", delay: 3600 },
+            { from: "customer", text: "Just the kitchen sink.", delay: 4400 },
+            { from: "ai", text: "✓ Booked for 7:00 AM — kitchen drain service. We'll text you a 30-minute arrival window.", delay: 5400 },
         ] as Message[],
     },
     {
-        niche: "Law Firm",
+        niche: "Water Damage Restoration",
+        label: "Water Damage",
+        time: "3:47 AM",
+        icon: "💧",
+        accentColor: "#06b6d4",
+        messages: [
+            { from: "customer", text: "A pipe burst in our basement. There's standing water everywhere.", delay: 0 },
+            { from: "ai", text: "I'm sorry to hear that. Is the water still actively flowing or has it been shut off?", delay: 1200 },
+            { from: "customer", text: "We shut off the main valve. But there's at least 2 inches of water down there.", delay: 2400 },
+            { from: "ai", text: "Good call shutting the valve. We can have an extraction crew there by 6 AM. How large is the affected area?", delay: 3600 },
+            { from: "customer", text: "Maybe 400 square feet — the whole finished basement.", delay: 4800 },
+            { from: "ai", text: "✓ Emergency crew booked for 6:00 AM — full extraction + moisture assessment. Don't move anything yet, we'll document for insurance.", delay: 5800 },
+        ] as Message[],
+    },
+    {
+        niche: "Personal Injury Law",
+        label: "Personal Injury",
         time: "9:52 PM",
         icon: "⚖️",
         accentColor: "#E8B923",
         messages: [
-            { from: "customer", text: "I was in a car accident today. Do you handle personal injury cases?", delay: 0 },
-            { from: "ai", text: "Yes, personal injury is our specialty. Was anyone injured and was a police report filed?", delay: 1200 },
-            { from: "customer", text: "I was injured and yes, police came. I'm not sure what to do next.", delay: 2400 },
-            { from: "ai", text: "Don't worry — we'll walk you through everything. I can book a free consultation tomorrow morning. Would 9 or 11 AM work?", delay: 3800 },
-            { from: "customer", text: "9 AM please", delay: 4800 },
-            { from: "ai", text: "✓ Free consultation booked for 9 AM. Keep all documentation — we'll handle the rest.", delay: 5800 },
+            { from: "customer", text: "I was rear-ended on the highway today. Do you handle auto accident cases?", delay: 0 },
+            { from: "ai", text: "Yes, auto accidents are our focus. Were you injured, and did you get a police report?", delay: 1200 },
+            { from: "customer", text: "My neck and back are hurting. Yes, police filed a report.", delay: 2400 },
+            { from: "ai", text: "Important — see a doctor within 48 hours if you haven't already. I can book you a free case evaluation tomorrow. Would 9 AM or 2 PM work?", delay: 3800 },
+            { from: "customer", text: "9 AM please.", delay: 4800 },
+            { from: "ai", text: "✓ Free consultation booked for 9 AM. Bring the police report and any medical records. We'll handle the rest.", delay: 5800 },
+        ] as Message[],
+    },
+    {
+        niche: "Senior Home Care",
+        label: "Senior Care",
+        time: "8:15 PM",
+        icon: "🏠",
+        accentColor: "#10b981",
+        messages: [
+            { from: "customer", text: "My mother just came home from hip surgery. She needs help around the house — do you offer in-home care?", delay: 0 },
+            { from: "ai", text: "Absolutely. We provide post-surgical in-home support. Does she need help with mobility, meals, or medication reminders?", delay: 1200 },
+            { from: "customer", text: "All three honestly. She lives alone and can't get around on her own yet.", delay: 2400 },
+            { from: "ai", text: "We can match her with a caregiver for daily visits or live-in support. Would you like to start with a free care assessment this week?", delay: 3800 },
+            { from: "customer", text: "Yes, as soon as possible.", delay: 4800 },
+            { from: "ai", text: "✓ Care assessment booked for tomorrow at 10 AM at her home. Our coordinator will call you beforehand to confirm details.", delay: 5800 },
         ] as Message[],
     },
 ];
@@ -81,6 +114,9 @@ export default function ChatScenario() {
     const [sessionId] = useState(generateSessionId);
     const [messageCount, setMessageCount] = useState(0);
     const [limitReached, setLimitReached] = useState(false);
+    const [emailCaptured, setEmailCaptured] = useState(false);
+    const [captureEmail, setCaptureEmail] = useState("");
+    const [captureSubmitting, setCaptureSubmitting] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -202,12 +238,48 @@ export default function ChatScenario() {
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
                             <div className="max-w-[85%] px-5 py-4 rounded-2xl rounded-bl-sm text-[15px] leading-relaxed space-y-3"
                                 style={{ background: `${accentColor}18`, border: `1px solid ${accentColor}30` }}>
-                                <p className="text-white/85">Impressed? That was just the demo. Imagine this working 24/7 for <em>your</em> business.</p>
-                                <Link href="/contact"
-                                    className="inline-flex items-center gap-1.5 text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97]"
-                                    style={{ background: accentColor, color: "#000" }}>
-                                    Book a Strategy Call <ArrowUpRight size={12} />
-                                </Link>
+                                {!emailCaptured ? (
+                                    <>
+                                        <p className="text-white/85 font-semibold">Want to see this for your business?</p>
+                                        <form onSubmit={async (e) => {
+                                            e.preventDefault();
+                                            if (!captureEmail.trim() || captureSubmitting) return;
+                                            setCaptureSubmitting(true);
+                                            try {
+                                                await fetch("/api/demo-lead", {
+                                                    method: "POST",
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify({
+                                                        email: captureEmail.trim(),
+                                                        niche: "General",
+                                                        sessionId,
+                                                    }),
+                                                });
+                                            } catch { /* never block UI */ }
+                                            setEmailCaptured(true);
+                                            setCaptureSubmitting(false);
+                                        }} className="flex gap-2">
+                                            <input type="email" required value={captureEmail}
+                                                onChange={(e) => setCaptureEmail(e.target.value)}
+                                                placeholder="you@company.com"
+                                                className="flex-1 bg-white/5 rounded-full px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-1 focus:ring-[#E8B923]/30" />
+                                            <button type="submit" disabled={captureSubmitting}
+                                                className="text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50 whitespace-nowrap"
+                                                style={{ background: accentColor, color: "#000" }}>
+                                                {captureSubmitting ? "..." : "Get My Free Demo"}
+                                            </button>
+                                        </form>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className="text-white/85">Impressed? That was just the demo. Imagine this working 24/7 for <em>your</em> business.</p>
+                                        <Link href="/contact"
+                                            className="inline-flex items-center gap-1.5 text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97]"
+                                            style={{ background: accentColor, color: "#000" }}>
+                                            Book a Strategy Call <ArrowUpRight size={12} />
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </motion.div>
                     )}
@@ -306,7 +378,7 @@ export default function ChatScenario() {
                                         color: mode === "demo" && activeScenario === i ? s.accentColor : "rgba(255,255,255,0.4)",
                                     }}
                                 >
-                                    <span>{s.icon}</span> {s.niche}
+                                    <span>{s.icon}</span> {s.label}
                                 </button>
                             ))}
                         </div>
@@ -383,7 +455,7 @@ export default function ChatScenario() {
                                     <div className="flex items-center gap-1.5">
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />
                                         <span className="text-xs text-[#10b981]">
-                                            {mode === "live" ? "Online · Live Demo" : `Online · ${scenario.niche}`}
+                                            {mode === "live" ? "Online · Live Demo" : `Online · ${scenario.label}`}
                                         </span>
                                     </div>
                                 </div>
