@@ -247,17 +247,19 @@ export default function ChatScenario() {
                                             if (captureSubmitting) return;
                                             setCaptureSubmitting(true);
                                             try {
+                                                const payload = {
+                                                    firstName: captureForm.firstName.trim(),
+                                                    businessName: captureForm.businessName.trim(),
+                                                    websiteUrl: captureForm.websiteUrl.trim(),
+                                                    email: captureForm.email.trim(),
+                                                    niche: captureForm.niche,
+                                                    sessionId,
+                                                };
+                                                console.log("[ChatScenario] Submitting:", payload);
                                                 await fetch("/api/demo-lead", {
                                                     method: "POST",
                                                     headers: { "Content-Type": "application/json" },
-                                                    body: JSON.stringify({
-                                                        firstName: captureForm.firstName.trim(),
-                                                        businessName: captureForm.businessName.trim(),
-                                                        websiteUrl: captureForm.websiteUrl.trim(),
-                                                        email: captureForm.email.trim(),
-                                                        niche: captureForm.niche,
-                                                        sessionId,
-                                                    }),
+                                                    body: JSON.stringify(payload),
                                                 });
                                             } catch { /* never block UI */ }
                                             setLeadCaptured(true);
@@ -289,6 +291,7 @@ export default function ChatScenario() {
                                                 <option value="Water Damage Restoration">Water Damage Restoration</option>
                                                 <option value="Personal Injury Law">Personal Injury Law</option>
                                                 <option value="Senior Home Care">Senior Home Care</option>
+                                                <option value="Other">Other</option>
                                             </select>
                                             <button type="submit" disabled={captureSubmitting}
                                                 className="w-full text-xs font-bold px-5 py-2.5 rounded-full transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"

@@ -20,6 +20,7 @@ const VALID_NICHES = [
   "Water Damage Restoration",
   "Personal Injury Law",
   "Senior Home Care",
+  "Other",
 ];
 
 const isDev = process.env.NODE_ENV === "development";
@@ -28,8 +29,9 @@ export async function POST(req: Request) {
   const debugLog: string[] = [];
 
   try {
-    const { firstName, businessName, websiteUrl, email, niche, sessionId } =
-      await req.json();
+    const body = await req.json();
+    console.log("[demo-lead] Received:", JSON.stringify(body, null, 2));
+    const { firstName, businessName, websiteUrl, email, niche, sessionId } = body;
 
     // Validate required fields
     if (!firstName?.trim()) {
