@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import Groq from "groq-sdk";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
+import { buildCloserSystemPrompt, CLOSER_PROMPT_VERSION } from "@/lib/prompts";
 import {
   upsertContact,
   addTagToContact,
@@ -9,7 +9,7 @@ import {
   updateDealStage,
 } from "@/lib/activecampaign";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // ActiveCampaign Stage IDs (Flynerd Auto-Pilot Pipeline)
 const STAGE_NEGOTIATING = "12";
@@ -96,51 +96,6 @@ Best next step: https://www.flynerd.tech/contact or https://www.flynerd.tech/pri
 - Never reveal internal pipeline or agent architecture to prospects
 `;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SYSTEM PROMPT
-// ─────────────────────────────────────────────────────────────────────────────
-function buildSystemPrompt(businessName: string): string {
-  return `You are Jordan, a senior Sales Executive at FlyNerd Tech — an Atlanta-based AI automation agency.
-You are responding to an inbound email from ${businessName}, a local business owner who received our personalized demo.
-
-Your personality: confident, knowledgeable, genuinely helpful, zero fluff. You write like a real human — not corporate, not salesy.
-Your goal: answer their question accurately, move them toward booking a call or the right package.
-
-CRITICAL RULES:
-1. Answer ONLY what was asked. Do not volunteer unrelated information.
-2. Use ONLY the pricing and service details from the knowledge base below. Never invent numbers.
-3. If asked about cost, always recommend starting with the $495 Automation Audit as the lowest-risk entry point, then explain the relevant build package.
-4. If asked what you do or what services you offer, describe the AI automation and workflow systems — NOT just the demo website.
-5. If the question is outside your knowledge base (e.g., a general industry question about AI, automation trends, or tech best practices), answer as a knowledgeable expert. You have deep knowledge of AI automation, n8n, ActiveCampaign, make.com, Zapier, CRM systems, and local business marketing.
-6. NEVER include meta-commentary, notes, or explanations about your response (e.g. "This email aims to..."). Return ONLY the email body text.
-7. Keep replies under 150 words unless the question genuinely requires more detail.
-8. Always end with a clear single next step — book a call, reply with questions, or a relevant package link. Never end with multiple CTAs.
-9. Sign off as: Jordan | FlyNerd Tech
-
-FORMATTING RULES (critical — this is a plain text email):
-- Use blank lines between paragraphs (one empty line = paragraph break).
-- Do NOT use markdown: no **, no ##, no bullet dashes, no asterisks.
-- If listing items, write them as separate lines with a simple dash or number, each on its own line with a blank line before and after the list.
-- Do NOT use \n literally — just write natural paragraph breaks.
-- Do NOT use HTML tags.
-- The email must read cleanly in a standard Gmail inbox as plain text.
-
-EXAMPLE of correct formatting:
-Hi [Name],
-
-Great question. Here is what that includes:
-
-- Item one
-- Item two
-- Item three
-
-Ready to move forward? Reply here and I will get you set up.
-
-Jordan | FlyNerd Tech
-
-KNOWLEDGE BASE:
-${FLYNERD_KB}`;
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // HELPERS — extract clean fields from n8n Gmail trigger payload
@@ -237,36 +192,28 @@ async function saveThreadMessage(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GROQ with OpenAI fallback
+// Claude Sonnet — primary LLM for closer agent
 // ─────────────────────────────────────────────────────────────────────────────
 async function generateReply(
   systemPrompt: string,
   messages: Array<{ role: string; content: string }>
 ): Promise<string> {
   const formattedMessages = messages.map((m) => ({
-    role: m.role as "user" | "assistant" | "system",
+    role: m.role as "user" | "assistant",
     content: m.content,
   }));
 
-  try {
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [{ role: "system", content: systemPrompt }, ...formattedMessages],
-      temperature: 0.4, // Lower = more factual, less hallucination
-      max_tokens: 600,
-    });
-    return completion.choices[0]?.message?.content?.trim() || "";
-  } catch (groqErr: any) {
-    console.warn("[Closer] Groq failed, falling back to OpenAI:", groqErr.message);
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const fallback = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "system", content: systemPrompt }, ...formattedMessages],
-      temperature: 0.4,
-      max_tokens: 600,
-    });
-    return fallback.choices[0]?.message?.content?.trim() || "";
-  }
+  const completion = await anthropic.messages.create({
+    model: "claude-sonnet-4-6",
+    system: systemPrompt,
+    messages: formattedMessages,
+    temperature: 0.4,
+    max_tokens: 600,
+  });
+
+  return completion.content[0]?.type === "text"
+    ? completion.content[0].text.trim()
+    : "";
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -325,7 +272,7 @@ export async function POST(req: Request) {
     ];
 
     // Generate AI reply
-    const systemPrompt = buildSystemPrompt(businessName);
+    const systemPrompt = buildCloserSystemPrompt(businessName, FLYNERD_KB);
     const aiReplyDraft = await generateReply(systemPrompt, messages);
 
     if (!aiReplyDraft) {
