@@ -4,11 +4,19 @@ import Anthropic from "@anthropic-ai/sdk";
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rate limiting: 5 messages per IP per hour (in-memory)
+// Rate limiting: 20 messages per IP per hour (in-memory)
 // ─────────────────────────────────────────────────────────────────────────────
 const ipRateMap = new Map<string, { count: number; resetAt: number }>();
 
+const bypassIps = new Set([
+    "127.0.0.1",
+    "::1",
+    ...(process.env.RATE_LIMIT_BYPASS_IPS?.split(",").map((s) => s.trim()) || []),
+]);
+
 function isRateLimited(ip: string): boolean {
+    if (bypassIps.has(ip)) return false;
+
     const now = Date.now();
     const entry = ipRateMap.get(ip);
 
@@ -17,7 +25,7 @@ function isRateLimited(ip: string): boolean {
         return false;
     }
 
-    if (entry.count >= 5) return true;
+    if (entry.count >= 20) return true;
 
     entry.count++;
     return false;
@@ -123,4 +131,16 @@ export async function POST(req: Request) {
             { status: 500 }
         );
     }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /api/chat-demo — Reset rate limits (admin only)
+// ─────────────────────────────────────────────────────────────────────────────
+export async function GET(req: Request) {
+    const secret = req.headers.get("x-admin-secret");
+    if (!secret || secret !== process.env.ADMIN_SECRET) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    ipRateMap.clear();
+    return NextResponse.json({ success: true, message: "Rate limits cleared" });
 }
