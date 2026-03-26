@@ -453,11 +453,18 @@ export default function ChatScenario() {
                         </motion.div>
 
                         {/* Message counter */}
-                        <p className="text-center text-xs text-white/40 mt-5">
-                            {mode === "live"
-                                ? `${MAX_MESSAGES - messageCount} messages remaining · Powered by Claude`
-                                : "Tap a scenario to replay ↑"}
-                        </p>
+                        <div className="text-center mt-5">
+                            <p className="text-xs text-white/40">
+                                {mode === "live"
+                                    ? `${MAX_MESSAGES - messageCount} of ${MAX_MESSAGES} messages remaining · Powered by Claude`
+                                    : "Tap a scenario to replay ↑"}
+                            </p>
+                            {mode === "live" && (
+                                <p className="text-[10px] text-white/25 mt-1">
+                                    Demo capped at {MAX_MESSAGES} messages per visitor to block bots and keep costs fair.
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
