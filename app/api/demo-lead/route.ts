@@ -3,13 +3,11 @@ import {
   upsertContact,
   addTagToContact,
   createDeal,
-  updateDealField,
 } from "@/lib/activecampaign";
 
 // ActiveCampaign IDs — FlyNerd Inbound pipeline
 const AC_PIPELINE_INBOUND = "4";
 const AC_STAGE_DEMO_COMPLETED = "17";
-const AC_FIELD_LEADNICHE = "18";
 
 export async function POST(req: Request) {
   try {
@@ -35,20 +33,15 @@ export async function POST(req: Request) {
         addTagToContact(contactId, "inbound_demo"),
       ]);
 
-      // d. Create deal — value in cents ($1,250 = 125000)
-      const dealRes = await createDeal(
+      // d. Create deal with DEAL_LEADNICHE inline — value in cents ($1,250 = 125000)
+      await createDeal(
         contactId,
         `Demo Lead - ${nicheLabel}`,
         125000,
         AC_PIPELINE_INBOUND,
         AC_STAGE_DEMO_COMPLETED,
+        [{ customFieldId: 18, fieldValue: nicheLabel }],
       );
-
-      // e. Set DEAL_LEADNICHE custom field
-      const dealId = dealRes.deal?.id;
-      if (dealId) {
-        await updateDealField(dealId, AC_FIELD_LEADNICHE, nicheLabel);
-      }
     }
 
     return NextResponse.json({ success: true });
