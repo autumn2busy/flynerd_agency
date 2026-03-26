@@ -99,7 +99,7 @@ export async function subscribeContactToList(contactId: string, listId: string) 
   return res.json();
 }
 
-export async function createDeal(contactId: string, title: string, value: number, pipelineId: string = "1", stageId: string = "1", fields?: Array<{ customFieldId: number; fieldValue: string }>, description?: string) {
+export async function createDeal(contactId: string, title: string, value: number, pipelineId: string = "1", stageId: string = "1", fields?: Array<{ customFieldId: number; fieldValue: string }>, description?: string, owner?: string) {
   const payload = {
     deal: {
       contact: contactId,
@@ -111,6 +111,7 @@ export async function createDeal(contactId: string, title: string, value: number
       status: 0, // Open
       ...(fields && { fields }),
       ...(description && { description }),
+      ...(owner && { owner }),
     },
   };
   console.log("[AC] createDeal payload:", JSON.stringify(payload, null, 2));

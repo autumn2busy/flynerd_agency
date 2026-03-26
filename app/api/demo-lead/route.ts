@@ -104,6 +104,7 @@ export async function POST(req: Request) {
       AC_STAGE_DEMO_COMPLETED,
       dealFields,
       `Website: ${websiteUrl.trim()} | Session: ${sessionId || "unknown"}`,
+      "4",
     );
 
     if (dealRes.error) {
