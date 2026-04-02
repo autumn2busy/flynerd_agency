@@ -8,25 +8,196 @@ datasource db {
 }
 
 model AgencyLead {
-  id                  String    @id @default(uuid())
-  businessName        String
-  niche               String
-  location            String?
-  contactEmail        String?
-  contactPhone        String?
-  placeId             String?   @unique
-  leadSource          String    @default("COLD") // COLD or INBOUND
-  sessionId           String?
-  status              String    @default("PROSPECT")
-  scoutData           Json?
-  intelScore          Int?
-  intelData           Json?
-  demoSiteUrl         String?
-  walkthroughVideoUrl String?
-  outreachHistory     Json?
-  paymentLink         String?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  validUntil          DateTime?
-  lastInteraction     DateTime?
+  id                    String    @id @default(uuid())
+  businessName          String
+  niche                 String
+  contactEmail          String?
+  contactPhone          String?
+  placeId               String?   @unique
+  status                String    @default("PROSPECT")
+  scoutData             Json?
+  intelScore            Int?
+  intelData             Json?
+  demoSiteUrl           String?
+  walkthroughVideoUrl   String?
+  outreachHistory       Json?
+  paymentLink           String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  validUntil            DateTime?
+  stage                 String?
+  lead_type             String?
+  priority              String?
+  system_down           Boolean?  @default(false)
+  issue_type            String?
+  equipment_type        String?
+  urgency               String?
+  preferred_time_window String?
+  service_address       String?
+  zip                   String?
+  name                  String?
+  phone                 String?
+  email                 String?
+  consent_to_contact    Boolean?  @default(false)
+  consent_timestamp     DateTime? @db.Timestamptz(6)
+  after_hours           Boolean?  @default(false)
+  source_url            String?
+  utm_source            String?
+  utm_medium            String?
+  utm_campaign          String?
+  chat_summary          String?
+  chat_transcript       String?
+  session_key           String?   @unique(map: "agency_lead_session_key_uidx")
+  lastInteraction       DateTime?
+  leadSource            String    @default("COLD")
+  location              String?
+  sessionId             String?
+
+  @@index([email], map: "agency_lead_email_idx")
+  @@index([phone], map: "agency_lead_phone_idx")
+  @@index([stage], map: "agency_lead_stage_idx")
+}
+
+model Client {
+  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  businessName            String
+  contactName             String?
+  contactEmail            String?
+  contactPhone            String?
+  niche                   String?
+  city                    String?
+  status                  String    @default("ONBOARDING")
+  plan                    String    @default("MAINTENANCE")
+  services                Json?
+  monthlyRate             Decimal?  @db.Decimal
+  siteUrl                 String?
+  vercelProjectId         String?
+  vercelProjectName       String?
+  previousPlatform        String?
+  seoBaseline             Json?
+  originLeadId            String?
+  activeCampaignContactId String?
+  activeCampaignDealId    String?
+  onboardedAt             DateTime? @db.Timestamptz(6)
+  nextReviewDate          DateTime? @db.Timestamptz(6)
+  clientData              Json?
+  createdAt               DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt               DateTime  @default(now()) @db.Timestamptz(6)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model agent_logs {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lead_id     String?
+  agent_name  String
+  status      String
+  error       String?
+  duration_ms Int?
+  metadata    Json?
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([agent_name], map: "idx_al_agent_name")
+  @@index([created_at(sort: Desc)], map: "idx_al_created_at")
+  @@index([lead_id], map: "idx_al_lead_id")
+  @@index([status], map: "idx_al_status")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model email_conversation_threads {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  thread_id  String
+  lead_email String
+  role       String
+  content    String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at(sort: Desc)], map: "idx_ect_created_at")
+  @@index([lead_email], map: "idx_ect_lead_email")
+  @@index([thread_id], map: "idx_ect_thread_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model estimate_photos {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id       String
+  lead_id          String?   @db.Uuid
+  niche            String
+  storage_path     String
+  signed_url       String?
+  mime_type        String
+  size_bytes       Int?
+  analysis_status  String?   @default("pending")
+  analysis_summary Json?
+  created_at       DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([lead_id], map: "idx_estimate_photos_lead")
+  @@index([session_id], map: "idx_estimate_photos_session")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model estimate_requests {
+  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id           String
+  lead_id              String?            @db.Uuid
+  niche                String
+  estimate_type        String?
+  request_payload_json Json               @default("{}")
+  status               String             @default("pending")
+  created_at           DateTime?          @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime?          @default(now()) @db.Timestamptz(6)
+  estimate_results     estimate_results[]
+
+  @@index([lead_id], map: "idx_estimate_requests_lead")
+  @@index([session_id], map: "idx_estimate_requests_session")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model estimate_results {
+  id                     String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  estimate_request_id    String?            @db.Uuid
+  lead_id                String?            @db.Uuid
+  niche                  String
+  normalized_result_json Json               @default("{}")
+  raw_api_response_json  Json               @default("{}")
+  created_at             DateTime?          @default(now()) @db.Timestamptz(6)
+  estimate_requests      estimate_requests? @relation(fields: [estimate_request_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([lead_id], map: "idx_estimate_results_lead")
+  @@index([estimate_request_id], map: "idx_estimate_results_request")
+}
+
+model kb_items {
+  id         BigInt                 @id @default(autoincrement())
+  niche      String
+  question   String
+  answer     String
+  topic      String?
+  tags       String[]
+  content    String?
+  embedding  Unsupported("vector")?
+  created_at DateTime?              @default(now()) @db.Timestamptz(6)
+
+  @@unique([niche, question])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model lead_messages {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_key String
+  role        String
+  content     String
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([created_at], map: "idx_lead_messages_created_at")
+  @@index([session_key], map: "idx_lead_messages_session_key")
+}
+
+model niches {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key          String   @unique
+  display_name String
+  is_active    Boolean  @default(true)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime @default(now()) @db.Timestamptz(6)
 }
