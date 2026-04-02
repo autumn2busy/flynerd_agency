@@ -99,7 +99,7 @@ export async function subscribeContactToList(contactId: string, listId: string) 
   return res.json();
 }
 
-export async function createDeal(contactId: string, title: string, value: number, pipelineId: string = "1", stageId: string = "1", fields?: Array<{ customFieldId: number; fieldValue: string }>, description?: string, owner?: string) {
+export async function createDeal(contactId: string, title: string, value: number, pipelineId: number | string = 1, stageId: number | string = 1, fields?: Array<{ customFieldId: number; fieldValue: string }>, description?: string, owner?: string | number) {
   const payload = {
     deal: {
       contact: contactId,
@@ -151,7 +151,7 @@ export async function getDealsByContact(contactId: string) {
   return res.json();
 }
 
-export async function updateDealStage(dealId: string, stageId: string) {
+export async function updateDealStage(dealId: string, stageId: number | string) {
   const res = await fetch(`${AC_CONFIG.apiUrl}/api/3/deals/${dealId}`, {
     method: "PUT",
     headers: { "Api-Token": AC_CONFIG.apiKey, "Content-Type": "application/json" },

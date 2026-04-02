@@ -6,8 +6,8 @@ import {
 } from "@/lib/activecampaign";
 
 // ActiveCampaign IDs — FlyNerd Inbound pipeline
-const AC_PIPELINE_INBOUND = "4";
-const AC_STAGE_DEMO_COMPLETED = "17";
+const AC_PIPELINE_INBOUND = 4;
+const AC_STAGE_DEMO_COMPLETED = 17;
 
 // Deal custom field IDs
 const FIELD_DEMOSITEURL = 16;
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
       AC_STAGE_DEMO_COMPLETED,
       dealFields,
       `Website: ${websiteUrl.trim()} | Session: ${sessionId || "unknown"}`,
-      "4",
+      4,
     );
 
     if (dealRes.error) {

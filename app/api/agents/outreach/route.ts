@@ -43,8 +43,8 @@ export async function POST(req: Request) {
     const dealTitle = `AI Web Demo - ${businessName}`;
     const dealValue = 250000; // $2,500.00
     
-    // Using Flynerd Auto-Pilot Pipeline (ID: 3) and 'Outreach Pitched' Stage (ID: 11)
-    const dealRes = await createDeal(contactId, dealTitle, dealValue, "3", "11");
+    // Using Flynerd Auto-Pilot Pipeline (ID: 1) and 'Negotiating' Stage (ID: 12)
+    const dealRes = await createDeal(contactId, dealTitle, dealValue, 1, 12);
     const dealId = dealRes.deal?.id;
     console.log(`[Outreach Agent] Created Deal '${dealTitle}' (ID: ${dealId}) for Contact ${contactId}.`);
 
