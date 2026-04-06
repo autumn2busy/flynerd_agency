@@ -159,7 +159,6 @@ export async function POST(req: Request) {
           await fetch(`${apiUrl}/api/3/dealCustomFieldData`, {
             method: "POST",
             headers,
-            headers,
             body: JSON.stringify({
               dealCustomFieldDatum: {
                 dealId: dealId,

@@ -175,9 +175,10 @@ model kb_items {
   tags       String[]
   content    String?
   embedding  Unsupported("vector")?
-  created_at DateTime?              @default(now()) @db.Timestamptz(6)
+  business_key String?
+  created_at   DateTime?              @default(now()) @db.Timestamptz(6)
 
-  @@unique([niche, question])
+  @@unique([niche, question, business_key])
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -200,4 +201,34 @@ model niches {
   is_active    Boolean  @default(true)
   created_at   DateTime @default(now()) @db.Timestamptz(6)
   updated_at   DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model niche_config {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  niche_key      String   @unique
+  display_name   String
+  category       String
+  system_prompt  String
+  interest_score Int?
+  trend_pct      Float?
+  tier           String   @default("tier_2")
+  pricing_tier   String   @default("standard")
+  is_active      Boolean  @default(true)
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model kb_source {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  niche      String
+  question   String
+  answer     String
+  topic      String?
+  tags       String[]
+  business_key String?
+  is_active    Boolean  @default(true)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  @@unique([niche, question, business_key])
 }
