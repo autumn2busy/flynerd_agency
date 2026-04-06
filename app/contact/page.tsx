@@ -118,6 +118,8 @@ const packageMap: Record<string, string> = {
 export default function ContactPage() {
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const selectedPackage = new URLSearchParams(window.location.search).get("package");
@@ -131,25 +133,32 @@ export default function ContactPage() {
         e.preventDefault();
         
         if (!formData.email || !formData.name) {
-            alert("Please provide your name and email.");
+            setError("Please provide your name and email.");
             return;
         }
 
+        setIsLoading(true);
+        setError(null);
+
         try {
-            const res = await fetch("/api/contact", {
+            const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
 
-            if (res.ok) {
-                setIsSubmitted(true);
-            } else {
-                alert("Something went wrong joining the pipeline. Please try again.");
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || "Something went wrong. Please try again.");
             }
-        } catch (error) {
-            console.error(error);
-            alert("Error submitting the form.");
+
+            console.log("Form submitted successfully");
+            setIsSubmitted(true);
+        } catch (err: any) {
+            console.error("Submission error:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -283,9 +292,19 @@ export default function ContactPage() {
                                     </div>
                                 ))}
 
-                                <button type="submit" className="btn btn-primary w-full text-lg py-4">
-                                    Submit & Book a Call
-                                    <ArrowUpRight size={20} />
+                                {error && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                                        {error}
+                                    </div>
+                                )}
+
+                                <button 
+                                    type="submit" 
+                                    disabled={isLoading}
+                                    className="btn btn-primary w-full text-lg py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isLoading ? "Submitting..." : "Submit & Book a Call"}
+                                    {!isLoading && <ArrowUpRight size={20} />}
                                 </button>
                             </form>
                         </div>

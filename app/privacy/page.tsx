@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                                 <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
                                 <p className="text-[var(--text-secondary)] leading-relaxed">
                                     If you have questions about this Privacy Policy, please contact us at:<br />
-                                    <strong className="text-white">Email:</strong> hello@flynerdtech.com<br />
+                                    <strong className="text-white">Email:</strong> info@flynerdtech.com<br />
                                     <strong className="text-white">Location:</strong> Atlanta, GA
                                 </p>
                             </section>
