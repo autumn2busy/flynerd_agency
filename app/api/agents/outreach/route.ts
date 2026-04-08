@@ -6,7 +6,7 @@ import { upsertContact, addTagToContact, subscribeContactToList, createDeal, upd
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { leadId, businessName, contactEmail, demoSiteUrl, walkthroughVideoUrl } = body;
+    const { leadId, businessName, contactEmail, demoSiteUrl, walkthroughVideoUrl, niche } = body;
 
     if (!leadId || !businessName || !demoSiteUrl) {
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       console.log(`[Outreach Agent] No email for ${businessName}. Skipping.`);
       await prisma.agencyLead.update({
         where: { id: leadId },
-        data: { status: "PITCHED" },
+        data: { status: "OUTREACH_SENT" },
       });
       return NextResponse.json({ message: "No email, marked as pitched." });
     }
@@ -28,33 +28,53 @@ export async function POST(req: Request) {
     // Fetch lead record to get real data (phone, niche, etc.)
     const lead = await prisma.agencyLead.findUnique({ where: { id: leadId } });
     
+    // 1. Create or Update Contact
     const contactRes = await upsertContact(contactEmail, businessName, "Business", lead?.contactPhone || undefined);
     const contactId = contactRes.contact?.id;
 
+    console.log(`[Outreach Agent] Contact Sync Result:`, JSON.stringify(contactRes, null, 2));
+
     if (!contactId) {
-      return NextResponse.json({ error: "Failed to sync contact to ActiveCampaign" }, { status: 500 });
+      console.error("[Outreach Agent] FAILED to get contactId. Response:", contactRes);
+      return NextResponse.json({ 
+        error: "Failed to sync contact to ActiveCampaign",
+        details: contactRes 
+      }, { status: 500 });
     }
 
-    // Subscription
-    await subscribeContactToList(contactId, "29");
-    console.log(`[Outreach Agent] Subscribed Contact ${contactId} to List 29.`);
+    // 2. Subscription
+    const subRes = await subscribeContactToList(contactId, "29");
+    console.log(`[Outreach Agent] Subscription Result for List 29:`, JSON.stringify(subRes, null, 2));
 
-    // 1. CREATE DEAL TO TRIGGER 1:1 AUTOMATION
+    // 3. CREATE DEAL
     const dealTitle = `AI Web Demo - ${businessName}`;
     const dealValue = 250000; // $2,500.00
     
-    // Using Flynerd Auto-Pilot Pipeline (ID: 1) and 'Negotiating' Stage (ID: 12)
-    const dealRes = await createDeal(contactId, dealTitle, dealValue, 1, 12);
+    // Using Flynerd Auto-Pilot Pipeline (ID: 3) and 'To Contact' Stage (ID: 8)
+    console.log(`[Outreach Agent] Attempting to create deal in Pipeline 3, Stage 8...`);
+    const dealRes = await createDeal(contactId, dealTitle, dealValue, 3, 8);
+    
+    if (dealRes.error) {
+      console.error("[Outreach Agent] Deal Creation FAILED:", dealRes.error);
+      return NextResponse.json({ 
+        error: "ActiveCampaign Deal Creation Failed", 
+        details: dealRes.error 
+      }, { status: 500 });
+    }
+
     const dealId = dealRes.deal?.id;
-    console.log(`[Outreach Agent] Created Deal '${dealTitle}' (ID: ${dealId}) for Contact ${contactId}.`);
+    console.log(`[Outreach Agent] Created Deal ID: ${dealId}`);
 
     if (dealId && lead) {
-      // 2. Map the Deal Custom Fields (IDs based on AC Audit)
-      // 34: DEMO_SITE_URL, 35: DEMO_VIDEO_URL, 33: LEAD_NICHE, 36: LEAD_PAINPOINT, 37: DEAL_ORGANIZATION_NAME
-      if (demoSiteUrl) await updateDealField(dealId, "34", demoSiteUrl);
-      if (walkthroughVideoUrl) await updateDealField(dealId, "35", walkthroughVideoUrl);
-      if (lead.niche) await updateDealField(dealId, "33", lead.niche);
-      if (businessName) await updateDealField(dealId, "37", businessName);
+      // 4. Map the Deal Custom Fields (Matches definitive AC Audit)
+      console.log(`[Outreach Agent] Updating custom fields for Deal ${dealId}...`);
+      if (demoSiteUrl) await updateDealField(dealId, "16", demoSiteUrl);
+      if (walkthroughVideoUrl) await updateDealField(dealId, "17", walkthroughVideoUrl);
+      const finalNiche = niche || lead?.niche;
+      console.log(`[Outreach Agent] Setting Niche (18): ${finalNiche}`);
+      if (finalNiche) await updateDealField(dealId, "18", finalNiche);
+      
+      if (businessName) await updateDealField(dealId, "40", businessName);
       if (lead.intelScore !== null) await updateDealField(dealId, "19", lead.intelScore.toString());
       
       const pptList = (lead.intelData as any)?.painPoints;
@@ -62,8 +82,7 @@ export async function POST(req: Request) {
         ? pptList.join(", ")
         : "attracting high-quality and consistent clients online";
         
-      await updateDealField(dealId, "36", painPointsStr);
-      console.log(`[Outreach Agent] Pushed Deal custom fields for ${businessName}.`);
+      await updateDealField(dealId, "20", painPointsStr);
     }
 
     await addTagToContact(contactId, "FLYNERD_OUTREACH_PENDING");
@@ -71,11 +90,10 @@ export async function POST(req: Request) {
     const updatedLead = await prisma.agencyLead.update({
       where: { id: leadId },
       data: {
-        status: "PITCHED",
+        status: "OUTREACH_SENT",
         outreachHistory: [
           {
             type: "activecampaign",
-            status: "deal_created_and_tagged",
             contactId,
             timestamp: new Date(),
           },
@@ -86,10 +104,11 @@ export async function POST(req: Request) {
     return NextResponse.json({
       message: "Lead pushed to ActiveCampaign for outreach automation.",
       contactId,
+      dealId,
       lead: updatedLead,
     });
   } catch (error: any) {
-    console.error("Outreach Agent Error:", error);
+    console.error("Outreach Agent Fatal Error:", error);
     return NextResponse.json(
       { error: "Internal Server Error", message: error.message },
       { status: 500 }

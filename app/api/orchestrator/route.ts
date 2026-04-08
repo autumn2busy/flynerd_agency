@@ -65,7 +65,7 @@ export async function GET(req: Request) {
 
     // 4. Process BUILT -> PITCHED
     const builtLeads = await prisma.agencyLead.findMany({
-      where: { status: "BUILT" },
+      where: { status: "DEMO_BUILT" },
       take: 5,
     });
 

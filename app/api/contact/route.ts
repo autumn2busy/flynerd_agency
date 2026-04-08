@@ -130,7 +130,7 @@ export async function POST(req: Request) {
           currency: "usd",
           group: "3",
           stage: "8",
-          status: 0, // 0 = Open
+
         },
       }),
     });

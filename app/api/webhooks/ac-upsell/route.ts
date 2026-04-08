@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       where: { id: client.id },
       data: {
         plan: "GROWTH",
-        status: "ONBOARDING",
+        status: "CLIENT_ACTIVE",
       }
     });
 

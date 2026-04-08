@@ -254,7 +254,7 @@ export async function POST(req: Request) {
     if (lead) {
       await prisma.agencyLead.update({
         where: { id: lead.id },
-        data: { status: "NEGOTIATING" },
+        data: { status: "REPLIED" },
       });
     }
 

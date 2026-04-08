@@ -1,5 +1,8 @@
 import SearchNiche from "@/components/home/SearchNiche";
+import ChatScenario from "@/components/home/ChatScenario";
+import { Cpu, Globe, Clock, BarChart3, Zap, ChevronRight } from "lucide-react";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
@@ -108,6 +111,82 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ── Chat Scenario Demo ── */}
+      <ChatScenario />
+
+      {/* ── Core Five Section ── */}
+      <section className="py-24 lg:py-32 relative overflow-hidden">
+        <div className="section-container relative z-10 max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="mono-label text-[var(--amber-400)] tracking-[0.3em] uppercase block mb-4">
+              CAPABILITIES
+            </span>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-tight text-white leading-[1.1]">
+              Every FlyNerd site includes <br />
+              <span className="gradient-text serif-em italic font-normal">the Core Five.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Cpu,
+                title: "AI Booking Agent",
+                description: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, and follows up.",
+              },
+              {
+                icon: Globe,
+                title: "AI Personalization",
+                description: "Your brand palette, copy, and layout come from your real reputation and reviews — never a generic template.",
+              },
+              {
+                icon: Clock,
+                title: "7-Day Launch",
+                description: "Our proprietary pipeline extracts data and deploys your site in one week. No months-long development cycles.",
+              },
+              {
+                icon: BarChart3,
+                title: "Local SEO Stack",
+                description: "Next.js performance with structured schema markup — the technical foundation Google and AI-search reward.",
+              },
+              {
+                icon: Zap,
+                title: "Managed Monthly",
+                description: "Hosting, security, and minor updates included. Your site stays fast, secure, and technologically current.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="group relative flex flex-col p-8 rounded-sm border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.04)] hover:border-[rgba(232,185,35,0.2)] transition-all duration-300 backdrop-blur-sm"
+              >
+                <div className="w-12 h-12 rounded-sm border border-[rgba(232,185,35,0.2)] bg-[rgba(232,185,35,0.05)] flex items-center justify-center text-[var(--amber-400)] mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon size={22} strokeWidth={1.5} />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3 tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+
+            {/* Final CTA Card */}
+            <div className="flex flex-col p-8 rounded-sm border border-dashed border-[rgba(232,185,35,0.3)] bg-[rgba(232,185,35,0.02)] items-center justify-center text-center">
+              <p className="text-white/60 text-sm mb-6 max-w-[200px]">
+                Ready to see what an AI-powered site looks like for you?
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 mono-label text-[var(--amber-400)] hover:text-white transition-colors"
+              >
+                BOOK A STRATEGY CALL <ChevronRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
