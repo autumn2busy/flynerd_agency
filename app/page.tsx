@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import SearchNiche from "@/components/home/SearchNiche";
 import { ScrollReveal } from "@/components/home/ScrollReveal";
-import HomeChatWidget from "@/components/home/HomeChatWidget";
-
+import ClientJourney from "@/components/home/ClientJourney";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
   description:
@@ -64,50 +64,41 @@ export default function HomePage() {
             loop
             playsInline
             className="absolute inset-0 w-full h-full object-cover object-center"
+            style={{ mixBlendMode: "screen" }}
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-          {/* Gradient: solid cream left (text zone) → transparent right */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(105deg, var(--bg-base) 28%, rgba(242,237,228,0.75) 55%, rgba(242,237,228,0.05) 100%)",
-            }}
-            aria-hidden="true"
-          />
         </div>
 
-        {/* ── Text content — left-aligned, dominates viewport ── */}
+        {/* ── Text content — centered, dominates viewport ── */}
         <div
-          className="relative z-10 section-container flex flex-col justify-end min-h-screen pb-16"
-          style={{ paddingTop: "140px" }}
+          className="relative z-10 section-container flex flex-col justify-center items-center text-center min-h-screen pb-16 reveal visible"
+          style={{ paddingTop: "80px" }}
         >
           <h1
             style={{
-              fontSize: "clamp(4rem, 13vw, 160px)",
-              fontWeight: 800,
-              letterSpacing: "-0.05em",
-              lineHeight: 0.88,
+              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+              fontWeight: 700,
+              letterSpacing: "-0.04em",
+              lineHeight: 1.0,
               marginBottom: "1.5rem",
               color: "var(--text-primary)",
             }}
           >
-            <span className="block">We build the internet</span>
+            <span className="block" style={{ fontFamily: "Array, sans-serif", fontWeight: 400 }}>We build the internet</span>
             <span className="block">
-              for the{" "}
-              <span style={{ color: "var(--accent)" }}>overlooked.</span>
+              <span style={{ fontFamily: "Array, sans-serif", fontWeight: 400 }}>for the</span> <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 600 }}>overlooked.</span>
             </span>
           </h1>
 
           <p
-            className="text-base mb-10 text-[var(--text-secondary)]"
+            className="text-lg lg:text-xl mb-10 text-[var(--text-secondary)]"
             style={monoStyle}
           >
             // AI-powered websites for local service businesses.
           </p>
 
-          <div className="max-w-xl">
+          <div className="w-full max-w-xl mx-auto">
             <SearchNiche />
           </div>
         </div>
@@ -130,7 +121,7 @@ export default function HomePage() {
           {[...NICHES, ...NICHES].map((niche, i) => (
             <span
               key={i}
-              className="px-6 text-sm text-[var(--text-inverse)] whitespace-nowrap"
+              className="px-6 text-sm text-[var(--text-primary)] whitespace-nowrap"
               style={monoStyle}
             >
               {niche}{" "}
@@ -145,8 +136,9 @@ export default function HomePage() {
       {/* ─────────────────────────────────────────
           HOW IT WORKS
       ───────────────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-[var(--bg-base)] border-b border-[var(--text-primary)]">
-        <div className="section-container">
+      <section className="py-32 bg-[var(--bg-base)] border-y border-white/10 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+        <div className="section-container relative z-10">
           <ScrollReveal>
             <p
               className="text-sm text-[var(--text-muted)] mb-5"
@@ -156,10 +148,10 @@ export default function HomePage() {
             </p>
             <h2
               style={{
-                fontSize: "clamp(2.2rem, 5vw, 4rem)",
-                fontWeight: 800,
+                fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                fontWeight: 700,
                 letterSpacing: "-0.04em",
-                lineHeight: 0.92,
+                lineHeight: 1.0,
                 marginBottom: "4rem",
                 maxWidth: "24ch",
                 color: "var(--text-primary)",
@@ -171,11 +163,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-t border-[var(--text-primary)]">
             {STEPS.map((step, i) => (
-              <ScrollReveal key={i} delay={i * 80}>
-                {/* No transition-* class — hover snaps instantly (brutalist) */}
-                <div
-                  className="border-r border-b border-[var(--text-primary)] p-10 bg-[var(--bg-base)] text-[var(--text-primary)] hover:bg-[var(--bg-dark)] hover:text-[var(--text-inverse)] cursor-default h-full"
-                >
+              <ScrollReveal key={i} delay={i * 80} className="h-full">
+                <SpotlightCard className="h-full border-r border-b border-[var(--text-primary)]/10 p-10 bg-transparent rounded-none">
                   <span
                     className="block font-bold mb-8 opacity-20"
                     style={{ ...monoStyle, fontSize: "3.5rem" }}
@@ -198,7 +187,7 @@ export default function HomePage() {
                   >
                     {step.body}
                   </p>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
             ))}
           </div>
@@ -208,8 +197,9 @@ export default function HomePage() {
       {/* ─────────────────────────────────────────
           DEMO SHOWCASE
       ───────────────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-[var(--bg-dark)] border-b border-[var(--text-inverse)]/10">
-        <div className="section-container">
+      <section className="py-32 bg-[var(--bg-dark)] border-b border-white/10 relative">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="section-container relative z-10">
           <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-24">
 
             {/* Left: copy */}
@@ -222,11 +212,11 @@ export default function HomePage() {
               </p>
               <h2
                 style={{
-                  fontSize: "clamp(2.2rem, 5vw, 4rem)",
-                  fontWeight: 800,
+                  fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                  fontWeight: 700,
                   letterSpacing: "-0.04em",
-                  lineHeight: 0.92,
-                  color: "var(--text-inverse)",
+                  lineHeight: 1.0,
+                  color: "var(--text-primary)",
                   marginBottom: "1.5rem",
                   maxWidth: "18ch",
                 }}
@@ -235,23 +225,22 @@ export default function HomePage() {
               </h2>
               <p
                 className="text-base mb-10 max-w-md leading-relaxed"
-                style={{ color: "rgba(242,237,228,0.55)" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 We pull your real business data — reviews, services, location —
                 and deploy a personalized site before you finish your coffee.
               </p>
-              <div className="flex flex-wrap gap-0 border border-[var(--text-inverse)]">
-                {/* No transition — instant hover snap */}
+              <div className="flex flex-wrap gap-0 border border-[var(--text-primary)]/10 rounded-lg overflow-hidden glass-panel-dark">
                 <Link
                   href="/ai-website"
-                  className="px-6 py-3 text-[var(--text-inverse)] text-sm hover:bg-[var(--text-inverse)] hover:text-[var(--bg-dark)] border-r border-[var(--text-inverse)]"
+                  className="px-6 py-4 text-[var(--text-primary)] text-sm hover:bg-[var(--text-primary)] hover:text-[var(--bg-dark)] border-r border-[var(--text-primary)]/10 transition-colors"
                   style={monoStyle}
                 >
                   See example demo
                 </Link>
                 <Link
                   href="/contact"
-                  className="px-6 py-3 bg-[var(--accent)] text-[var(--text-inverse)] text-sm hover:opacity-80"
+                  className="px-6 py-4 bg-[var(--accent)] text-[#fff] text-sm font-semibold hover:opacity-80 transition-opacity"
                   style={monoStyle}
                 >
                   Run your pipeline
@@ -259,91 +248,96 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Right: brutalist phone mockup — sharp corners, stark border */}
+            {/* Right: phone mockup — glassmorphism & phone hardware features */}
             <ScrollReveal delay={120}>
               <div
+                className="glass-panel-dark relative overflow-hidden"
                 style={{
-                  width: "260px",
-                  height: "520px",
-                  border: "2px solid var(--text-inverse)",
-                  position: "relative",
-                  overflow: "hidden",
-                  background: "var(--bg-base)",
+                  width: "280px",
+                  height: "580px",
+                  border: "5px solid #222",
+                  borderRadius: "44px",
+                  boxShadow: "inset 0 0 0 2px #000, 0 25px 50px -12px rgba(0,0,0,0.5)",
+                  background: "var(--bg-dark)",
                   flexShrink: 0,
                 }}
               >
-                {/* Notch — square */}
+                {/* Dynamic Island / Notch */}
                 <div
                   style={{
                     position: "absolute",
-                    top: "0",
+                    top: "12px",
                     left: "50%",
                     transform: "translateX(-50%)",
-                    width: "72px",
-                    height: "20px",
-                    background: "var(--bg-dark)",
-                    zIndex: 2,
+                    width: "90px",
+                    height: "28px",
+                    background: "#000",
+                    borderRadius: "20px",
+                    zIndex: 10,
                   }}
                   aria-hidden="true"
                 />
 
-                {/* Demo site skeleton */}
-                <div className="pt-10 px-5 pb-5">
+                {/* Demo site inside screen */}
+                <div className="pt-14 px-5 pb-5 h-full bg-[var(--bg-base)]">
                   <div
-                    className="h-1 w-10 mb-5"
+                    className="h-1 w-12 mb-6 rounded-full skeleton-shimmer"
                     style={{ background: "var(--accent)" }}
                   />
                   <div
-                    className="h-7 mb-2"
-                    style={{ background: "var(--bg-dark)", width: "80%" }}
+                    className="h-8 mb-3 rounded-sm skeleton-shimmer"
+                    style={{ background: "var(--bg-dark)", width: "85%" }}
                   />
                   <div
-                    className="h-3 mb-1"
-                    style={{ background: "rgba(13,13,13,0.12)", width: "65%" }}
+                    className="h-3 mb-1.5 rounded-sm skeleton-shimmer block"
+                    style={{ background: "rgba(255,255,255,0.05)", width: "70%" }}
                   />
                   <div
-                    className="h-3 mb-7"
-                    style={{ background: "rgba(13,13,13,0.08)", width: "45%" }}
+                    className="h-3 mb-8 rounded-sm skeleton-shimmer block"
+                    style={{ background: "rgba(255,255,255,0.03)", width: "50%" }}
                   />
+                  
                   <div
-                    className="h-10 flex items-center justify-center mb-6 border border-[var(--bg-dark)]"
+                    className="h-12 flex items-center justify-center mb-8 rounded-lg shadow-md skeleton-shimmer"
                     style={{ background: "var(--bg-dark)" }}
                   >
                     <span
-                      className="text-[var(--text-inverse)] text-xs"
+                      className="text-[var(--text-primary)] text-xs font-semibold"
                       style={monoStyle}
                     >
                       Book Now →
                     </span>
                   </div>
-                  <div className="flex gap-1 mb-3">
+                  
+                  <div className="flex gap-1.5 mb-4">
                     {[...Array(5)].map((_, j) => (
                       <div
                         key={j}
-                        className="w-3 h-3"
+                        className="w-3.5 h-3.5 rounded-full"
                         style={{ background: "var(--accent)" }}
                       />
                     ))}
                   </div>
+                  
                   <div
-                    className="h-3 mb-1"
-                    style={{ background: "rgba(13,13,13,0.1)", width: "70%" }}
+                    className="h-3 mb-2 rounded-sm skeleton-shimmer"
+                    style={{ background: "rgba(255,255,255,0.05)", width: "75%" }}
                   />
                   <div
-                    className="h-3 mb-6"
-                    style={{ background: "rgba(13,13,13,0.07)", width: "55%" }}
+                    className="h-3 mb-8 rounded-sm skeleton-shimmer"
+                    style={{ background: "rgba(255,255,255,0.03)", width: "60%" }}
                   />
                   <div
-                    className="h-px mb-5"
-                    style={{ background: "rgba(13,13,13,0.12)" }}
+                    className="h-px mb-6"
+                    style={{ background: "rgba(255,255,255,0.08)" }}
                   />
                   <div
-                    className="h-3 mb-1"
-                    style={{ background: "rgba(13,13,13,0.08)", width: "80%" }}
+                    className="h-3 mb-2 rounded-sm skeleton-shimmer"
+                    style={{ background: "rgba(255,255,255,0.05)", width: "85%" }}
                   />
                   <div
-                    className="h-3"
-                    style={{ background: "rgba(13,13,13,0.06)", width: "60%" }}
+                    className="h-3 rounded-sm skeleton-shimmer"
+                    style={{ background: "rgba(255,255,255,0.03)", width: "65%" }}
                   />
                 </div>
               </div>
@@ -351,6 +345,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ClientJourney />
 
       {/* ─────────────────────────────────────────
           STATS STRIP
@@ -367,8 +363,8 @@ export default function HomePage() {
                 <div
                   className="font-bold leading-none mb-3 text-[var(--text-primary)]"
                   style={{
-                    fontSize: "clamp(3.5rem, 8vw, 6.5rem)",
-                    fontWeight: 800,
+                    fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                    fontWeight: 700,
                     letterSpacing: "-0.04em",
                   }}
                 >
@@ -394,11 +390,11 @@ export default function HomePage() {
           <ScrollReveal>
             <h2
               style={{
-                fontSize: "clamp(3rem, 9vw, 7rem)",
-                fontWeight: 800,
+                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontWeight: 700,
                 letterSpacing: "-0.05em",
-                lineHeight: 0.88,
-                color: "var(--text-inverse)",
+                lineHeight: 1.0,
+                color: "var(--text-primary)",
                 marginBottom: "2.5rem",
                 maxWidth: "18ch",
               }}
@@ -429,8 +425,8 @@ export default function HomePage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs hover:text-[var(--text-inverse)]"
-                style={{ ...monoStyle, color: "rgba(242,237,228,0.35)" }}
+                className="text-xs hover:text-[#fff]"
+                style={{ ...monoStyle, color: "var(--text-secondary)" }}
               >
                 {link.label}
               </Link>
@@ -439,8 +435,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Chat widget */}
-      <HomeChatWidget />
     </div>
   );
 }
