@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Service Businesses",
   description:
-    "FlyNerd Tech builds AI-powered websites for local service businesses — HVAC, plumbing, roofing, med spas, and more. Custom AI chatbot, 48-hour launch, 24/7 lead capture.",
+    "FlyNerd Tech builds AI-powered websites for local service businesses — HVAC, plumbing, roofing, med spas, and more. Custom AI chatbot included. 24/7 lead capture.",
 };
 
 const NICHES = [
@@ -33,7 +33,7 @@ const STEPS = [
   {
     icon: Zap,
     number: "01",
-    title: "Your site goes live in 48 hours.",
+    title: "Your site goes live. Fast.",
     body: "We pull your real business data from Google, Yelp, and social profiles to build a fully personalized site — no templates, no lengthy back-and-forth.",
   },
   {
@@ -75,7 +75,7 @@ const PROCESS = [
 
 const STATS = [
   { value: "20+", label: "businesses scouted per run" },
-  { value: "48hr", label: "average build time" },
+  { value: "Fast", label: "personalized build, no templates" },
   { value: "7 day", label: "demo window" },
 ];
 
@@ -156,7 +156,7 @@ export default function HomePage() {
             className="text-sm mb-10 text-[var(--text-secondary)]"
             style={monoStyle}
           >
-            // Live in 48 hours. Leads captured 24/7.
+            // Built for your niche. Leads captured 24/7.
           </p>
 
           <div className="w-full max-w-xl mx-auto">
@@ -281,7 +281,7 @@ export default function HomePage() {
                 color: "var(--text-primary)",
               }}
             >
-              From invisible to unforgettable in 48 hours.
+              From invisible to unforgettable.
             </h2>
           </ScrollReveal>
 
@@ -396,65 +396,58 @@ export default function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────
-          DEMO SHOWCASE — Enlarged phone widget
+          DEMO SHOWCASE — Centered, copy above phone
       ───────────────────────────────────────── */}
       <section className="py-32 bg-black border-b border-[#222] relative">
         <div className="section-container relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          <div className="flex flex-col items-center text-center">
 
-            {/* Left: copy */}
-            <ScrollReveal className="flex-1">
+            {/* Copy above phone */}
+            <ScrollReveal className="max-w-2xl mb-12">
               <p
                 className="text-sm mb-5"
                 style={{ ...monoStyle, color: "rgba(242,237,228,0.35)" }}
               >
-                // live demo
+                // demo
               </p>
               <h2
                 style={{
-                  fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                  fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                   fontWeight: 700,
                   letterSpacing: "-0.04em",
                   lineHeight: 1.0,
                   color: "var(--text-primary)",
-                  marginBottom: "1.5rem",
-                  maxWidth: "20ch",
+                  marginBottom: "1.25rem",
                 }}
               >
-                Ask our AI anything about your niche.
+                Your demo. Live in minutes.
               </h2>
               <p
-                className="text-base mb-8 max-w-md leading-relaxed"
+                className="text-lg mb-10 leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Tell it your business type and city. It'll show you exactly what we'd build — personalized to your services, your reviews, your market.
+                We pull your real business data — reviews, services, location — and deploy a personalized site before you finish your coffee.
               </p>
-              <p
-                className="text-sm mb-10 max-w-md leading-relaxed"
-                style={{ color: "var(--text-muted)", ...monoStyle }}
-              >
-                // 5 free messages · no sign-up required
-              </p>
-              <div className="flex flex-wrap gap-0 border border-[var(--text-primary)]/10 rounded-lg overflow-hidden glass-panel-dark">
+              <div className="flex flex-wrap justify-center gap-0 border border-[var(--text-primary)]/10 rounded-lg overflow-hidden glass-panel-dark">
                 <Link
                   href="/ai-website"
                   className="px-6 py-4 text-[var(--text-primary)] text-sm hover:bg-[var(--text-primary)] hover:text-[var(--bg-dark)] border-r border-[var(--text-primary)]/10 transition-colors"
                   style={monoStyle}
                 >
-                  See example site
+                  See example demo
                 </Link>
                 <Link
                   href="/contact"
-                  className="px-6 py-4 bg-[var(--accent)] text-white text-sm font-semibold hover:opacity-80 transition-opacity"
+                  className="px-6 py-4 bg-[var(--accent)] text-black text-sm font-bold hover:opacity-80 transition-opacity"
                   style={monoStyle}
                 >
-                  Get My AI Website →
+                  Run your pipeline
                 </Link>
               </div>
             </ScrollReveal>
 
-            {/* Right: Interactive phone chat widget (enlarged) */}
-            <ScrollReveal delay={120} className="flex justify-center">
+            {/* Phone — centered, dominant */}
+            <ScrollReveal delay={100} className="flex justify-center">
               <PhoneChatWidget />
             </ScrollReveal>
           </div>
@@ -629,7 +622,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/apply?package=build"
-                  className="px-8 py-4 text-sm font-bold text-white"
+                  className="px-8 py-4 text-sm font-bold text-black accent-glow"
                   style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
                 >
                   Get My AI Website →

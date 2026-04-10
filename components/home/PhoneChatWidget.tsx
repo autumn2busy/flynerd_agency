@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 interface Message {
@@ -25,13 +24,17 @@ export default function PhoneChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(() => Math.random().toString(36).slice(2));
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const userCount = messages.filter((m) => m.role === "user").length;
   const locked = userCount >= MAX_USER_MESSAGES;
 
+  // Scroll the messages container internally — never scrolls the page
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages, loading]);
 
   async function send() {
@@ -70,15 +73,15 @@ export default function PhoneChatWidget() {
   }
 
   return (
-    /* Phone frame */
+    /* Phone frame — larger on desktop via CSS custom property */
     <div
-      className="relative flex flex-col overflow-hidden"
+      className="relative flex flex-col overflow-hidden accent-glow"
       style={{
-        width: "340px",
-        height: "680px",
+        width: "clamp(300px, 38vw, 420px)",
+        height: "clamp(580px, 70vh, 760px)",
         border: "10px solid #1a1a1a",
         borderRadius: "52px",
-        boxShadow: "inset 0 0 0 1px #444, 0 40px 80px -12px rgba(0,0,0,1), 0 0 0 1px #333, 0 0 60px 0 rgba(255,51,0,0.08)",
+        boxShadow: "inset 0 0 0 1px #444, 0 40px 80px -12px rgba(0,0,0,1), 0 0 0 1px #333",
         background: "#0A0A0A",
         flexShrink: 0,
       }}
@@ -103,8 +106,12 @@ export default function PhoneChatWidget() {
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0A0A0A]">
+      {/* Messages — scrolls internally, never moves the page */}
+      <div
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#0A0A0A]"
+        style={{ overscrollBehavior: "contain" }}
+      >
         {messages.map((m, i) => (
           <div
             key={i}
@@ -131,8 +138,6 @@ export default function PhoneChatWidget() {
             </div>
           </div>
         )}
-
-        <div ref={bottomRef} />
       </div>
 
       {/* Locked CTA */}

@@ -17,7 +17,8 @@
     --text-muted: #71717a;     /* Zinc 500 */
     --text-inverse: #0A0A0A;   /* Black text for inverted elements */
     
-    --accent: #ff3300;     /* TryCook brutalist brand orange */
+    --accent: #00D4FF;     /* Electric cyan — technical glow */
+    --accent-glow: rgba(0, 212, 255, 0.22);
     
     /* Typographic Variables */
     --font-sans: 'Satoshi', system-ui, sans-serif;
@@ -106,8 +107,13 @@ a {
 /* ── Scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
-::-webkit-scrollbar-thumb { background: #0D0D0D; }
-::-webkit-scrollbar-thumb:hover { background: #333; }
+::-webkit-scrollbar-thumb { background: #333; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ── Accent glow utility ───────────────────────────────── */
+.accent-glow {
+  box-shadow: 0 0 24px var(--accent-glow), 0 0 48px rgba(0, 212, 255, 0.08);
+}
 
 /* ── Scroll reveal ─────────────────────────────────────── */
 .reveal {
