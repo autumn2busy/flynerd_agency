@@ -2,8 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import SearchNiche from "@/components/home/SearchNiche";
 import { ScrollReveal } from "@/components/home/ScrollReveal";
-import ClientJourney from "@/components/home/ClientJourney";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
   description:
@@ -161,12 +159,12 @@ export default function HomePage() {
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-t border-[var(--text-primary)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-t border-[var(--text-primary)]/10">
             {STEPS.map((step, i) => (
               <ScrollReveal key={i} delay={i * 80} className="h-full">
-                <SpotlightCard className="h-full border-r border-b border-[var(--text-primary)]/10 p-10 bg-transparent rounded-none">
+                <SpotlightCard className="h-full rounded-none border-r border-b border-[var(--text-primary)]/10 p-10 bg-transparent cursor-default group transition-colors hover:bg-[var(--bg-elevated)]">
                   <span
-                    className="block font-bold mb-8 opacity-20"
+                    className="block font-bold mb-8 opacity-20 transition-opacity group-hover:opacity-40"
                     style={{ ...monoStyle, fontSize: "3.5rem" }}
                   >
                     {step.number}
@@ -311,7 +309,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ClientJourney />
 
       {/* ─────────────────────────────────────────
           STATS STRIP
