@@ -29,7 +29,7 @@ function Logo() {
         width="40"
         height="25"
         rx="4"
-        stroke="#0D0D0D"
+        stroke="currentColor"
         strokeWidth="2.25"
         fill="none"
       />
@@ -39,25 +39,25 @@ function Logo() {
         width="40"
         height="25"
         rx="4"
-        stroke="#0D0D0D"
+        stroke="currentColor"
         strokeWidth="2.25"
         fill="none"
       />
       <path
         d="M45 24 Q60 18 75 24"
-        stroke="#0D0D0D"
+        stroke="currentColor"
         strokeWidth="2.25"
         fill="none"
       />
       <path
         d="M5 20 L-5 15"
-        stroke="#0D0D0D"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
       />
       <path
         d="M115 20 L125 15"
-        stroke="#0D0D0D"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
       />
@@ -98,7 +98,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[13px] text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
+                  className="text-[15px] text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {link.label}
@@ -109,7 +109,7 @@ export function Header() {
             {/* CTA pill — black bg, cream text */}
             <Link
               href="/contact"
-              className="hidden lg:inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--bg-dark)] text-[var(--text-inverse)] text-[13px] hover:opacity-90 transition-opacity"
+              className="hidden lg:inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-dark)] text-[15px] hover:opacity-90 transition-opacity"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               Get Started

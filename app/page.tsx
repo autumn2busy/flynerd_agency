@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import SearchNiche from "@/components/home/SearchNiche";
 import { ScrollReveal } from "@/components/home/ScrollReveal";
+import PhoneChatWidget from "@/components/home/PhoneChatWidget";
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
   description:
@@ -245,65 +246,9 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Right: Actual High-Fidelity Phone Mockup */}
+            {/* Right: Interactive phone chat widget */}
             <ScrollReveal delay={120}>
-              <div
-                className="relative overflow-hidden flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
-                style={{
-                  width: "280px",
-                  height: "580px",
-                  border: "8px solid #222",
-                  borderRadius: "44px",
-                  boxShadow: "inset 0 0 0 1px #444, 0 30px 60px -12px rgba(0,0,0,1)",
-                  background: "#0A0A0A",
-                  flexShrink: 0,
-                }}
-              >
-                {/* Dynamic Island / Notch */}
-                <div
-                  className="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-20 shadow-inner"
-                  aria-hidden="true"
-                />
-
-                {/* Header inside screen */}
-                <div className="pt-12 pb-4 px-6 border-b border-white/5 bg-[#000] text-gray-100 relative z-10 flex flex-col items-center">
-                  <span className="text-sm font-bold font-sans">FlyNerd AI</span>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[9px] text-[var(--accent)] font-semibold uppercase tracking-[0.2em]">Agent Online</span>
-                  </div>
-                </div>
-
-                {/* Demo screen content */}
-                <div className="flex-1 p-4 space-y-4 bg-gradient-to-b from-[#0A0A0A] to-[#121212] overflow-hidden">
-                  {/* Fake chat bubble 1 */}
-                  <div className="flex justify-start">
-                    <div className="max-w-[90%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#1C1C1E] text-gray-100 rounded-[20px] rounded-tl-[4px] border border-white/5">
-                      Tell me your niche, and I will build you an entire demo system right now.
-                    </div>
-                  </div>
-                  {/* Fake chat bubble 2 */}
-                  <div className="flex justify-end">
-                    <div className="max-w-[85%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#e8e8e8] text-black rounded-[20px] rounded-br-[4px]">
-                      Roofing business in Austin, TX
-                    </div>
-                  </div>
-                  {/* Fake chat bubble 3 */}
-                  <div className="flex justify-start">
-                    <div className="max-w-[95%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#1C1C1E] text-gray-100 rounded-[20px] rounded-tl-[4px] border border-white/5">
-                      Great. Extracting local data...<br />
-                      <div className="mt-3 space-y-1.5">
-                        <span className="text-gray-400 font-mono text-[10px] block">✓ Found 146 reviews</span>
-                        <span className="text-gray-400 font-mono text-[10px] block">✓ Generating copy</span>
-                        <span className="text-[var(--accent)] font-mono font-bold text-[10px] mt-2 block animate-pulse">DEPLOYING PREVIEW...</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom Bar (Home Indicator) mask */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[35%] h-1 bg-white/30 rounded-full"></div>
-              </div>
+              <PhoneChatWidget />
             </ScrollReveal>
           </div>
         </div>
