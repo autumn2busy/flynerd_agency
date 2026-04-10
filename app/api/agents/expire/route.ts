@@ -9,7 +9,7 @@ import { passwordProtectDeployment } from "@/lib/vercel";
 // Vercel Cron job (see vercel.json cron config below).
 //
 // What it does:
-//   1. Finds all BUILT leads where validUntil < now() and status != "EXPIRED"
+//   1. Finds all DEMO_BUILT leads where validUntil < now() and status != "EXPIRED"
 //   2. Enables password protection on the Vercel project for each
 //   3. Marks the lead status as "EXPIRED" in the DB
 //
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const whereClause = leadId
       ? { id: leadId }
       : {
-          status: "BUILT",
+          status: "DEMO_BUILT",
           validUntil: { lt: new Date() },
         };
 

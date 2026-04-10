@@ -50,9 +50,9 @@ export async function POST(req: Request) {
     const dealTitle = `AI Web Demo - ${businessName}`;
     const dealValue = 250000; // $2,500.00
     
-    // Using Flynerd Auto-Pilot Pipeline (ID: 3) and 'To Contact' Stage (ID: 8)
-    console.log(`[Outreach Agent] Attempting to create deal in Pipeline 3, Stage 8...`);
-    const dealRes = await createDeal(contactId, dealTitle, dealValue, 3, 8);
+    // Using Flynerd Outbound/Cold Pipeline (ID: 3) and 'Outreach Pitched' Stage (ID: 11)
+    console.log(`[Outreach Agent] Attempting to create deal in Pipeline 3, Stage 11...`);
+    const dealRes = await createDeal(contactId, dealTitle, dealValue, 3, 11);
     
     if (dealRes.error) {
       console.error("[Outreach Agent] Deal Creation FAILED:", dealRes.error);

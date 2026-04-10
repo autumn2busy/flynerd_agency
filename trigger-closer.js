@@ -4,7 +4,7 @@ async function testCloserAgent() {
   console.log("Simulating an inbound email from a real estate lead...");
 
   // You must change this email to exactly match the contactEmail of a lead that exists
-  // in your database, where the status is currently PITCHED or BUILT or PROSPECT.
+  // in your database, where the status is currently OUTREACH_SENT or DEMO_BUILT or PROSPECT.
   // For safety, you might want to manually edit a lead in Supabase/Prisma Studio
   // and set its contactEmail to "test@example.com" first.
   const testPayload = {

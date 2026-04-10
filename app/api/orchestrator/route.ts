@@ -39,7 +39,7 @@ export async function GET(req: Request) {
       if (res.ok) results.intelProcessed++;
     }
 
-    // 3. Process AUDITED -> BUILT
+    // 3. Process AUDITED -> DEMO_BUILT
     const auditedLeads = await prisma.agencyLead.findMany({
       where: { 
         status: "AUDITED",
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
       if (res.ok) results.builderProcessed++;
     }
 
-    // 4. Process BUILT -> PITCHED
+    // 4. Process DEMO_BUILT -> OUTREACH_SENT
     const builtLeads = await prisma.agencyLead.findMany({
       where: { status: "DEMO_BUILT" },
       take: 5,

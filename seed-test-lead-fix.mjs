@@ -15,10 +15,10 @@ async function seedTestLead() {
     });
 
     if (existing) {
-      console.log("Test lead already exists. Updating status to PITCHED...");
+      console.log("Test lead already exists. Updating status to OUTREACH_SENT...");
       await prisma.agencyLead.update({
         where: { id: existing.id },
-        data: { status: "PITCHED" }
+        data: { status: "OUTREACH_SENT" }
       });
       console.log("Update complete.");
     } else {
@@ -26,7 +26,7 @@ async function seedTestLead() {
         data: {
           businessName: "Test Plumbing Co",
           niche: "plumber",
-          status: "PITCHED",
+          status: "OUTREACH_SENT",
           contactEmail: testEmail,
           placeId: testPlaceId,
           intelScore: 85,

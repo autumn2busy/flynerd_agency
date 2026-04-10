@@ -17,8 +17,8 @@ export async function POST(req: Request) {
     }
 
     const projectName = `flynerd-demo-${leadId.slice(0, 8)}`;
-    // Falling back to your main real estate template repo
-    const templateRepo = "autumn2busy/FN-real-estate";
+    // Deploy from the canonical flynerd_agency template repo
+    const templateRepo = "autumn2busy/flynerd_agency";
 
     // 1. Trigger Vercel Site Generation
     let demoSiteUrl = "";
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     const updatedLead = await prisma.agencyLead.update({
       where: { id: leadId },
       data: {
-        status: "BUILT",
+        status: "DEMO_BUILT",
         demoSiteUrl: demoSiteUrl,
         walkthroughVideoUrl: videoUrl,
       },
