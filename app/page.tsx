@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import SearchNiche from "@/components/home/SearchNiche";
@@ -57,27 +56,23 @@ export default function HomePage() {
       ───────────────────────────────────────── */}
       <section className="relative min-h-screen overflow-hidden bg-[var(--bg-base)]">
 
-        {/* ── Background media slot ──────────────────────────────
-            To swap in the generated video, replace the <Image> below
-            with: <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover object-right" />
-            and remove the gradient overlay if the video has enough contrast.
-        ─────────────────────────────────────────────────────── */}
+        {/* ── Background media slot ── */}
         <div className="hero-media">
-          <Image
-            src="/hero-lightbulb.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-right"
-            style={{ animation: "bulb-flicker 2.8s ease-in-out infinite" }}
-          />
-          {/* Gradient: solid cream on the left (text zone) → transparent on the right */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+          {/* Gradient: solid cream left (text zone) → transparent right */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(105deg, var(--bg-base) 30%, rgba(242,237,228,0.82) 58%, rgba(242,237,228,0.15) 100%)",
+                "linear-gradient(105deg, var(--bg-base) 28%, rgba(242,237,228,0.75) 55%, rgba(242,237,228,0.05) 100%)",
             }}
             aria-hidden="true"
           />
