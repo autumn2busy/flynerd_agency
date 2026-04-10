@@ -1,35 +1,38 @@
 @import "tailwindcss";
 
 /* ========================================
-   FlyNerd Tech — Design System v3.1
+   FlyNerd Tech — Design System v3.2
    Brutalist Tech × Gen Z Editorial
-   Space Grotesk (display) + Space Mono (mono/label)
+   Satoshi (sans) + Playfair Display (serif) + Space Mono (mono)
    ======================================== */
 
 @layer base {
   :root {
-    --bg-base: #F2EDE4;
-    --bg-dark: #0D0D0D;
-    --text-primary: #0D0D0D;
-    --text-inverse: #F2EDE4;
-    --accent: #FF3B00;
-    --accent-mono: #7B61FF;
-    --text-secondary: rgba(13, 13, 13, 0.62);
-    --text-muted: rgba(13, 13, 13, 0.42);
-
-    --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
-    --font-mono: var(--font-space-mono), 'Space Mono', monospace;
+    --bg-base: #0A0A0A;    /* Stark black */
+    --bg-dark: #000000;    /* Pure black for deeper layers */
+    --bg-elevated: #111111;/* Slightly raised surfaces */
+    
+    --text-primary: #f2ede4; /* TryCook Cream */
+    --text-secondary: #a1a1aa; /* Zinc 400 */
+    --text-muted: #71717a;     /* Zinc 500 */
+    --text-inverse: #0A0A0A;   /* Black text for inverted elements */
+    
+    --accent: #ff3300;     /* TryCook brutalist brand orange */
+    
+    /* Typographic Variables */
+    --font-sans: 'Satoshi', system-ui, sans-serif;
+    --font-serif: var(--font-serif), 'Playfair Display', serif;
+    --font-mono: var(--font-mono), 'Space Mono', monospace;
   }
 
-  /* Global border-radius reset — brutalism requires sharp edges.
-     Tailwind rounded-* utilities override this via the utilities layer. */
+  /* Global reset for brutalist standard where needed, but keeping some rounding for glassmorphism */
   *, *::before, *::after {
-    border-radius: 0;
+    /* border-radius: 0; Removing global zero border radius as some glass elements look better with rounded edges */
   }
 }
 
 @theme inline {
-  --font-sans: var(--font-space-grotesk);
+  --font-sans: var(--font-sans);
 }
 
 /* ── Base ──────────────────────────────────────────────── */
@@ -45,30 +48,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headlines: dense, impactful, zero softness */
+/* Headlines: dense, impactful, TryCook style */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  line-height: 1.0;
+  line-height: 1.1;
 }
 
 h1 {
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 0.88;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
 }
 
 h2 {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 h3 {
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-/* No transition on links — brutalism snaps */
+/* No transition on basic links — brutalism snaps */
 a {
   text-decoration: none;
   color: inherit;
@@ -110,7 +113,7 @@ a {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.visible {
   opacity: 1;
@@ -118,14 +121,90 @@ a {
 }
 
 /* ── Hero media slot ───────────────────────────────────── */
-/* Houses the background image (or video once generated).
-   Swap the <Image> for a <video autoPlay muted loop playsInline> when ready. */
 .hero-media {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
 }
+
+/* ── Glassmorphism ─────────────────────────────────────── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+.glass-panel-dark {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* ── Enterprise App Skeleton Shimmer ───────────────────── */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.5s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+  z-index: 10;
+}
+
+/* ── Linear-style Spotlight Card ───────────────────────── */
+.spotlight-card {
+  position: relative;
+  background: rgba(25, 25, 25, 0.4);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Note: Actual dynamic spotlight needs JS to update --mouse-x and --mouse-y */
 
 /* ── Keyframes ─────────────────────────────────────────── */
 

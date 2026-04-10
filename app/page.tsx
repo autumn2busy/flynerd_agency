@@ -136,7 +136,7 @@ export default function HomePage() {
       {/* ─────────────────────────────────────────
           HOW IT WORKS
       ───────────────────────────────────────── */}
-      <section className="py-32 bg-[var(--bg-base)] border-y border-white/10 relative">
+      <section className="py-32 bg-[#050505] border-y border-white/10 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
         <div className="section-container relative z-10">
           <ScrollReveal>
@@ -197,8 +197,7 @@ export default function HomePage() {
       {/* ─────────────────────────────────────────
           DEMO SHOWCASE
       ───────────────────────────────────────── */}
-      <section className="py-32 bg-[var(--bg-dark)] border-b border-white/10 relative">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <section className="py-32 bg-black border-b border-[#222] relative">
         <div className="section-container relative z-10">
           <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-24">
 
@@ -248,98 +247,64 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Right: phone mockup — glassmorphism & phone hardware features */}
+            {/* Right: Actual High-Fidelity Phone Mockup */}
             <ScrollReveal delay={120}>
               <div
-                className="glass-panel-dark relative overflow-hidden"
+                className="relative overflow-hidden flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
                 style={{
                   width: "280px",
                   height: "580px",
-                  border: "5px solid #222",
+                  border: "8px solid #222",
                   borderRadius: "44px",
-                  boxShadow: "inset 0 0 0 2px #000, 0 25px 50px -12px rgba(0,0,0,0.5)",
-                  background: "var(--bg-dark)",
+                  boxShadow: "inset 0 0 0 1px #444, 0 30px 60px -12px rgba(0,0,0,1)",
+                  background: "#0A0A0A",
                   flexShrink: 0,
                 }}
               >
                 {/* Dynamic Island / Notch */}
                 <div
-                  style={{
-                    position: "absolute",
-                    top: "12px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "90px",
-                    height: "28px",
-                    background: "#000",
-                    borderRadius: "20px",
-                    zIndex: 10,
-                  }}
+                  className="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-20 shadow-inner"
                   aria-hidden="true"
                 />
 
-                {/* Demo site inside screen */}
-                <div className="pt-14 px-5 pb-5 h-full bg-[var(--bg-base)]">
-                  <div
-                    className="h-1 w-12 mb-6 rounded-full skeleton-shimmer"
-                    style={{ background: "var(--accent)" }}
-                  />
-                  <div
-                    className="h-8 mb-3 rounded-sm skeleton-shimmer"
-                    style={{ background: "var(--bg-dark)", width: "85%" }}
-                  />
-                  <div
-                    className="h-3 mb-1.5 rounded-sm skeleton-shimmer block"
-                    style={{ background: "rgba(255,255,255,0.05)", width: "70%" }}
-                  />
-                  <div
-                    className="h-3 mb-8 rounded-sm skeleton-shimmer block"
-                    style={{ background: "rgba(255,255,255,0.03)", width: "50%" }}
-                  />
-                  
-                  <div
-                    className="h-12 flex items-center justify-center mb-8 rounded-lg shadow-md skeleton-shimmer"
-                    style={{ background: "var(--bg-dark)" }}
-                  >
-                    <span
-                      className="text-[var(--text-primary)] text-xs font-semibold"
-                      style={monoStyle}
-                    >
-                      Book Now →
-                    </span>
+                {/* Header inside screen */}
+                <div className="pt-12 pb-4 px-6 border-b border-white/5 bg-[#000] text-gray-100 relative z-10 flex flex-col items-center">
+                  <span className="text-sm font-bold font-sans">FlyNerd AI</span>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[9px] text-[var(--accent)] font-semibold uppercase tracking-[0.2em]">Agent Online</span>
                   </div>
-                  
-                  <div className="flex gap-1.5 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <div
-                        key={j}
-                        className="w-3.5 h-3.5 rounded-full"
-                        style={{ background: "var(--accent)" }}
-                      />
-                    ))}
-                  </div>
-                  
-                  <div
-                    className="h-3 mb-2 rounded-sm skeleton-shimmer"
-                    style={{ background: "rgba(255,255,255,0.05)", width: "75%" }}
-                  />
-                  <div
-                    className="h-3 mb-8 rounded-sm skeleton-shimmer"
-                    style={{ background: "rgba(255,255,255,0.03)", width: "60%" }}
-                  />
-                  <div
-                    className="h-px mb-6"
-                    style={{ background: "rgba(255,255,255,0.08)" }}
-                  />
-                  <div
-                    className="h-3 mb-2 rounded-sm skeleton-shimmer"
-                    style={{ background: "rgba(255,255,255,0.05)", width: "85%" }}
-                  />
-                  <div
-                    className="h-3 rounded-sm skeleton-shimmer"
-                    style={{ background: "rgba(255,255,255,0.03)", width: "65%" }}
-                  />
                 </div>
+
+                {/* Demo screen content */}
+                <div className="flex-1 p-4 space-y-4 bg-gradient-to-b from-[#0A0A0A] to-[#121212] overflow-hidden">
+                  {/* Fake chat bubble 1 */}
+                  <div className="flex justify-start">
+                    <div className="max-w-[90%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#1C1C1E] text-gray-100 rounded-[20px] rounded-tl-[4px] border border-white/5">
+                      Tell me your niche, and I will build you an entire demo system right now.
+                    </div>
+                  </div>
+                  {/* Fake chat bubble 2 */}
+                  <div className="flex justify-end">
+                    <div className="max-w-[85%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#e8e8e8] text-black rounded-[20px] rounded-br-[4px]">
+                      Roofing business in Austin, TX
+                    </div>
+                  </div>
+                  {/* Fake chat bubble 3 */}
+                  <div className="flex justify-start">
+                    <div className="max-w-[95%] px-4 py-3 text-[13px] font-sans leading-relaxed shadow-sm bg-[#1C1C1E] text-gray-100 rounded-[20px] rounded-tl-[4px] border border-white/5">
+                      Great. Extracting local data...<br />
+                      <div className="mt-3 space-y-1.5">
+                        <span className="text-gray-400 font-mono text-[10px] block">✓ Found 146 reviews</span>
+                        <span className="text-gray-400 font-mono text-[10px] block">✓ Generating copy</span>
+                        <span className="text-[var(--accent)] font-mono font-bold text-[10px] mt-2 block animate-pulse">DEPLOYING PREVIEW...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Bar (Home Indicator) mask */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[35%] h-1 bg-white/30 rounded-full"></div>
               </div>
             </ScrollReveal>
           </div>

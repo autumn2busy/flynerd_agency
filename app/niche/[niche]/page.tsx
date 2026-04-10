@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
-import { CheckCircle, ArrowRight, Zap, Target, TrendingUp, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -16,156 +15,196 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     where: { niche_key: nicheKey },
   });
 
-  if (!nicheData) {
-    return {
-      title: "Custom AI Business Automation | FlyNerd Tech",
-      description: "Scale your business with a custom AI employee. Live in 7 days.",
-    };
-  }
-
   return {
-    title: `${nicheData.display_name} AI Sales Funnels | FlyNerd Tech`,
-    description: `Automate your ${nicheData.display_name.toLowerCase()} business with a 24/7 AI employee that qualifies leads and books appointments.`,
+    title: `${nicheData?.display_name || nicheKey.replace(/_/g, " ")} | AI Live Demo`,
+    description: `Experience the automated AI sales funnel for ${nicheData?.display_name || nicheKey}.`,
   };
+}
+
+// ------------------------------------------------------------
+// Niche-Specific Demo Visual Components
+// ------------------------------------------------------------
+
+function MedSpaDemo() {
+  return (
+    <div className="min-h-screen bg-[#FAF9F6] text-[#2c2c2c] font-serif relative">
+      {/* MedSpa Header */}
+      <header className="px-8 py-6 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-[#e5e5e5]">
+        <h1 className="text-2xl tracking-widest uppercase text-[#B5A58D]">Aethel Wellness</h1>
+        <nav className="hidden md:flex gap-8 text-sm tracking-wide text-[#666]">
+          <span className="hover:text-[#B5A58D] cursor-pointer transition-colors">Treatments</span>
+          <span className="hover:text-[#B5A58D] cursor-pointer transition-colors">Membership</span>
+          <span className="hover:text-[#B5A58D] cursor-pointer transition-colors">About</span>
+        </nav>
+        <button className="bg-[#B5A58D] text-white px-6 py-2 rounded-sm text-sm tracking-wider uppercase hover:bg-[#a3947c] transition-colors shadow-sm">
+          Book Consultation
+        </button>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative h-[80vh] flex items-center justify-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center">
+          <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px]" />
+        </div>
+        <div className="relative z-10 text-center px-6 max-w-3xl">
+          <p className="tracking-[0.3em] uppercase text-[#B5A58D] text-sm mb-4 font-sans font-semibold">Elevate Your Natural Beauty</p>
+          <h2 className="text-5xl md:text-7xl font-light mb-6 text-[#2c2c2c] leading-tight">
+            Refined Aesthetics & <br /> Preventative Care.
+          </h2>
+          <p className="font-sans text-[#555] max-w-xl mx-auto mb-10 leading-relaxed">
+            Experience world-class injectable treatments, laser therapies, and tailored wellness regimens designed to enhance and preserve.
+          </p>
+          <button className="bg-[#2c2c2c] text-white px-8 py-4 rounded-sm text-sm tracking-wider font-sans uppercase hover:bg-black transition-colors shadow-xl">
+            View Treatment Menu
+          </button>
+        </div>
+      </section>
+
+      {/* Trust Bar */}
+      <section className="bg-white py-12 border-b border-[#e5e5e5]">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center font-sans">
+           <div>
+              <p className="text-2xl text-[#B5A58D] font-serif mb-1">Dr. Chen, MD</p>
+              <p className="text-xs uppercase tracking-widest text-[#888]">Board Certified</p>
+           </div>
+           <div>
+              <p className="text-2xl text-[#B5A58D] font-serif mb-1">10,000+</p>
+              <p className="text-xs uppercase tracking-widest text-[#888]">Treatments Performed</p>
+           </div>
+           <div>
+              <p className="text-2xl text-[#B5A58D] font-serif mb-1">5-Star</p>
+              <p className="text-xs uppercase tracking-widest text-[#888]">Patient Rating</p>
+           </div>
+           <div>
+              <p className="text-2xl text-[#B5A58D] font-serif mb-1">2024</p>
+              <p className="text-xs uppercase tracking-widest text-[#888]">Best of City Award</p>
+           </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function HVACDemo() {
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+      {/* HVAC Header */}
+      <header className="bg-[#002f6c] text-white">
+        <div className="bg-[#001b3d] px-4 py-2 flex justify-between items-center text-xs font-semibold tracking-wide">
+          <span>🚨 24/7 EMERGENCY REPAIR</span>
+          <span>LICENSED & INSURED • LIC# 8472910</span>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <h1 className="text-3xl font-black italic tracking-tighter">FROST<span className="text-red-500">BITE</span> HVAC</h1>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:block text-right">
+              <p className="text-gray-300 text-sm font-semibold">Call Now</p>
+              <p className="text-2xl font-bold text-white">(800) 555-0199</p>
+            </div>
+            <button className="bg-red-600 px-6 py-3 font-bold text-white uppercase tracking-wider rounded border-b-4 border-red-800 hover:bg-red-500 active:border-b-0 active:translate-y-1 transition-all">
+              Request Service
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-[#002f6c] py-20 px-6 border-y-8 border-red-600 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80')] bg-cover bg-center" />
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-start gap-6">
+          <span className="bg-white text-[#002f6c] px-3 py-1 font-bold uppercase tracking-wider rounded-sm text-sm shadow-md">Same Day Service</span>
+          <h2 className="text-5xl md:text-7xl font-black text-white leading-none uppercase tracking-tight">
+            Stop Sweating.<br/>
+            Start <span className="text-red-500">Saving.</span>
+          </h2>
+          <p className="text-xl text-gray-200 font-medium max-w-xl leading-relaxed bg-black/20 p-4 rounded-md border-l-4 border-red-600">
+            A/C blowing hot air? Heater acting up? Get upfront pricing and expert repairs from certified technicians out to your door immediately.
+          </p>
+          <div className="flex gap-4 mt-4">
+            <button className="bg-red-600 text-white px-8 py-4 font-bold text-lg uppercase tracking-wider rounded shadow-2xl border-b-4 border-red-800">
+              Book Appointment Online
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Grid */}
+      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+         <div className="bg-white p-8 rounded shadow-md border-t-4 border-[#002f6c]">
+           <h3 className="text-xl font-black mb-2 uppercase">Upfront Pricing</h3>
+           <p className="text-gray-600 font-medium">No hidden fees, no surprises. You know the exact cost before we start any work.</p>
+         </div>
+         <div className="bg-white p-8 rounded shadow-md border-t-4 border-red-600">
+           <h3 className="text-xl font-black mb-2 uppercase">A+ Rating</h3>
+           <p className="text-gray-600 font-medium">Over 2,000 five-star reviews from local homeowners who trust our team completely.</p>
+         </div>
+         <div className="bg-white p-8 rounded shadow-md border-t-4 border-[#002f6c]">
+           <h3 className="text-xl font-black mb-2 uppercase">10-Year Warranty</h3>
+           <p className="text-gray-600 font-medium">We stand by our installations with the best parts and labor warranty in the entire state.</p>
+         </div>
+      </section>
+    </div>
+  );
+}
+
+function DefaultGenericDemo({ niche }: { niche: string }) {
+  return (
+      <div className="min-h-screen bg-white text-gray-900 font-sans">
+        <header className="border-b px-8 py-6 flex justify-between items-center shadow-sm">
+           <h1 className="text-2xl font-bold tracking-tight capitalize">{niche} Partners</h1>
+           <button className="bg-black text-white px-6 py-2 rounded-md font-medium hover:bg-gray-800 transition-colors">
+              Contact Us
+           </button>
+        </header>
+        <section className="py-32 px-8 text-center bg-gray-50 border-b">
+           <h2 className="text-5xl font-extrabold tracking-tight mb-6 capitalize text-gray-900">
+              The Premier {niche} Service
+           </h2>
+           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+              Explore how our automated systems will instantly book, qualify, and convert your incoming leads. Notice the AI Chatbot waiting for you.
+           </p>
+           <button className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-all">
+              Schedule Your {niche} Callback
+           </button>
+        </section>
+      </div>
+  );
 }
 
 export default async function NichePage({ params }: Props) {
   const { niche: nicheSlug } = await params;
+  
+  // Floating overlay explaining this is a demo environment
+  const DemoBanner = () => (
+    <div className="fixed top-24 right-6 z-50 bg-black/90 backdrop-blur p-4 rounded-xl border border-white/10 shadow-2xl max-w-sm font-sans animate-in slide-in-from-right fade-in duration-500">
+       <div className="flex items-center gap-2 mb-2">
+         <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[var(--accent)]"></span>
+         </span>
+         <span className="text-white font-bold text-sm tracking-tight">Live Preview Mode</span>
+       </div>
+       <p className="text-gray-400 text-xs leading-relaxed">
+         This is what your customers see. Engage with the <strong>booking widget</strong> below to experience how FlyNerd AI qualifies your leads before you ever pick up the phone.
+       </p>
+    </div>
+  );
 
-  const nicheData = await prisma.niche_config.findUnique({
-    where: { niche_key: nicheSlug },
-  });
-
-  // Category-specific value propositions
-  const categoryBenefits = {
-    medical: [
-      "HIPAA-compliant lead qualification",
-      "24/7 patient consultation booking",
-      "Automated procedure-type screening",
-      "Seamless patient intake automation",
-    ],
-    legal: [
-      "Strict case-type qualification",
-      "After-hours intake for high-intent leads",
-      "Conflict-of-interest screening triage",
-      "Immediate consultation scheduling",
-    ],
-    home_high_ticket: [
-      "24/7 estimate scheduling",
-      "Project scope & photo capture",
-      "Emergency service triage after hours",
-      "Automated follow-up for high-value quotes",
-    ],
-    default: [
-      "24/7 lead capture and qualification",
-      "Direct CRM (ActiveCampaign) integration",
-      "Custom brand reputation data seeding",
-      "Live in 7 days with a performance guarantee",
-    ],
-  };
-
-  const benefits = nicheData 
-    ? (categoryBenefits[nicheData.category as keyof typeof categoryBenefits] || categoryBenefits.default)
-    : categoryBenefits.default;
+  let Content;
+  const normalized = nicheSlug.toLowerCase();
+  
+  if (normalized.includes("med") || normalized.includes("spa") || normalized.includes("salon")) {
+    Content = <MedSpaDemo />;
+  } else if (normalized.includes("hvac") || normalized.includes("plumb") || normalized.includes("roof") || normalized.includes("trade")) {
+    Content = <HVACDemo />;
+  } else {
+    Content = <DefaultGenericDemo niche={nicheSlug.replace(/_/g, " ")} />;
+  }
 
   return (
-    <main className="min-h-screen bg-[var(--bg-base)] text-white font-sans selection:bg-[var(--amber-500)] selection:text-black">
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(232,185,35,0.06)_0%,transparent_70%)]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(43,90,106,0.05)_0%,transparent_70%)]" />
-      </div>
-
-      <div className="container relative z-10 mx-auto px-6 pt-32 pb-24">
-        {/* Navigation / Back to Home */}
-        <Link href="/" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-white transition-colors mb-16 group">
-          <ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={16} />
-          <span className="text-xs uppercase tracking-widest font-bold">Back to Search</span>
-        </Link>
-
-        {/* Hero Section */}
-        <div className="max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
-           <div className="flex items-center gap-3 mb-6">
-              <Zap className="text-[var(--gold-400)]" size={24} />
-              <span className="text-xs font-bold tracking-[0.4em] uppercase text-[var(--amber-400)]">
-                {nicheData?.category?.replace(/_/g, ' ') || "Custom Solution"}
-              </span>
-           </div>
-           
-           <h1 className="text-[clamp(2.2rem,6vw,4.5rem)] font-extrabold leading-[1.1] mb-8">
-              The Digital <span className="gradient-text">{nicheData?.display_name || nicheSlug.replace(/-/g, ' ')}</span> Employee.
-           </h1>
-
-           <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-12 max-w-2xl">
-              Stop losing high-intent {nicheData?.display_name?.toLowerCase() || nicheSlug.replace(/-/g, ' ')} leads to slow responses. Our AI systems qualify your visitors and book them into your calendar before your competitors even see the notification.
-           </p>
-
-           {/* Core Value Props Grid */}
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
-              {benefits.map((benefit, i) => (
-                <div key={i} className="flex items-center gap-4 bg-[var(--bg-elevated)] p-5 rounded-2xl border border-[var(--glass-border)] shadow-xl">
-                   <div className="w-8 h-8 rounded-lg bg-[var(--amber-500)]/10 flex items-center justify-center">
-                      <CheckCircle className="text-[var(--amber-400)]" size={18} />
-                   </div>
-                   <span className="text-sm font-semibold text-[var(--text-primary)]">{benefit}</span>
-                </div>
-              ))}
-           </div>
-        </div>
-
-        {/* Action Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24 items-stretch">
-           <div className="lg:col-span-2 glass-card rounded-3xl p-10 flex flex-col justify-between border border-[var(--amber-500)]/20 bg-gradient-to-br from-[var(--amber-500)]/10 to-transparent">
-              <div>
-                 <h2 className="text-2xl font-bold mb-4">Ready to launch in 7 days?</h2>
-                 <p className="text-[var(--text-secondary)] mb-10 leading-relaxed">
-                   Select the build package that fits your volume, or book a free strategy call to see exactly how our {nicheData?.display_name || nicheSlug.replace(/-/g, ' ')} automation works.
-                 </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-5">
-                 <Link href="/pricing" className="btn btn-primary px-8 py-4 text-base">
-                    View Build Pricing <ArrowRight size={20} />
-                 </Link>
-                 <Link href="/contact" className="btn btn-ghost px-8 py-4 text-base">
-                    Book a Strategy Call <Target size={20} />
-                 </Link>
-              </div>
-           </div>
-
-           <div className="glass-card rounded-3xl p-10 flex flex-col gap-8 justify-center border border-[var(--glass-border)]">
-              <div className="space-y-2">
-                 <div className="flex items-center gap-3 text-[var(--gold-400)]">
-                    <ShieldCheck size={20} />
-                    <span className="text-sm font-bold uppercase tracking-widest">Guaranteed</span>
-                 </div>
-                 <p className="text-xs text-[var(--text-muted)] font-medium leading-relaxed">
-                   Launch your 24/7 sales agent within 1 week of your kickoff call, or your first month of management is on us.
-                 </p>
-              </div>
-              <div className="space-y-2">
-                 <div className="flex items-center gap-3 text-[var(--teal-400)]">
-                    <TrendingUp size={20} />
-                    <span className="text-sm font-bold uppercase tracking-widest">Scalable</span>
-                 </div>
-                 <p className="text-xs text-[var(--text-muted)] font-medium leading-relaxed">
-                   Built on the Sonata Stack (n8n + Supabase) to grow with your lead volume.
-                 </p>
-              </div>
-           </div>
-        </div>
-
-        {/* SEO Bottom Footer (Dynamic) */}
-        {!nicheData && (
-          <div className="text-center p-12 border-2 border-dashed border-[var(--glass-border)] rounded-3xl">
-             <p className="text-[var(--text-muted)] text-sm mb-4 italic font-medium">
-                Note: "{nicheSlug.replace(/-/g, ' ')}" is a high-intent custom niche. We can definitely automate your funnel.
-             </p>
-             <Link href="/contact" className="text-[var(--amber-400)] text-sm font-bold hover:underline">
-                Contact us to seed this niche into our platform →
-             </Link>
-          </div>
-        )}
-      </div>
+    <main className="relative">
+      <DemoBanner />
+      {Content}
     </main>
   );
 }

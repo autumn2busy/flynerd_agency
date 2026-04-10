@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono } from "next/font/google";
+import { Instrument_Serif, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { CommandMenu } from "@/components/home/CommandMenu";
+import { LiveAgentFeed } from "@/components/home/LiveAgentFeed";
+import HomeChatWidget from "@/components/home/HomeChatWidget";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -85,6 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&f[]=array@400&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -120,11 +124,14 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} antialiased`}
+        className={`${instrumentSerif.variable} ${geistMono.variable} font-satoshi antialiased`}
       >
         <Header />
         <main>{children}</main>
         <Footer />
+        <CommandMenu />
+        <LiveAgentFeed />
+        <HomeChatWidget />
       </body>
     </html>
   );
