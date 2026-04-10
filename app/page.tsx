@@ -295,24 +295,43 @@ export default function HomePage() {
       <section className="py-24 lg:py-36 bg-[var(--bg-dark)]">
         <div className="section-container">
           <ScrollReveal>
-            <h2
-              style={{
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.05em",
-                lineHeight: 1.0,
-                color: "var(--text-primary)",
-                marginBottom: "2.5rem",
-                maxWidth: "18ch",
-              }}
-            >
-              Ready to{" "}
-              <span style={{ color: "var(--accent)" }}>dominate</span>
-              <br />
-              your market?
-            </h2>
-            <div className="max-w-xl">
-              <SearchNiche />
+            <div className="text-center max-w-4xl mx-auto mb-16">
+              <h2
+                style={{
+                  fontFamily: "Array, sans-serif",
+                  fontWeight: 400,
+                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  letterSpacing: "-0.04em",
+                  lineHeight: 1.0,
+                  color: "var(--text-primary)",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                Stop losing leads<br />
+                <span style={{ color: "var(--accent)" }}>after hours.</span>
+              </h2>
+              <p
+                className="text-base mb-10 max-w-xl mx-auto"
+                style={{ color: "var(--text-secondary)", fontFamily: "var(--font-mono)" }}
+              >
+                Every unanswered call is money your competitor just pocketed. Let's fix that.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/apply?package=build"
+                  className="px-8 py-4 text-sm font-bold text-black"
+                  style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
+                >
+                  Get My AI Website →
+                </Link>
+                <Link
+                  href="/contact"
+                  className="px-8 py-4 text-sm border border-[var(--text-primary)]/30 text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-colors"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Book Strategy Call
+                </Link>
+              </div>
             </div>
           </ScrollReveal>
 
