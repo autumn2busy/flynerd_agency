@@ -1,192 +1,398 @@
-import SearchNiche from "@/components/home/SearchNiche";
-import ChatScenario from "@/components/home/ChatScenario";
-import { Cpu, Globe, Clock, BarChart3, Zap, ChevronRight } from "lucide-react";
-import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+import SearchNiche from "@/components/home/SearchNiche";
+import { ScrollReveal } from "@/components/home/ScrollReveal";
+import HomeChatWidget from "@/components/home/HomeChatWidget";
 
 export const metadata: Metadata = {
   title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
   description:
-    "FlyNerd Tech builds AI-powered websites that work as digital employees. Search your niche to see how we automate your business today.",
+    "We build the internet for the overlooked. FlyNerd Tech builds AI-powered websites for local service businesses in 48 hours.",
 };
+
+const NICHES = [
+  "HVAC",
+  "PLUMBING",
+  "BARBERSHOP",
+  "MEDSPA",
+  "ROOFING",
+  "ELECTRICIAN",
+  "WEIGHT LOSS",
+  "PEST CONTROL",
+];
+
+const STEPS = [
+  {
+    number: "01",
+    title: "Simon finds weak-presence businesses.",
+    body: "Our scout agent scans local search results, Google Business profiles, and competitor gaps to surface businesses that need us most.",
+  },
+  {
+    number: "02",
+    title: "Yoncé scores the opportunity.",
+    body: "Each prospect gets an opportunity score based on search volume, online presence grade, and revenue potential. Only the best make the cut.",
+  },
+  {
+    number: "03",
+    title: "Dre builds and deploys the demo.",
+    body: "A fully functional, personalized demo site goes live within 48 hours — pulling real data from Yelp, Google, and social profiles.",
+  },
+];
+
+const STATS = [
+  { value: "20+", label: "businesses scouted per run" },
+  { value: "48hr", label: "average build time" },
+  { value: "7 day", label: "demo window" },
+];
+
+const monoStyle = { fontFamily: "var(--font-mono)" } as const;
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen bg-[var(--bg-base)] text-white overflow-hidden">
+    <div className="bg-[var(--bg-base)]">
 
-      {/* ── Vertical Server-Rack Bars (trycook.ai-style depth) ── */}
-      <div className="vertical-bars" aria-hidden="true" />
+      {/* ─────────────────────────────────────────
+          HERO
+      ───────────────────────────────────────── */}
+      <section className="min-h-screen flex items-center pt-24 pb-16">
+        <div className="section-container w-full">
+          <div className="flex items-center justify-between gap-12 lg:gap-20">
 
-      {/* ── Ambient radial glows ── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0"
-      >
-        {/* Primary amber glow — center */}
-        <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(232,185,35,0.07)_0%,transparent_70%)]" />
-        {/* Secondary teal glow — bottom-left */}
-        <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(43,90,106,0.09)_0%,transparent_70%)]" />
-      </div>
-
-      {/* ── Dot grid overlay ── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 opacity-30"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(232,185,35,0.12) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-          maskImage:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 100%)",
-        }}
-      />
-
-      {/* ── Content ── */}
-      <div className="relative z-10 container mx-auto px-6 flex flex-col items-center justify-center min-h-screen pt-20 pb-16">
-
-        {/* Online Status Badge */}
-        <div className="mb-12 flex items-center gap-3 px-4 py-2 rounded-sm border border-[rgba(34,197,94,0.2)] bg-[rgba(34,197,94,0.04)] backdrop-blur-sm">
-          <span className="status-dot" />
-          <span className="mono-label text-[var(--status-green)]">
-            NETWORK STATUS: OPERATIONAL
-          </span>
-          <span className="mono-label text-[var(--text-muted)] border-l border-[rgba(255,255,255,0.08)] pl-3">
-            3 AGENTS ACTIVE
-          </span>
-        </div>
-
-        {/* Hero headlines */}
-        <div className="text-center max-w-4xl mx-auto mb-14 space-y-5">
-          <h1 className="text-[clamp(2.6rem,7.5vw,5.5rem)] font-extrabold leading-[1.06] tracking-tight">
-            <span className="block text-[var(--text-primary)]">
-              Your Website Should Be
-            </span>
-            <span className="block">
-              {/* Sans word + serif italic "Digital Employee" like trycook.ai */}
-              A{" "}
-              <span className="serif-em gradient-text">Digital Employee.</span>
-            </span>
-          </h1>
-
-          <p className="mx-auto max-w-2xl text-[clamp(1rem,1.8vw,1.3rem)] text-[var(--text-secondary)] leading-relaxed">
-            AI-powered websites that capture, qualify, and book leads 24/7.
-            Search your niche below — see how the system works for your industry.
-          </p>
-        </div>
-
-        {/* Search bar */}
-        <div className="w-full max-w-3xl mx-auto">
-          <SearchNiche />
-        </div>
-
-        {/* Divider + meta stats */}
-        <div className="mt-16 flex flex-col items-center gap-5">
-          {/* Thin horizontal rule flanked by corner marks */}
-          <div className="flex items-center gap-4 w-full max-w-xs">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[rgba(232,185,35,0.25)]" />
-            <span className="mono-label text-[var(--text-muted)]">v2.0</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[rgba(232,185,35,0.25)]" />
-          </div>
-
-          {/* Stats row */}
-          <div className="flex flex-wrap justify-center gap-6">
-            {[
-              { value: "7-Day", label: "Launch Guarantee" },
-              { value: "$1,250", label: "Starting Price" },
-              { value: "24/7", label: "AI Lead Capture" },
-              { value: "14+", label: "Active Niches" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center gap-0.5 px-5 py-3 rounded-sm border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] backdrop-blur-sm"
+            {/* Left: headline + mono subtitle + search */}
+            <div className="flex-1 min-w-0">
+              <h1
+                className="font-bold leading-[0.93] tracking-tight mb-6"
+                style={{ fontSize: "clamp(3rem, 9vw, 118px)", fontWeight: 800 }}
               >
-                <span className="text-base font-bold text-[var(--amber-400)]">
-                  {stat.value}
+                <span className="block text-[var(--text-primary)]">
+                  We build the internet
                 </span>
-                <span className="mono-label text-[var(--text-muted)]">
-                  {stat.label}
+                <span className="block text-[var(--text-primary)]">
+                  for the{" "}
+                  <span style={{ color: "var(--accent)" }}>overlooked.</span>
                 </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+              </h1>
 
-      {/* ── Chat Scenario Demo ── */}
-      <ChatScenario />
-
-      {/* ── Core Five Section ── */}
-      <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="section-container relative z-10 max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="mono-label text-[var(--amber-400)] tracking-[0.3em] uppercase block mb-4">
-              CAPABILITIES
-            </span>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-tight text-white leading-[1.1]">
-              Every FlyNerd site includes <br />
-              <span className="gradient-text serif-em italic font-normal">the Core Five.</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Cpu,
-                title: "AI Booking Agent",
-                description: "24/7 lead capture and qualification. A missed-call replacement for your website that books, qualifies, and follows up.",
-              },
-              {
-                icon: Globe,
-                title: "AI Personalization",
-                description: "Your brand palette, copy, and layout come from your real reputation and reviews — never a generic template.",
-              },
-              {
-                icon: Clock,
-                title: "7-Day Launch",
-                description: "Our proprietary pipeline extracts data and deploys your site in one week. No months-long development cycles.",
-              },
-              {
-                icon: BarChart3,
-                title: "Local SEO Stack",
-                description: "Next.js performance with structured schema markup — the technical foundation Google and AI-search reward.",
-              },
-              {
-                icon: Zap,
-                title: "Managed Monthly",
-                description: "Hosting, security, and minor updates included. Your site stays fast, secure, and technologically current.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group relative flex flex-col p-8 rounded-sm border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.04)] hover:border-[rgba(232,185,35,0.2)] transition-all duration-300 backdrop-blur-sm"
+              <p
+                className="text-base text-[var(--text-secondary)] mb-10"
+                style={monoStyle}
               >
-                <div className="w-12 h-12 rounded-sm border border-[rgba(232,185,35,0.2)] bg-[rgba(232,185,35,0.05)] flex items-center justify-center text-[var(--amber-400)] mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <item.icon size={22} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3 tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-
-            {/* Final CTA Card */}
-            <div className="flex flex-col p-8 rounded-sm border border-dashed border-[rgba(232,185,35,0.3)] bg-[rgba(232,185,35,0.02)] items-center justify-center text-center">
-              <p className="text-white/60 text-sm mb-6 max-w-[200px]">
-                Ready to see what an AI-powered site looks like for you?
+                // AI-powered websites for local service businesses.
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 mono-label text-[var(--amber-400)] hover:text-white transition-colors"
-              >
-                BOOK A STRATEGY CALL <ChevronRight size={14} />
-              </Link>
+
+              <div className="max-w-xl">
+                <SearchNiche />
+              </div>
+            </div>
+
+            {/* Right: lightbulb — floats + flickers */}
+            <div
+              className="hidden lg:block shrink-0"
+              style={{ animation: "hero-float 5s ease-in-out infinite" }}
+            >
+              <Image
+                src="/hero-lightbulb.jpg"
+                alt="FlyNerd — light up your business"
+                width={460}
+                height={460}
+                priority
+                className="object-contain"
+                style={{ animation: "bulb-flicker 2.8s ease-in-out infinite" }}
+              />
             </div>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* ─────────────────────────────────────────
+          TICKER STRIP
+      ───────────────────────────────────────── */}
+      <div
+        className="overflow-hidden bg-[var(--bg-dark)] py-4"
+        aria-hidden="true"
+      >
+        <div
+          style={{
+            display: "flex",
+            width: "max-content",
+            animation: "ticker-scroll 30s linear infinite",
+          }}
+        >
+          {[...NICHES, ...NICHES].map((niche, i) => (
+            <span
+              key={i}
+              className="px-6 text-sm text-[var(--text-inverse)] whitespace-nowrap"
+              style={monoStyle}
+            >
+              {niche}{" "}
+              <span className="opacity-40 mx-1" style={{ color: "var(--accent)" }}>
+                ·
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ─────────────────────────────────────────
+          HOW IT WORKS
+      ───────────────────────────────────────── */}
+      <section className="py-24 lg:py-32 bg-[var(--bg-base)]">
+        <div className="section-container">
+          <ScrollReveal>
+            <p
+              className="text-sm text-[var(--text-muted)] mb-4"
+              style={monoStyle}
+            >
+              // process
+            </p>
+            <h2
+              className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-[var(--text-primary)] mb-16 max-w-2xl"
+            >
+              From invisible to unforgettable in 48 hours.
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-[var(--text-primary)]">
+            {STEPS.map((step, i) => (
+              <ScrollReveal key={i} delay={i * 100}>
+                {/* No transition-* class = instant color swap on hover */}
+                <div
+                  className="border-r border-b border-[var(--text-primary)] p-10 bg-[var(--bg-base)] text-[var(--text-primary)] hover:bg-[var(--bg-dark)] hover:text-[var(--text-inverse)] cursor-default"
+                >
+                  <span
+                    className="block font-bold mb-6 opacity-25"
+                    style={{ ...monoStyle, fontSize: "3rem" }}
+                  >
+                    {step.number}
+                  </span>
+                  <h3 className="text-lg font-bold mb-3 leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed opacity-70">
+                    {step.body}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────
+          DEMO SHOWCASE
+      ───────────────────────────────────────── */}
+      <section className="py-24 lg:py-32 bg-[var(--bg-dark)]">
+        <div className="section-container">
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+            {/* Left: copy */}
+            <ScrollReveal className="flex-1">
+              <p
+                className="text-sm text-[var(--text-inverse)]/40 mb-4"
+                style={monoStyle}
+              >
+                // demo
+              </p>
+              <h2
+                className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-[var(--text-inverse)] mb-6 max-w-lg"
+              >
+                Your demo. Live in minutes.
+              </h2>
+              <p
+                className="text-base text-[var(--text-inverse)]/60 mb-10 max-w-md leading-relaxed"
+              >
+                We pull your real business data — reviews, services, location —
+                and deploy a personalized site before you finish your coffee.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/ai-website"
+                  className="px-6 py-3 border border-[var(--text-inverse)] text-[var(--text-inverse)] text-sm hover:bg-[var(--text-inverse)] hover:text-[var(--bg-dark)] transition-colors"
+                  style={monoStyle}
+                >
+                  See example demo
+                </Link>
+                <Link
+                  href="/contact"
+                  className="px-6 py-3 bg-[var(--accent)] text-[var(--text-inverse)] text-sm hover:opacity-90 transition-opacity"
+                  style={monoStyle}
+                >
+                  Run your pipeline
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Right: CSS phone mockup */}
+            <ScrollReveal delay={150}>
+              <div
+                style={{ animation: "hero-float 5s ease-in-out infinite" }}
+              >
+                {/* Phone frame */}
+                <div
+                  style={{
+                    width: "280px",
+                    height: "540px",
+                    border: "3px solid var(--text-inverse)",
+                    borderRadius: "44px",
+                    position: "relative",
+                    overflow: "hidden",
+                    background: "var(--bg-base)",
+                  }}
+                >
+                  {/* Notch */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "14px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "80px",
+                      height: "24px",
+                      background: "#0D0D0D",
+                      borderRadius: "12px",
+                      zIndex: 2,
+                    }}
+                    aria-hidden="true"
+                  />
+
+                  {/* Fake demo site content */}
+                  <div className="pt-16 px-5 pb-5">
+                    {/* Accent bar */}
+                    <div
+                      className="h-1 w-12 mb-4 rounded-sm"
+                      style={{ background: "var(--accent)" }}
+                    />
+                    {/* Business name */}
+                    <div
+                      className="h-7 rounded-sm mb-2"
+                      style={{ background: "var(--bg-dark)", width: "80%" }}
+                    />
+                    {/* Subtitle */}
+                    <div
+                      className="h-3 rounded-sm mb-1"
+                      style={{ background: "rgba(13,13,13,0.12)", width: "65%" }}
+                    />
+                    <div
+                      className="h-3 rounded-sm mb-6"
+                      style={{ background: "rgba(13,13,13,0.08)", width: "45%" }}
+                    />
+                    {/* CTA button */}
+                    <div
+                      className="h-10 rounded-sm flex items-center justify-center mb-5"
+                      style={{ background: "var(--bg-dark)" }}
+                    >
+                      <span
+                        className="text-[var(--text-inverse)] text-xs"
+                        style={monoStyle}
+                      >
+                        Book Now →
+                      </span>
+                    </div>
+                    {/* Stars */}
+                    <div className="flex gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="w-3 h-3 rounded-sm"
+                          style={{ background: "var(--accent)" }}
+                        />
+                      ))}
+                    </div>
+                    <div
+                      className="h-3 rounded-sm mb-1"
+                      style={{ background: "rgba(13,13,13,0.1)", width: "70%" }}
+                    />
+                    <div
+                      className="h-3 rounded-sm"
+                      style={{ background: "rgba(13,13,13,0.07)", width: "55%" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────
+          STATS STRIP
+      ───────────────────────────────────────── */}
+      <section className="py-20 lg:py-28 bg-[var(--bg-base)] border-b border-[var(--text-primary)]">
+        <div className="section-container">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--text-primary)]">
+            {STATS.map((stat, i) => (
+              <ScrollReveal key={i} delay={i * 80} className="px-8 py-8 md:py-0 text-center first:pl-0 last:pr-0">
+                <div
+                  className="font-bold leading-none mb-3 text-[var(--text-primary)]"
+                  style={{
+                    fontSize: "clamp(3rem, 7vw, 5.5rem)",
+                    fontWeight: 800,
+                  }}
+                >
+                  {stat.value}
+                </div>
+                <div
+                  className="text-xs uppercase tracking-widest text-[var(--text-muted)]"
+                  style={monoStyle}
+                >
+                  {stat.label}
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────
+          FOOTER CTA
+      ───────────────────────────────────────── */}
+      <section className="py-24 lg:py-32 bg-[var(--bg-dark)]">
+        <div className="section-container">
+          <ScrollReveal>
+            <h2
+              className="font-bold text-[var(--text-inverse)] mb-10 max-w-3xl"
+              style={{
+                fontSize: "clamp(2.5rem, 7vw, 5.5rem)",
+                fontWeight: 800,
+                lineHeight: 0.95,
+              }}
+            >
+              Ready to{" "}
+              <span style={{ color: "var(--accent)" }}>dominate</span>
+              <br />
+              your market?
+            </h2>
+            <div className="max-w-xl">
+              <SearchNiche />
+            </div>
+          </ScrollReveal>
+
+          {/* Footer nav */}
+          <div className="mt-20 pt-8 border-t border-[var(--text-inverse)]/10 flex flex-wrap gap-x-8 gap-y-3">
+            {[
+              { href: "/ai-website", label: "AI Websites" },
+              { href: "/pricing", label: "Pricing" },
+              { href: "/work", label: "Work" },
+              { href: "/about", label: "About" },
+              { href: "/blog", label: "Nerd News" },
+              { href: "/contact", label: "Contact" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs text-[var(--text-inverse)]/40 hover:text-[var(--text-inverse)]/80 transition-colors"
+                style={monoStyle}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Chat widget */}
+      <HomeChatWidget />
+    </div>
   );
 }

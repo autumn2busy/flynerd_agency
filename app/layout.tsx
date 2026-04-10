@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Outfit, Syne } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
-const syne = Syne({
-  variable: "--font-syne",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | FlyNerd Tech",
   },
   description:
-    "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Atlanta-based, serving clients globally.",
+    "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 48-hour launch. Atlanta-based, serving clients globally.",
   keywords: [
     "AI-powered website for local business",
     "AI booking agent",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "digital employee website",
     "AI automation agency Atlanta",
     "local SEO website",
-    "7 day website launch",
+    "48 hour website launch",
     "AI concierge for small business",
   ],
   authors: [{ name: "FlyNerd Tech" }],
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "FlyNerd Tech",
     title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
     description:
-      "Your website should be a digital employee. FlyNerd Tech builds AI-powered sites that book appointments, answer questions, and convert leads 24/7.",
+      "We build the internet for the overlooked. FlyNerd Tech builds AI-powered sites that book appointments, answer questions, and convert leads 24/7.",
     images: [
       {
         url: "/og-image.jpg",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FlyNerd Tech | AI-Powered Websites for Local Businesses",
     description:
-      "Your website should be a digital employee. FlyNerd Tech builds AI-powered sites that book appointments and convert leads 24/7.",
+      "We build the internet for the overlooked. FlyNerd Tech builds AI-powered sites that book appointments and convert leads 24/7.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -95,7 +95,7 @@ export default function RootLayout({
               url: "https://flynerd.tech",
               logo: "https://flynerd.tech/logo.png",
               description:
-                "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO architecture, and 7-day launch guarantee.",
+                "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO architecture, and 48-hour launch.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Atlanta",
@@ -119,20 +119,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${outfit.variable} ${syne.variable} antialiased font-sans`}>
-        {/* Film grain overlay — premium texture */}
-        <div className="film-grain" />
-
-        {/* Animated Background */}
-        <div className="fixed inset-0 -z-10 overflow-hidden">
-          <div className="bg-orb w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(232,185,35,0.15)_0%,transparent_70%)] -top-[300px] -right-[200px] absolute" />
-          <div className="bg-orb w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(43,90,106,0.2)_0%,transparent_70%)] -bottom-[200px] -left-[200px] absolute" style={{ animationDelay: "-5s" }} />
-          <div className="bg-orb w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(232,185,35,0.1)_0%,transparent_70%)] top-[50%] left-[60%] absolute" style={{ animationDelay: "-10s" }} />
-          <div className="grid-lines" />
-          <div className="scan-line" />
-          <div className="data-stream absolute inset-0 pointer-events-none opacity-50" />
-        </div>
-
+      <body
+        className={`${spaceGrotesk.variable} ${spaceMono.variable} antialiased`}
+      >
         <Header />
         <main>{children}</main>
         <Footer />
