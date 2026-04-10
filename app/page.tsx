@@ -162,9 +162,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-l border-t border-[var(--text-primary)]/10">
             {STEPS.map((step, i) => (
               <ScrollReveal key={i} delay={i * 80} className="h-full">
-                <SpotlightCard className="h-full rounded-none border-r border-b border-[var(--text-primary)]/10 p-10 bg-transparent cursor-default group transition-colors hover:bg-[var(--bg-elevated)]">
+                <div className="h-full border-r border-b border-[var(--text-primary)]/10 p-10 bg-transparent hover:bg-[var(--bg-dark)] hover:text-[var(--text-inverse)] cursor-default">
                   <span
-                    className="block font-bold mb-8 opacity-20 transition-opacity group-hover:opacity-40"
+                    className="block font-bold mb-8 opacity-20"
                     style={{ ...monoStyle, fontSize: "3.5rem" }}
                   >
                     {step.number}
@@ -185,7 +185,7 @@ export default function HomePage() {
                   >
                     {step.body}
                   </p>
-                </SpotlightCard>
+                </div>
               </ScrollReveal>
             ))}
           </div>
