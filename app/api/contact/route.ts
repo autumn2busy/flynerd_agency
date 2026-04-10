@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { resend } from "@/lib/resend";
+import { Resend } from "resend";
 
 const TARGET_NICHES = [
   "Water Damage Restoration",
@@ -173,6 +173,7 @@ export async function POST(req: Request) {
 
     // 5. Send Notification Email via Resend
     try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
         from: 'FlyNerd Contact Form <info@flynerdtech.com>',
         to: ['hello@flynerd.tech'],
