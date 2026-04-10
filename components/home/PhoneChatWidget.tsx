@@ -74,18 +74,18 @@ export default function PhoneChatWidget() {
     <div
       className="relative flex flex-col overflow-hidden"
       style={{
-        width: "280px",
-        height: "580px",
-        border: "8px solid #222",
-        borderRadius: "44px",
-        boxShadow: "inset 0 0 0 1px #444, 0 30px 60px -12px rgba(0,0,0,1)",
+        width: "340px",
+        height: "680px",
+        border: "10px solid #1a1a1a",
+        borderRadius: "52px",
+        boxShadow: "inset 0 0 0 1px #444, 0 40px 80px -12px rgba(0,0,0,1), 0 0 0 1px #333, 0 0 60px 0 rgba(255,51,0,0.08)",
         background: "#0A0A0A",
         flexShrink: 0,
       }}
     >
       {/* Dynamic Island */}
       <div
-        className="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-20"
+        className="absolute top-3 left-1/2 -translate-x-1/2 w-[100px] h-[30px] bg-black rounded-full z-20"
         aria-hidden="true"
       />
 
@@ -111,7 +111,7 @@ export default function PhoneChatWidget() {
             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-[88%] px-3 py-2.5 text-[12px] leading-relaxed ${
+              className={`max-w-[88%] px-3 py-2.5 text-[13px] leading-relaxed ${
                 m.role === "user"
                   ? "bg-[#e8e8e8] text-black rounded-[16px] rounded-br-[4px]"
                   : "bg-[#1C1C1E] text-gray-100 rounded-[16px] rounded-tl-[4px] border border-white/5"

@@ -106,10 +106,10 @@ export function Header() {
               ))}
             </div>
 
-            {/* CTA pill — black bg, cream text */}
+            {/* CTA pill — accent bg, white text */}
             <Link
               href="/contact"
-              className="hidden lg:inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--text-primary)] text-[var(--bg-dark)] text-[15px] hover:opacity-90 transition-opacity"
+              className="hidden lg:inline-flex items-center px-5 py-2.5 rounded-full bg-[var(--accent)] text-white text-[15px] font-semibold hover:opacity-90 transition-opacity"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               Get Started
@@ -176,7 +176,7 @@ export function Header() {
               <div className="mt-auto pt-8">
                 <Link
                   href="/contact"
-                  className="block w-full text-center py-3 bg-[var(--bg-dark)] text-[var(--text-inverse)] rounded-full text-sm"
+                  className="block w-full text-center py-3 bg-[var(--accent)] text-white rounded-full text-sm font-semibold"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   Get Started
