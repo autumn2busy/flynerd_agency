@@ -1,230 +1,224 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Check, HelpCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { SERVICES } from "./services-data";
 
 export const metadata: Metadata = {
-    title: "Pricing",
-    description: "Productized pricing for a lean AI automation agency. Clear scopes, fixed outcomes, and scalable monthly support.",
+  title: "Services & Pricing | FlyNerd Tech",
+  description:
+    "AI-powered websites, automation builds, and growth retainers for local service businesses. Fixed-scope, clear pricing, measurable outcomes.",
 };
 
-const pricingTiers = [
-    {
-        name: "Starter",
-        subtitle: "Automation Audit",
-        price: "$495",
-        period: "one-time",
-        description: "A focused systems audit and 30-day roadmap to identify your highest-impact automation opportunities.",
-        features: [
-            "60-minute strategy call",
-            "Current stack and workflow audit",
-            "Bottleneck and ROI prioritization",
-            "Custom 30-day implementation roadmap",
-            "Tool recommendations (AI + automation)",
-            "Async follow-up Q&A for 7 days",
-            "Audit fee credited toward Build package",
-        ],
-        cta: "Book Audit",
-        href: "/contact?package=starter",
-        popular: true,
-    },
-    {
-        name: "Build",
-        subtitle: "Quickstart Workflow Build",
-        price: "$1,250",
-        period: "one-time",
-        description: "One high-impact automation built end-to-end with documentation and team handoff.",
-        features: [
-            "Everything in Starter applied to implementation",
-            "1 production-ready workflow (fixed scope)",
-            "Core tool integrations (CRM, email, forms, sheets)",
-            "QA + launch checklist",
-            "Loom walkthrough + SOP documentation",
-            "14 days post-launch support",
-            "Option to upgrade into monthly optimization",
-        ],
-        cta: "Start Build",
-        href: "/contact?package=build",
-    },
-    {
-        name: "Optimize",
-        subtitle: "Monthly Care Plan",
-        price: "$750",
-        period: "/month",
-        description: "Ongoing maintenance, monitoring, and iterative improvements to keep your systems performing.",
-        features: [
-            "System monitoring and health checks",
-            "2 improvement tickets per month",
-            "Bug fixes and reliability tuning",
-            "Monthly performance summary",
-            "Priority async support",
-            "Quarterly roadmap refresh",
-            "Best for 1-3 core automations",
-        ],
-        cta: "Choose Optimize",
-        href: "/contact?package=optimize",
-        featured: true,
-    },
-    {
-        name: "Scale",
-        subtitle: "Growth Partner Retainer",
-        price: "$1,800",
-        period: "/month",
-        description: "For teams ready for multi-workflow execution, agent rollouts, and proactive growth operations.",
-        features: [
-            "Everything in Optimize",
-            "Up to 6 active workflow initiatives",
-            "AI lead qualification or support agent rollout",
-            "Advanced CRM automation and lifecycle journeys",
-            "Biweekly strategy calls",
-            "Faster turnaround SLAs",
-            "Ideal for growing teams with active campaigns",
-        ],
-        cta: "Apply for Scale",
-        href: "/contact?package=scale",
-    },
-];
+const monoStyle = { fontFamily: "var(--font-mono)" } as const;
 
-const faqs = [
-    {
-        question: "Why is the Starter package paid?",
-        answer: "The audit includes strategy, technical diagnostics, and a tailored roadmap you can execute with or without us. It prevents guesswork and keeps implementation focused.",
-    },
-    {
-        question: "Can the audit fee be applied to implementation?",
-        answer: "Yes. If you move forward within 30 days, your Starter fee is credited toward the Build package.",
-    },
-    {
-        question: "Do you offer custom scopes?",
-        answer: "Yes, for clients with complex requirements. We still start with a paid audit so custom work is grounded in a clear implementation plan.",
-    },
-    {
-        question: "How fast can we launch?",
-        answer: "Most Build projects launch within 1-2 weeks after kickoff. Timeline depends on integrations, access readiness, and review speed.",
-    },
-    {
-        question: "Who is this best for?",
-        answer: "Small and midsize teams that want meaningful automation outcomes without hiring a full in-house operations team.",
-    },
-    {
-        question: "Do monthly plans require long-term contracts?",
-        answer: "No. Optimize and Scale are month-to-month with 30 days notice.",
-    },
-];
+export default function ServicesPage() {
+  return (
+    <div className="min-h-screen bg-[var(--bg-base)]">
 
-export default function PricingPage() {
-    return (
-        <>
-            {/* Hero */}
-            <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
-                <div className="section-container">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <span className="section-label">Pricing</span>
-                        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
-                            Productized <span className="gradient-text">Pricing</span>
-                        </h1>
-                        <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-                            Lean, clear packages designed for fast implementation and measurable outcomes.
-                        </p>
-                    </div>
-                </div>
-            </section>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="pt-32 pb-16 lg:pt-44 lg:pb-20 border-b border-white/8">
+        <div className="section-container">
+          <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)] mb-5" style={monoStyle}>
+            // services + pricing
+          </p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+            <h1
+              style={{
+                fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.05em",
+                lineHeight: 0.95,
+                color: "var(--text-primary)",
+                maxWidth: "18ch",
+              }}
+            >
+              What we build.<br />
+              <span style={{ color: "var(--accent)" }}>What it costs.</span>
+            </h1>
+            <p
+              className="text-base text-[var(--text-secondary)] max-w-sm leading-relaxed lg:text-right"
+              style={{ lineHeight: 1.7 }}
+            >
+              Fixed scopes. Clear outcomes. No surprise invoices. Click any service to see exactly what you get.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Pricing Grid */}
-            <section className="pb-24 lg:pb-32">
-                <div className="section-container">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {pricingTiers.map((tier) => (
-                            <div
-                                key={tier.name}
-                                className={`glass-card rounded-2xl p-8 relative ${tier.featured ? "ring-2 ring-[var(--gold-500)] lg:scale-105" : ""
-                                    }`}
-                            >
-                                {tier.popular && (
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
-                                        Popular
-                                    </span>
-                                )}
-                                {tier.featured && (
-                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full">
-                                        Best Value
-                                    </span>
-                                )}
+      {/* ── Category: AI Websites ─────────────────────────────── */}
+      <section className="py-16 border-b border-white/8">
+        <div className="section-container">
+          <div className="flex items-center gap-4 mb-8">
+            <span
+              className="text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border"
+              style={{ ...monoStyle, color: "var(--accent)", borderColor: "var(--accent)" }}
+            >
+              AI Websites
+            </span>
+            <div className="flex-1 h-px bg-white/8" />
+          </div>
 
-                                <div className="mb-6">
-                                    <h3 className="text-xl font-semibold">{tier.name}</h3>
-                                    <p className="text-sm text-[var(--gold-400)]">{tier.subtitle}</p>
-                                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/10">
+            {SERVICES.filter((s) => s.category.startsWith("AI")).map((service, i) => (
+              <ServiceCard key={service.slug} service={service} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-                                <div className="mb-6">
-                                    <span className="text-4xl font-bold">{tier.price}</span>
-                                    <span className="text-[var(--text-muted)] ml-1">{tier.period}</span>
-                                </div>
+      {/* ── Category: Automation ─────────────────────────────── */}
+      <section className="py-16 border-b border-white/8">
+        <div className="section-container">
+          <div className="flex items-center gap-4 mb-8">
+            <span
+              className="text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border border-zinc-600"
+              style={{ ...monoStyle, color: "#a1a1aa" }}
+            >
+              Automation
+            </span>
+            <div className="flex-1 h-px bg-white/8" />
+          </div>
 
-                                <p className="text-sm text-[var(--text-secondary)] mb-6">{tier.description}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/10">
+            {SERVICES.filter((s) => s.category === "Automation").map((service, i) => (
+              <ServiceCard key={service.slug} service={service} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-                                <ul className="space-y-3 mb-8">
-                                    {tier.features.map((feature, i) => (
-                                        <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
-                                            <Check size={16} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                            {feature}
-                                        </li>
-                                    ))}
-                                </ul>
+      {/* ── Category: Retainers ──────────────────────────────── */}
+      <section className="py-16 border-b border-white/8">
+        <div className="section-container">
+          <div className="flex items-center gap-4 mb-8">
+            <span
+              className="text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 border border-zinc-700"
+              style={{ ...monoStyle, color: "#71717a" }}
+            >
+              Retainers
+            </span>
+            <div className="flex-1 h-px bg-white/8" />
+          </div>
 
-                                <Link
-                                    href={tier.href}
-                                    className={`btn w-full ${tier.featured ? "btn-primary" : "btn-ghost"}`}
-                                >
-                                    {tier.cta}
-                                    <ArrowUpRight size={16} />
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/10">
+            {SERVICES.filter((s) => s.category === "Retainer").map((service, i) => (
+              <ServiceCard key={service.slug} service={service} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* FAQs */}
-            <section className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
-                <div className="section-container">
-                    <div className="text-center mb-16">
-                        <span className="section-label">FAQ</span>
-                        <h2 className="text-[clamp(2rem,4vw,3rem)] font-semibold mt-4">
-                            Common Questions
-                        </h2>
-                    </div>
+      {/* ── Footer CTA ──────────────────────────────────────── */}
+      <section className="py-24 lg:py-32 bg-black">
+        <div className="section-container">
+          <div className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)] mb-5" style={monoStyle}>
+              // not sure where to start?
+            </p>
+            <h2
+              style={{
+                fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.04em",
+                lineHeight: 1.0,
+                color: "var(--text-primary)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Start with the Audit.<br />
+              <span style={{ color: "var(--accent)" }}>Credit it toward any build.</span>
+            </h2>
+            <p className="text-base text-[var(--text-secondary)] mb-10 max-w-xl" style={{ lineHeight: 1.7 }}>
+              The Automation Audit gives you a 30-day roadmap and ROI-ranked priorities — whether you build with us or not. The $495 fee is credited toward any Build or Bundle package.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/contact?package=starter"
+                className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold text-black accent-glow"
+                style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
+              >
+                Book Audit — $495 <ArrowUpRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 text-sm border border-white/20 text-[var(--text-primary)] hover:border-white/50 transition-colors"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                Book Strategy Call
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                    <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {faqs.map((faq, i) => (
-                            <div key={i} className="glass-card rounded-xl p-6">
-                                <div className="flex items-start gap-3 mb-3">
-                                    <HelpCircle size={18} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
-                                    <h3 className="font-semibold">{faq.question}</h3>
-                                </div>
-                                <p className="text-sm text-[var(--text-secondary)] pl-7">{faq.answer}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+    </div>
+  );
+}
 
-            {/* CTA */}
-            <section className="py-24 lg:py-32">
-                <div className="section-container">
-                    <div className="max-w-2xl mx-auto text-center">
-                        <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-semibold mb-6">
-                            Still Have Questions?
-                        </h2>
-                        <p className="text-lg text-[var(--text-secondary)] mb-8">
-                            Start with a paid audit so we can map exactly what to automate first, why it matters, and how to implement it.
-                        </p>
-                        <Link href="/contact" className="btn btn-primary text-lg px-10 py-4">
-                            Book the Starter Audit
-                            <ArrowUpRight size={20} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+function ServiceCard({ service, index }: { service: typeof SERVICES[0]; index: number }) {
+  const isRight = index % 2 === 1;
+  return (
+    <Link
+      href={`/pricing/${service.slug}`}
+      className={`group block p-8 lg:p-10 border-b lg:border-b-0 border-white/10 hover:bg-[#0f0f0f] transition-colors duration-200 relative ${
+        isRight ? "lg:border-l border-white/10" : ""
+      }`}
+    >
+      {service.featured && (
+        <span
+          className="absolute top-6 right-6 text-[9px] uppercase tracking-[0.2em] font-bold px-2.5 py-1 text-black"
+          style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
+        >
+          Most Popular
+        </span>
+      )}
+
+      {/* Category */}
+      <p
+        className="text-[10px] uppercase tracking-[0.2em] mb-4 font-bold"
+        style={{ ...monoStyle, color: service.categoryColor }}
+      >
+        {service.category}
+      </p>
+
+      {/* Name */}
+      <h2
+        className="text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent)] transition-colors duration-200"
+        style={{
+          fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)",
+          fontWeight: 700,
+          letterSpacing: "-0.03em",
+          lineHeight: 1.15,
+        }}
+      >
+        {service.name}
+      </h2>
+
+      {/* Tagline */}
+      <p className="text-sm text-[var(--text-muted)] mb-8 leading-relaxed max-w-sm">
+        {service.tagline}
+      </p>
+
+      {/* Price + CTA row */}
+      <div className="flex items-end justify-between">
+        <div>
+          <div
+            className="text-[var(--text-primary)] font-bold"
+            style={{ fontSize: "1.6rem", letterSpacing: "-0.04em" }}
+          >
+            {service.priceDisplay}
+          </div>
+          <div className="text-xs text-[var(--text-muted)] mt-0.5" style={monoStyle}>
+            {service.priceSub}
+          </div>
+        </div>
+        <div
+          className="flex items-center gap-2 text-xs font-bold text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-200"
+          style={monoStyle}
+        >
+          View Service <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+        </div>
+      </div>
+    </Link>
+  );
 }

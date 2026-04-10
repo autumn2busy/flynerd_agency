@@ -95,7 +95,7 @@ export default function AIWebsitePage() {
                             FlyNerd Tech builds AI-powered websites that answer questions, book appointments, and qualify leads — around the clock, without you being involved. Live in 7 days, built from your real reputation.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="#pricing" className="btn btn-primary text-lg px-10 py-4">
+                            <Link href="/pricing/ai-website-quickstart" className="btn btn-primary text-lg px-10 py-4">
                                 See Pricing <ArrowUpRight size={20} />
                             </Link>
                             <Link href="/contact" className="btn btn-ghost text-lg px-8 py-4">
@@ -206,10 +206,10 @@ export default function AIWebsitePage() {
                                     ))}
                                 </ul>
                                 <Link
-                                    href={pkg.stripe}
+                                    href={pkg.name === "Quickstart Build" ? "/pricing/ai-website-quickstart" : "/pricing/ai-concierge-bundle"}
                                     className={`btn w-full ${pkg.featured ? "btn-primary" : "btn-ghost"}`}
                                 >
-                                    {pkg.cta} <ArrowUpRight size={16} />
+                                    View Full Details <ArrowUpRight size={16} />
                                 </Link>
                             </div>
                         ))}
