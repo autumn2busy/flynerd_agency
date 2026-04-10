@@ -27,6 +27,9 @@ export interface Service {
   stripeDepositPriceId?: string;
   stripeFinalPriceId?: string;
   stripeMonthlyPriceId?: string;
+  stripeDepositLink?: string;   // portal.flynerd.tech payment link
+  stripeFinalLink?: string;
+  stripeMonthlyLink?: string;
   featured?: boolean;
 }
 
@@ -45,6 +48,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$495",
     priceSub: "one-time · credited toward any build",
     stripeDepositPriceId: "price_1TDr8NRVuKVVmtoDxjmFLW6M",
+    stripeDepositLink: "https://portal.flynerd.tech/b/6oU4gBeGhcbCf2jbKybo400",
     about: [
       "Before building anything, you need to know what to build — and in what order. The Automation Audit is a focused 60-90 minute strategy session followed by a complete written analysis of your current tech stack, workflows, and automation gaps.",
       "We identify your three highest-impact quick wins, rank every opportunity by ROI, and hand you a 30-day implementation roadmap you can execute with or without us.",
@@ -83,6 +87,8 @@ export const SERVICES: Service[] = [
     priceSub: "split 50/50 · deposit secures your start date",
     stripeDepositPriceId: "price_1TDrDPRVuKVVmtoDXipbO9KN",
     stripeFinalPriceId: "price_1TDrJsRVuKVVmtoD2f7QpFDP",
+    stripeDepositLink: "https://portal.flynerd.tech/b/fZu6oJbu56RicUb4i6bo401",
+    stripeFinalLink: "https://portal.flynerd.tech/b/4gMbJ3fKla3ug6n4i6bo402",
     about: [
       "You've identified the workflow that's costing you the most time or revenue. Now you need someone to build it correctly — with real integrations, proper error handling, and documentation your team can actually use.",
       "The Quickstart Workflow Build takes one fixed-scope automation and turns it into a production-ready system. From scoping and tool selection through QA, handoff, and 14-day post-launch support.",
@@ -100,7 +106,7 @@ export const SERVICES: Service[] = [
       { title: "Scoping", description: "We define exact inputs, outputs, triggers, and edge cases. Scope is locked in writing before build begins — no scope creep, no surprises." },
       { title: "Build", description: "One production-ready automation built using your existing tools. We handle all configuration, API connections, and logic." },
       { title: "QA", description: "Full testing across live conditions — normal flow, edge cases, and failure handling confirmed before handoff." },
-      { title: "Handoff", description: "Loom walkthrough + written SOP delivered. 14-day support window begins. Option to add Monthly Care Plan for ongoing maintenance." },
+      { title: "Handoff", description: "Loom walkthrough + written SOP delivered. 14-day support window begins. Option to add the Automation Care Plan for ongoing maintenance." },
     ],
     milestones: [
       { label: "Project Deposit (50%)", dueAt: "Due at checkout · secures your start date", price: "$625" },
@@ -121,6 +127,8 @@ export const SERVICES: Service[] = [
     priceSub: "split 50/50 · deposit secures your start date",
     stripeDepositPriceId: "price_1TDrLhRVuKVVmtoD0YfWNJ1D",
     stripeFinalPriceId: "price_1TDrRbRVuKVVmtoDAAlAFLAP",
+    stripeDepositLink: "https://portal.flynerd.tech/b/dRm4gBeGh1wY1btaGubo403",
+    stripeFinalLink: "https://portal.flynerd.tech/b/28E00lgOpa3u07p01Qbo404",
     featured: true,
     about: [
       "Your website should be answering questions, qualifying leads, and booking appointments around the clock. The AI Concierge Launch deploys a fully trained AI agent — customized to your exact services, pricing, and business logic — ready to handle real customer conversations.",
@@ -157,16 +165,17 @@ export const SERVICES: Service[] = [
   // ─────────────────────────────────────────
 
   {
-    slug: "monthly-care-plan",
-    name: "Monthly Care Plan",
+    slug: "automation-care-plan",
+    name: "Automation Care Plan",
     tagline: "Ongoing monitoring, issue triage, and iterative improvements for your active automations. No tickets go stale.",
     category: "Automation Retainer",
     categoryColor: "#a1a1aa",
     priceDisplay: "$750",
     priceSub: "/month · cancel anytime with 30 days notice",
     stripeMonthlyPriceId: "price_1TDrZGRVuKVVmtoDMa1UdeEg",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/6oU9AVdCd2B21bt3e2bo405",
     about: [
-      "Automations break. APIs change. Business processes evolve. The Monthly Care Plan keeps your systems healthy and improving without you needing to manage it yourself.",
+      "Automations break. APIs change. Business processes evolve. The Automation Care Plan keeps your systems healthy and improving without you needing to manage it yourself.",
       "Each month you get continuous health monitoring, two improvement tickets for enhancements or new micro-automations, rapid bug fixes, and a plain-English performance summary.",
       "Best for businesses running 1–3 core automations who want consistent improvement without hiring a full-time ops person. Month-to-month, 30-day notice to cancel.",
     ],
@@ -189,8 +198,8 @@ export const SERVICES: Service[] = [
       { label: "Ongoing", dueAt: "Billed monthly", price: "$750/mo" },
     ],
     projectDuration: "Ongoing · 30-day cancel",
-    ctaLabel: "Start Care Plan — $750/mo",
-    ctaHref: "/contact?package=care-plan",
+    ctaLabel: "Start Automation Care — $750/mo",
+    ctaHref: "/contact?package=automation-care",
   },
 
   {
@@ -202,13 +211,14 @@ export const SERVICES: Service[] = [
     priceDisplay: "$1,800",
     priceSub: "/month · cancel anytime with 30 days notice",
     stripeMonthlyPriceId: "price_1TDrbDRVuKVVmtoDMtued2fJ",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/14A00lbu58Zq4nFdSGbo406",
     about: [
       "You're not missing automations — you're missing the capacity to build, manage, and improve them fast enough. The Growth Ops Partner gives you dedicated operations bandwidth every month: multi-workflow execution, advanced automation experiments, and a strategic partner who's thinking about your ops full-time.",
-      "Everything in the Monthly Care Plan, plus up to 6 active workflow initiatives per month, quarterly strategic roadmap sessions, Slack-based priority support, and cross-channel reporting that shows you exactly what your systems are producing.",
+      "Everything in the Automation Care Plan, plus up to 6 active workflow initiatives per month, quarterly strategic roadmap sessions, Slack-based priority support, and cross-channel reporting that shows you exactly what your systems are producing.",
       "Ideal for growing teams with active outbound campaigns, multi-location operations, or a backlog of automation needs that never seem to get cleared.",
     ],
     inThePackage: [
-      { bold: "Everything in Care Plan", detail: "All monthly monitoring, issue triage, bug fixes, and reporting included." },
+      { bold: "Everything in Automation Care Plan", detail: "All monthly monitoring, issue triage, bug fixes, and reporting included." },
       { bold: "Multi-Workflow Optimization", detail: "Up to 6 active workflow initiatives per month — new builds, optimizations, or agent rollouts." },
       { bold: "Quarterly Roadmap", detail: "End-of-quarter strategic session to set the next 90-day automation priorities." },
       { bold: "Advanced Automation Experiments", detail: "We propose and test new automation approaches to find what drives the most ROI for your business." },
@@ -244,6 +254,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$449",
     priceSub: "/month · cancel anytime",
     stripeMonthlyPriceId: "price_1THVEeRVuKVVmtoDzgXmycIa",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/14A4gBcy94Ja1bt4i6bo407",
     about: [
       "If your business doesn't appear in local search results, you're invisible to the customers actively looking for what you do. The Local SEO Foundation builds the technical and content foundation that local search rewards.",
       "We manage up to 40 target keywords, handle your Google Business Profile, build local citations, create two SEO-optimized blog posts per month, and implement schema markup — all with a monthly performance report so you see exactly what's improving.",
@@ -281,6 +292,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$799",
     priceSub: "/month · cancel anytime",
     stripeMonthlyPriceId: "price_1THVEfRVuKVVmtoDjDrFJcfs",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/8x214peGha3ucUbcOCbo408",
     about: [
       "You're in a competitive market, and ranking isn't enough — you need to own the conversation. The Competitive SEO + Reputation Management retainer is designed for businesses that need high-volume keyword coverage, authoritative content, and active reputation control.",
       "We target up to 80 keywords, run a full E-E-A-T audit, optimize for voice and AI search, publish four long-form blog posts per month, build authority links, and actively manage your branded search results. If negative content, thin reviews, or competitor rankings are holding you back, this is the package that moves the needle.",
@@ -311,6 +323,47 @@ export const SERVICES: Service[] = [
   },
 
   {
+    slug: "authority-seo-aeo",
+    name: "Authority SEO + AEO",
+    tagline: "Top-tier SEO and Answer Engine Optimization — built for businesses that want to own their category in Google, ChatGPT, and Perplexity.",
+    category: "SEO & Marketing",
+    categoryColor: "#00D4FF",
+    priceDisplay: "$1,299",
+    priceSub: "/month · cancel anytime",
+    stripeMonthlyPriceId: "price_1TKmKGRVuKVVmtoD4v40C0Xx",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/9B6dRb0Prb7yaM35mabo40c",
+    about: [
+      "Search is no longer just Google. AI answer engines — ChatGPT, Perplexity, Google AI Overviews, and Bing Copilot — are increasingly where your customers get answers. If your business isn't optimized to appear in those results, you're invisible to a growing segment of high-intent searchers.",
+      "Authority SEO + AEO is our top-tier monthly retainer for businesses that want to dominate both traditional search and the new generation of AI-powered answer engines. It includes everything in the Competitive SEO + Reputation package, plus AEO-specific optimization, six long-form authority posts per month, digital PR link building, and brand mention monitoring across AI platforms.",
+      "This is the package for category leaders — businesses in competitive markets who want to be the definitive answer, not just one of the results.",
+    ],
+    inThePackage: [
+      { bold: "Everything in Competitive SEO + Reputation", detail: "80 keywords, E-E-A-T, 4 blog posts, link building, reputation offset content, and monthly report/call." },
+      { bold: "AEO — AI Overview Optimization", detail: "Content and schema structured to appear in Google AI Overviews, ChatGPT citations, and Perplexity answers." },
+      { bold: "6 Authority Posts/Month", detail: "Long-form pillar and cluster content targeting your highest-value keyword groups and AI citation opportunities." },
+      { bold: "Digital PR Link Building", detail: "Outreach-based coverage in industry publications and local media to build domain authority at scale." },
+      { bold: "Brand Mention Monitoring Across AI Platforms", detail: "We track where your brand is (and isn't) showing up in AI-generated answers — and fix the gaps." },
+      { bold: "Pillar + Cluster Content Strategy", detail: "Full topical authority architecture — pillar pages supported by a network of cluster content that signals deep expertise." },
+      { bold: "Structured Data for AI Crawlers", detail: "Advanced schema markup (FAQ, HowTo, Speakable, LocalBusiness) that makes your content machine-readable for AI engines." },
+      { bold: "Dedicated Strategist", detail: "One strategist owns your account. Monthly strategy call included." },
+    ],
+    process: [
+      { title: "Authority Audit", description: "Full audit of your current search presence, topical authority gaps, AI citation status, and reputation signals. 90-day roadmap built in week one." },
+      { title: "Pillar + Cluster Architecture", description: "We design your full content architecture — pillar pages, cluster topics, and AEO-optimized FAQ structures." },
+      { title: "Technical + AEO Foundation", description: "Advanced schema, E-E-A-T signals, and AI-readability improvements implemented in month one." },
+      { title: "Ongoing Content + PR", description: "Six posts per month published, digital PR outreach running, AI platform monitoring active." },
+      { title: "Monthly Report + Strategy Call", description: "Full performance review — traditional rankings, AI citation appearances, domain authority trends, and next-month priorities." },
+    ],
+    milestones: [
+      { label: "Month 1", dueAt: "Due at signup", price: "$1,299" },
+      { label: "Ongoing", dueAt: "Billed monthly", price: "$1,299/mo" },
+    ],
+    projectDuration: "Ongoing · 30-day cancel",
+    ctaLabel: "Start Authority SEO — $1,299/mo",
+    ctaHref: "/contact?package=authority-seo",
+  },
+
+  {
     slug: "b2b-email-marketing",
     name: "B2B Email Marketing",
     tagline: "Monthly email marketing for service businesses targeting commercial clients — 2 campaigns, brand-aligned design, copywriting, and reporting.",
@@ -319,6 +372,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$399",
     priceSub: "/month · cancel anytime",
     stripeMonthlyPriceId: "price_1THVEiRVuKVVmtoDmjoTRrot",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/28EfZjgOpgrS1bt8ymbo40b",
     about: [
       "Your email list is an asset most service businesses completely underutilize. The B2B Email Marketing retainer turns it into a consistent revenue channel — with two campaigns per month, brand-aligned templates, and professional copywriting.",
       "We handle list segmentation and management, email design, copy, personalization, and reporting. If you're using ActiveCampaign, we integrate directly into your existing CRM and automation flows.",
@@ -356,6 +410,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$1,098",
     priceSub: "/month · save $49 vs individual pricing",
     stripeMonthlyPriceId: "price_1THVEhRVuKVVmtoD1ZftuZ6M",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/8x23cx41D0sUbQ7eWKbo40a",
     featured: true,
     about: [
       "The Growth Retainer Bundle is FlyNerd's recommended all-in-one monthly package for local service businesses ready to grow. It combines our Competitive SEO + Reputation Management retainer with the Site Care Plan — at a $49/month savings over individual pricing.",
@@ -397,6 +452,7 @@ export const SERVICES: Service[] = [
     priceDisplay: "$299",
     priceSub: "/month · cancel anytime",
     stripeMonthlyPriceId: "price_1THVEgRVuKVVmtoDZmyOohTE",
+    stripeMonthlyLink: "https://portal.flynerd.tech/b/28E6oJdCd0sUbQ7g0Obo409",
     about: [
       "Your website is a revenue-generating asset. It should stay fast, secure, and up-to-date without you thinking about it. The Site Care Plan keeps your Vercel-hosted site running at peak performance month after month.",
       "We handle hosting and deployment management, uptime monitoring, up to three content updates per month, SSL and security checks, analytics review, and priority support with a 48-hour response SLA.",

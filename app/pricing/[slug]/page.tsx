@@ -223,13 +223,38 @@ export default async function ServiceDetailPage({ params }: Props) {
 
               {/* CTA */}
               <div className="p-6">
-                <Link
-                  href={service.ctaHref}
-                  className="flex items-center justify-center gap-2 w-full py-4 text-sm font-bold text-black accent-glow"
-                  style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
-                >
-                  {service.ctaLabel} <ArrowUpRight size={15} />
-                </Link>
+                {/* Primary CTA — deposit or monthly link if available, else contact */}
+                {(service.stripeDepositLink || service.stripeMonthlyLink) ? (
+                  <a
+                    href={service.stripeDepositLink ?? service.stripeMonthlyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-4 text-sm font-bold text-black accent-glow"
+                    style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
+                  >
+                    {service.ctaLabel} <ArrowUpRight size={15} />
+                  </a>
+                ) : (
+                  <Link
+                    href={service.ctaHref}
+                    className="flex items-center justify-center gap-2 w-full py-4 text-sm font-bold text-black accent-glow"
+                    style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
+                  >
+                    {service.ctaLabel} <ArrowUpRight size={15} />
+                  </Link>
+                )}
+                {/* For split-payment services, show final payment link separately */}
+                {service.stripeFinalLink && (
+                  <a
+                    href={service.stripeFinalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-3 mt-2 text-xs border border-white/15 text-[var(--text-muted)] hover:border-white/30 hover:text-[var(--text-primary)] transition-colors"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    Pay Final Balance <ArrowUpRight size={12} />
+                  </a>
+                )}
                 <p className="text-center text-[10px] text-[var(--text-muted)] mt-3" style={monoStyle}>
                   or{" "}
                   <Link href="/contact" className="text-[var(--accent)] hover:underline">

@@ -20,7 +20,7 @@ function ApplyForm() {
     const packageDisplayNames: Record<string, string> = {
         "build": "Quickstart Build ($1,250 Setup)",
         "agent": "AI Concierge Bundle ($2,400 Setup)",
-        "care-plan": "Monthly Care Plan ($750/mo)",
+        "care-plan": "Automation Care Plan ($750/mo)",
         "growth-partner": "Growth Ops Partner ($1,800/mo)",
         "audit": "Automation Audit ($495)",
     };

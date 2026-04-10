@@ -38,7 +38,7 @@ const intakeQuestions = [
             "Quickstart Workflow Build ($1,250)",
             "AI Concierge Agent Launch ($2,400)",
             "Email Revenue Sprint ($900)",
-            "Monthly Care Plan ($750/mo)",
+            "Automation Care Plan ($750/mo)",
             "Growth Ops Partner ($1,800/mo)",
             "Not sure yet",
         ],
@@ -111,7 +111,7 @@ const packageMap: Record<string, string> = {
     "agent-launch": "AI Concierge Agent Launch ($2,400)",
     "ai-concierge": "AI Concierge Agent Launch ($2,400)",
     "email-revenue-sprint": "Email Revenue Sprint ($900)",
-    "care-plan": "Monthly Care Plan ($750/mo)",
+    "care-plan": "Automation Care Plan ($750/mo)",
     "growth-partner": "Growth Ops Partner ($1,800/mo)",
 };
 

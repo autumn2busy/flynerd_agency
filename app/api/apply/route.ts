@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     } else if (packageName === "agent") {
       stripeUrl = process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact";
     } else if (packageName === "care-plan") {
-      stripeUrl = process.env.STRIPE_LINK_MONTHLY_CARE || "/contact";
+      stripeUrl = process.env.STRIPE_LINK_AUTOMATION_CARE || "/contact";
     } else if (packageName === "growth-partner") {
       stripeUrl = process.env.STRIPE_LINK_GROWTH_OPS || "/contact";
     } else if (packageName === "audit") {

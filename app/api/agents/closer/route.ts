@@ -70,7 +70,7 @@ NEVER quote this to inbound or organic prospects. NEVER mention this publicly.
 Best first step for businesses unsure where to start. 60-90 min session, systems
 audit, roadmap. Credit toward any build.
 
-### Monthly Care Plan — $750/month
+### Automation Care Plan — $750/month
 System monitoring, 2 improvement tickets/month, performance reports, optimization.
 Cancel anytime at portal.flynerd.tech
 
