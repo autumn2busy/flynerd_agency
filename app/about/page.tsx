@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Award, BarChart3, Clock, ShieldCheck, TerminalSquare } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, BarChart3, Clock, ShieldCheck, TerminalSquare } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "About Us | FlyNerd Tech",
@@ -56,19 +57,25 @@ export default function AboutPage() {
                 <div className="section-container">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
                         
-                        {/* Visual Placeholder - Founder area */}
-                        <div className="lg:col-span-4 relative group">
-                            <div className="aspect-[4/5] rounded-3xl bg-[var(--bg-base)] border border-[var(--glass-border)] flex flex-col items-center justify-center p-8 text-center relative overflow-hidden transition-all duration-500 group-hover:border-[var(--gold-500)]/50">
-                                <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                
-                                <div className="w-24 h-24 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] mx-auto mb-6 flex items-center justify-center shadow-lg shadow-[var(--gold-500)]/10">
-                                    <Award className="text-[var(--gold-400)]" size={32} />
+                        {/* Founder photo */}
+                        <div className="lg:col-span-4 relative">
+                            <div className="aspect-[4/5] relative overflow-hidden border border-[var(--text-primary)]">
+                                <Image
+                                    src="/founder.jpg"
+                                    alt="Autumn — Founder, FlyNerd Tech"
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 33vw"
+                                    className="object-cover object-top"
+                                    priority
+                                />
+                                <div
+                                    className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-[var(--bg-dark)]"
+                                >
+                                    <p className="text-sm font-bold text-[var(--text-inverse)]">Autumn</p>
+                                    <p className="text-xs text-[var(--accent)]" style={{ fontFamily: "var(--font-mono)" }}>
+                                        Founder · Lead Solutions Architect
+                                    </p>
                                 </div>
-                                <h3 className="text-xl font-semibold mb-1">The Founder</h3>
-                                <p className="text-sm text-[var(--gold-400)] font-medium mb-4">Lead Solutions Architect</p>
-                                <p className="text-xs text-[var(--text-muted)] mt-auto pt-8 border-t border-[var(--glass-border)] w-full">
-                                    (Replace this component with your professional headshot inside app/about/page.tsx)
-                                </p>
                             </div>
                         </div>
 
