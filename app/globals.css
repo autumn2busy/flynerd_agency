@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ========================================
-   FlyNerd Tech — Design System v3.0
+   FlyNerd Tech — Design System v3.1
    Brutalist Tech × Gen Z Editorial
    Space Grotesk (display) + Space Mono (mono/label)
    ======================================== */
@@ -19,6 +19,12 @@
 
     --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
     --font-mono: var(--font-space-mono), 'Space Mono', monospace;
+  }
+
+  /* Global border-radius reset — brutalism requires sharp edges.
+     Tailwind rounded-* utilities override this via the utilities layer. */
+  *, *::before, *::after {
+    border-radius: 0;
   }
 }
 
@@ -39,25 +45,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Headlines: dense, impactful, zero softness */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 1.0;
 }
 
-h1 { font-weight: 800; letter-spacing: -0.045em; }
-h2 { font-weight: 700; letter-spacing: -0.035em; }
-h3 { font-weight: 700; letter-spacing: -0.02em; }
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.88;
+}
+
+h2 {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+/* No transition on links — brutalism snaps */
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 ::selection {
   background: var(--accent);
   color: var(--text-inverse);
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s ease;
 }
 
 *:focus-visible {
@@ -84,7 +103,7 @@ a {
 /* ── Scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
-::-webkit-scrollbar-thumb { background: #0D0D0D; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #0D0D0D; }
 ::-webkit-scrollbar-thumb:hover { background: #333; }
 
 /* ── Scroll reveal ─────────────────────────────────────── */
@@ -98,8 +117,19 @@ a {
   transform: translateY(0);
 }
 
+/* ── Hero media slot ───────────────────────────────────── */
+/* Houses the background image (or video once generated).
+   Swap the <Image> for a <video autoPlay muted loop playsInline> when ready. */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
 /* ── Keyframes ─────────────────────────────────────────── */
 
+/* Per-bulb flicker — apply with animation-delay 0s / 0.4s / 0.9s */
 @keyframes bulb-flicker {
   0%   { opacity: 1; }
   15%  { opacity: 0.3; }
@@ -108,11 +138,6 @@ a {
   65%  { opacity: 1; }
   85%  { opacity: 0.2; }
   100% { opacity: 1; }
-}
-
-@keyframes hero-float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-14px); }
 }
 
 @keyframes ticker-scroll {
@@ -158,7 +183,6 @@ a {
 .blog-prose a {
   color: var(--accent);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
 }
 .blog-prose a:hover { border-bottom-color: var(--accent); }
 .blog-prose ul {
@@ -182,5 +206,4 @@ a {
   width: 8px;
   height: 2px;
   background: var(--accent);
-  border-radius: 1px;
 }
