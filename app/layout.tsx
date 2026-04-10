@@ -3,8 +3,6 @@ import { Instrument_Serif, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { CommandMenu } from "@/components/home/CommandMenu";
-import { LiveAgentFeed } from "@/components/home/LiveAgentFeed";
 import HomeChatWidget from "@/components/home/HomeChatWidget";
 
 const instrumentSerif = Instrument_Serif({
@@ -129,8 +127,6 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <CommandMenu />
-        <LiveAgentFeed />
         <HomeChatWidget />
       </body>
     </html>
