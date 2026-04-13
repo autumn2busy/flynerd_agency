@@ -21,36 +21,38 @@ export default function SearchNiche() {
   };
 
   return (
-    <form onSubmit={handleSearch} className="w-full">
+    <form onSubmit={handleSearch} className="w-full max-w-2xl mx-auto">
       <div
-        className="relative flex items-center"
+        className="relative flex items-center bg-white text-black transition-shadow duration-300 rounded-full"
         style={{
-          border: focused
-            ? "1px solid var(--accent)"
-            : "1px solid var(--text-primary)",
-          borderRadius: "4px",
-          backgroundColor: "var(--bg-base)",
-          transition: "border-color 0.15s ease",
+          boxShadow: focused
+            ? "0 4px 30px rgba(255, 255, 255, 0.15)"
+            : "0 2px 10px rgba(0, 0, 0, 0.4)",
+          border: focused ? "2px solid var(--accent)" : "2px solid transparent",
         }}
       >
+        <div className="pl-6 pr-3 text-gray-400">
+          <Search size={22} strokeWidth={2.5} />
+        </div>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          placeholder='enter niche, e.g. "hvac atlanta"'
+          placeholder='hvac or med spa'
           autoComplete="off"
-          className="flex-1 bg-transparent outline-none px-5 py-4 text-base text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="flex-1 bg-transparent outline-none py-5 text-lg font-sans placeholder:text-gray-400"
         />
-        <button
-          type="submit"
-          aria-label="Search niche"
-          className="pr-5 pl-3 flex-shrink-0 text-[var(--accent)] hover:opacity-70 transition-opacity"
-        >
-          <Search size={18} strokeWidth={2} />
-        </button>
+        <div className="pr-2">
+          <button
+            type="submit"
+            aria-label="Search niche"
+            className="flex-shrink-0 bg-[var(--accent)] hover:bg-[#ff5500] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-colors shadow-sm"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </form>
   );
