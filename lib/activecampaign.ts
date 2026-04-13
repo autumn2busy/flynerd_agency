@@ -106,8 +106,8 @@ export async function createDeal(contactId: string, title: string, value: number
       title: title,
       value: value, // in cents (e.g. 250000 for $2,500)
       currency: "usd",
-      group: pipelineId,
-      stage: stageId,
+      group: String(pipelineId),
+      stage: String(stageId),
       status: 0, // Open
       ...(fields && { fields }),
       ...(description && { description }),
