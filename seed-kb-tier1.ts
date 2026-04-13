@@ -2,64 +2,68 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const kbData = [
-  // MEDICAL: Orthodontics & Invisalign
-  { niche: 'orthodontics', question: 'Am I a candidate for clear aligners like Invisalign?', answer: 'Most patients with mild to moderate crowding or spacing are excellent candidates. A digital scan during your consultation will confirm if your specific dental alignment can be corrected with aligners versus traditional braces.' },
-  { niche: 'orthodontics', question: 'How long does Invisalign treatment usually take?', answer: 'Typical cases take between 12 to 18 months, though some minor corrections can be completed in as little as 6 months. Consistency in wearing your aligners (22 hours/day) is the biggest factor in speed.' },
-  { niche: 'orthodontics', question: 'Do clear aligners hurt more than metal braces?', answer: 'No, aligners are generally more comfortable. You may feel "pressure" for the first 24-48 hours after switching to a new tray, which indicates your teeth are moving as planned.' },
-
-  // MEDICAL: Hormone Therapy & TRT
-  { niche: 'hormone_therapy_trt', question: 'What are the most common signs of low testosterone?', answer: 'Common symptoms include persistent fatigue, decreased libido, loss of muscle mass, increased body fat, and "brain fog" or difficulty concentrating.' },
-  { niche: 'hormone_therapy_trt', question: 'How is TRT administered?', answer: 'We offer several methods including weekly injections, topical gels, and subcutaneous pellets. The choice depends on your lifestyle and how your body metabolizes the hormones.' },
-  { niche: 'hormone_therapy_trt', question: 'Is TRT safe for long-term use?', answer: 'Under clinical supervision with regular blood work to monitor red blood cell count and PSA levels, TRT is a safe and effective treatment for diagnosed hypogonadism.' },
-
-  // MEDICAL: Fertility Clinics
-  { niche: 'fertility_clinics', question: 'What is the first step in a fertility evaluation?', answer: 'The first step is a comprehensive fertility assessment for both partners, including hormone blood tests, an ultrasound for the female, and a semen analysis for the male.' },
-  { niche: 'fertility_clinics', question: 'What are your success rates for IVF?', answer: 'Success rates vary significantly by age and diagnosis. Our clinic maintains rates above the national average; we provide specific success data based on your age group during your initial consult.' },
-
-  // MEDICAL: Plastic Surgery
-  { niche: 'plastic_surgery', question: 'How long is the recovery period for major cosmetic surgery?', answer: 'Recovery varies by procedure. Typically, you can return to work in 1-2 weeks for most surgeries, but complete healing and final results can take 3-6 months.' },
-
-  // LEGAL: Workers Comp Lawyers
-  { niche: 'workers_comp', question: 'What should I do immediately after a work injury?', answer: '1. Report the injury to your supervisor immediately. 2. Seek medical attention. 3. Document everything. 4. Consult an attorney before signing any insurance company statements.' },
-  { niche: 'workers_comp', question: 'Can I choose my own doctor for a work injury?', answer: 'This depends on state law. In many cases, your employer has a designated "Panel of Physicians." We can help you navigate the process of getting a second opinion if you are unhappy with your care.' },
-
-  // LEGAL: Divorce & Family Law
-  { niche: 'divorce_law', question: 'How long does a typical divorce take to finalize?', answer: 'An uncontested divorce can take 60-90 days. Contested divorces involving complex assets or custody disputes can take 6-18 months depending on court schedules.' },
-  { niche: 'divorce_law', question: 'How is child custody determined?', answer: 'Courts always prioritize the "Best Interests of the Child." They consider stability, parental involvement, and the child\'s needs rather than just splitting time 50/50 automatically.' },
-
-  // HOME HIGH-TICKET: Pool Builders
-  { niche: 'pool_builders', question: 'How long does it take from excavation to swimming?', answer: 'A standard gunite pool typically takes 8-12 weeks. Factors like weather, permitting, and the complexity of your landscaping/masonry can extend this timeline.' },
-  { niche: 'pool_builders', question: 'What kind of warranty comes with a new pool?', answer: 'We typically provide a lifetime structural warranty on the shell, 3 years on equipment (pumps/filters), and 1-2 years on the interior finish (plaster/pebble).' },
-
-  // HOME HIGH-TICKET: Solar Panel Installers
-  { niche: 'solar_panel_installers', question: 'What happens to my solar power during a grid outage?', answer: 'Standard grid-tied systems shut off during an outage for safety. If you want power during a blackout, we can add a battery backup system like a Tesla Powerwall.' },
-  { niche: 'solar_panel_installers', question: 'Does solar still work on cloudy days?', answer: 'Yes! While production is lower than on a bright sunny day, modern high-efficiency panels still capture indirect sunlight to generate power.' },
-
-  // OTHERS (Oral Surgery, Weight Loss, Dental Implants, Bankruptcy, Personal Injury)
-  { niche: 'dental_implants', question: 'Are dental implants permanent?', answer: 'With proper care and maintenance, dental implants can last a lifetime. They are the most durable and natural-looking tooth replacement option available.' },
-  { niche: 'weight_loss', question: 'Is medical weight loss covered by insurance?', answer: 'Coverage varies significantly. Many plans cover consultations and medically necessary weight loss surgery, while medications like GLP-1s often require specific prior authorization.' },
-  { niche: 'personal_injury', question: 'How much does it cost to hire a personal injury lawyer?', answer: 'Most personal injury lawyers work on a contingency fee basis, meaning you pay nothing upfront and they only get paid a percentage of your final settlement.' },
-];
-
 async function main() {
-  console.log("Seeding Knowledge Base (Tier 1 Global) using createMany...");
+  console.log("Starting Synthesis Seed: Niche Engine + Global Brain...");
 
-  // We use createMany for bulk seeding as it is faster and cleaner for initial data.
-  // business_key is null for all global data.
+  // 1. Niche Configurations (Engine)
+  const nicheConfigs = [
+    { niche_key: "hvac", display_name: "HVAC & Cooling", category: "Home High-Ticket", interest_score: 95, system_prompt: "Professional HVAC assistant. Focus on repair, maintenance, and estimates." },
+    { niche_key: "orthodontics", display_name: "Orthodontics", category: "Medical", interest_score: 90, system_prompt: "Dental intake coordinator. Focus on Invisalign and braces." },
+    { niche_key: "personal-injury", display_name: "Personal Injury", category: "Legal", interest_score: 88, system_prompt: "Legal intake specialist. Collect incident and injury details." },
+    { niche_key: "trt-clinic", display_name: "TRT & Men's Health", category: "Medical", interest_score: 85, system_prompt: "Men's Health specialist. Focus on TRT and hormone optimization." },
+    { niche_key: "solar", display_name: "Solar Energy", category: "Home High-Ticket", interest_score: 82, system_prompt: "Solar consultant. Focus on energy savings and battery backup." },
+    { niche_key: "roofing", display_name: "Roofing", category: "Home High-Ticket", interest_score: 80, system_prompt: "Roofing specialist. Focus on repairs, replacements, and storm damage." },
+    { niche_key: "immigration-law", display_name: "Immigration Law", category: "Legal", interest_score: 78, system_prompt: "Immigration intake specialist. Focus on visas and residency." },
+    { niche_key: "med-spa", display_name: "Med Spa", category: "Medical", interest_score: 75, system_prompt: "Aesthetic specialist. Focus on skin treatments and injectables." },
+    { niche_key: "fertility", display_name: "Fertility Clinic", category: "Medical", interest_score: 74, system_prompt: "Fertility coordinator. Focus on IVF and evaluations." },
+    { niche_key: "family-law", display_name: "Family Law", category: "Legal", interest_score: 72, system_prompt: "Family law specialist. Focus on divorce and custody." },
+    { niche_key: "estate-planning", display_name: "Estate Planning", category: "Legal", interest_score: 70, system_prompt: "Legacy planner. Focus on wills, trusts, and estates." },
+    { niche_key: "dentistry", display_name: "General Dentistry", category: "Medical", interest_score: 68, system_prompt: "Dental assistant. Focus on cleanings, fillings, and emergencies." },
+    { niche_key: "real-estate-law", display_name: "Real Estate Law", category: "Legal", interest_score: 65, system_prompt: "Real estate legal assistant. Focus on closings and contracts." },
+    { niche_key: "bankruptcy-law", display_name: "Bankruptcy Law", category: "Legal", interest_score: 62, system_prompt: "Financial relief specialist. Focus on Chapter 7 and 13." }
+  ];
+
+  console.log(`Upserting ${nicheConfigs.length} niche configurations...`);
+  for (const config of nicheConfigs) {
+    await prisma.niche_config.upsert({
+      where: { niche_key: config.niche_key },
+      update: {
+        category: config.category,
+        system_prompt: config.system_prompt,
+        interest_score: config.interest_score,
+        is_active: true
+      },
+      create: {
+        ...config,
+        is_active: true
+      }
+    });
+  }
+
+  // 2. Global Knowledge Base (Brain)
+  const kbData = [
+    { niche: "hvac", question: "How often should I change my AC filter?", answer: "Every 1-3 months depending on usage and pets." },
+    { niche: "orthodontics", question: "How much does Invisalign cost?", answer: "Typically $3,000 - $7,000 depending on complexity." },
+    { niche: "personal-injury", question: "How much does it cost to hire you?", answer: "We work on a contingency fee; you pay nothing unless we win." },
+    { niche: "trt-clinic", question: "Is TRT safe?", answer: "Under clinical supervision with regular blood work, it is safe and effective." },
+    { niche: "solar", question: "Do solar panels work when it's cloudy?", answer: "Yes, they still produce power from indirect sunlight, though at lower levels." },
+    { niche: "roofing", question: "How do I know if I need a new roof?", answer: "Look for missing shingles, water stains on ceilings, or grit in gutters." },
+    { niche: "fertility", question: "What's the success rate for IVF?", answer: "Success rates vary by age but our clinic stays above national averages." }
+  ];
+
+  console.log(`Adding ${kbData.length} global brain entries...`);
   const result = await prisma.kb_source.createMany({
-    data: kbData.map(item => ({
-      niche: item.niche,
-      question: item.question,
-      answer: item.answer,
+    data: kbData.map(d => ({
+      ...d,
       business_key: null,
-      topic: 'General FAQ',
-      is_active: true
+      is_active: true,
+      tags: [],
+      topic: "General FAQ"
     })),
     skipDuplicates: true
   });
 
-  console.log(`Successfully seeded ${result.count} global niche FAQs.`);
+  console.log(`✅ Synthesis Seed Complete! Seeded ${nicheConfigs.length} niches and ${result.count} KB entries.`);
 }
 
 main()
