@@ -32,6 +32,12 @@ Deployed to Vercel. Next.js 15 + Tailwind + TypeScript.
 - Package manager: npm (never yarn or pnpm)
 - Commits: conventional commits format (feat:, fix:, chore:)
 
+## Hov Contract — Read Before Touching Anything Named "Hov"
+
+There are TWO distinct components named "Hov." This is a known foot-gun.
+Days have been lost to confusing them. Read this before writing or debugging
+anything in the outreach path.
+
 ## Environment variables needed
 ANTHROPIC_API_KEY, GROQ_API_KEY, SUPABASE_PROJECT_REF, SUPABASE_SERVICE_ROLE_KEY,
 DATABASE_URL, VERCEL_API_TOKEN, HEYGEN_API_KEY, GOOGLE_PLACES_API_KEY, YELP_API_KEY,
