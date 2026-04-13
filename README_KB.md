@@ -3,9 +3,9 @@
 This module adds a multi-niche KB backed by Supabase Postgres + pgvector.
 
 ## Included niches
-- `water_damage_restoration`
-- `senior_home_care`
-- `personal_injury_law`
+- `water-damage-restoration`
+- `senior-home-care`
+- `personal-injury-law`
 - `hvac`
 - `plumbing`
 

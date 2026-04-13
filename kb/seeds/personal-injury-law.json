@@ -18,7 +18,7 @@
     "{{guardrail_2}}"
   ],
   "brand_voice": "{{brand_voice}}",
-  "niche": "personal_injury_law",
+  "niche": "personal-injury-law",
   "topics": [
     "case_types",
     "fees",

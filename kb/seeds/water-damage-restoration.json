@@ -18,17 +18,17 @@
     "{{guardrail_2}}"
   ],
   "brand_voice": "{{brand_voice}}",
-  "niche": "senior_home_care",
+  "niche": "water-damage-restoration",
   "topics": [
-    "services",
-    "caregiver_qualifications",
-    "scheduling",
-    "care_plans",
-    "pricing_expectations",
-    "payment_options",
-    "safety",
-    "onboarding",
+    "emergency_response",
+    "inspection_process",
+    "drying_process",
+    "equipment_used",
+    "mold_risk",
+    "insurance_billing",
     "service_areas",
-    "cancellations"
+    "scheduling",
+    "pricing_expectations",
+    "safety"
   ]
 }

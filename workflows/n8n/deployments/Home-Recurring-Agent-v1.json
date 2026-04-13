@@ -1,0 +1,124 @@
+{
+  "name": "FlyNerd - Category Agent (Home-Recurring Agent)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-sub-node",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -200,
+        200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://www.flynerd.tech/api/kb?niche={{ $json.deal.fields.LEADNICHE }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "kb-loader-node",
+      "name": "KB Loader (Fetch Niche Data)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        50,
+        200
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "operation": "complete",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "={{ $node[\"KB Loader (Fetch Niche Data)\"].json.display_name }} Assistant.\n\nInstructions:\n{{ $node[\"KB Loader (Fetch Niche Data)\"].json.system_prompt }}\n\nKnowledge Base:\n{{ $node[\"KB Loader (Fetch Niche Data)\"].json.items.map(i => `Q: ${i.question}\\nA: ${i.answer}`).join('\\n\\n') }}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.deal.fields.LAST_MESSAGE || \"Analyze this lead and prepare an internal report.\" }}"
+            }
+          ]
+        }
+      },
+      "id": "ai-agent-node",
+      "name": "AI Agent (Niche Precision)",
+      "type": "n8n-nodes-base.openAi",
+      "position": [
+        300,
+        200
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "update",
+        "dealId": "={{ $json.deal.id }}",
+        "updateFields": {
+          "notes": "=AI Analysis Result:\n{{ $node[\"AI Agent (Niche Precision)\"].json.choices[0].message.content }}"
+        }
+      },
+      "id": "ac-sync-node",
+      "name": "Sync to ActiveCampaign",
+      "type": "n8n-nodes-base.activeCampaign",
+      "position": [
+        550,
+        200
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "KB Loader (Fetch Niche Data)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KB Loader (Fetch Niche Data)": {
+      "main": [
+        [
+          {
+            "node": "AI Agent (Niche Precision)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent (Niche Precision)": {
+      "main": [
+        [
+          {
+            "node": "Sync to ActiveCampaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+

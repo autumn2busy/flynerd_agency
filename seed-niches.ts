@@ -5,22 +5,22 @@ const prisma = new PrismaClient();
 const tier1Niches = [
   // Medical
   { niche_key: 'orthodontics', display_name: 'Orthodontics & Invisalign', category: 'medical', interest_score: 91, trend_pct: -1, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'hormone_therapy', display_name: 'Hormone Therapy & TRT Clinics', category: 'medical', interest_score: 90, trend_pct: 36, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'plastic_surgery', display_name: 'Plastic Surgery', category: 'medical', interest_score: 89, trend_pct: -3, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'trt-clinic', display_name: 'Hormone Therapy & TRT Clinics', category: 'medical', interest_score: 90, trend_pct: 36, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'plastic-surgery', display_name: 'Plastic Surgery', category: 'medical', interest_score: 89, trend_pct: -3, tier: 'tier_1', pricing_tier: 'premium' },
   { niche_key: 'fertility', display_name: 'Fertility Clinics', category: 'medical', interest_score: 88, trend_pct: 14, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'weight_loss', display_name: 'Weight Loss Clinics', category: 'medical', interest_score: 84, trend_pct: 13, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'addiction_treatment', display_name: 'Addiction Treatment Centers', category: 'medical', interest_score: 83, trend_pct: -2, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'oral_surgery', display_name: 'Oral Surgery Practices', category: 'medical', interest_score: 82, trend_pct: 1, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'dental_implants', display_name: 'Dental Implants', category: 'medical', interest_score: 81, trend_pct: 5, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'weight-loss', display_name: 'Weight Loss Clinics', category: 'medical', interest_score: 84, trend_pct: 13, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'addiction-treatment', display_name: 'Addiction Treatment Centers', category: 'medical', interest_score: 83, trend_pct: -2, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'oral-surgery', display_name: 'Oral Surgery Practices', category: 'medical', interest_score: 82, trend_pct: 1, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'dental-implants', display_name: 'Dental Implants', category: 'medical', interest_score: 81, trend_pct: 5, tier: 'tier_1', pricing_tier: 'premium' },
   
   // Legal
-  { niche_key: 'workers_comp', display_name: 'Workers Comp Lawyers', category: 'legal', interest_score: 89, trend_pct: 3, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'divorce_law', display_name: 'Divorce & Family Law', category: 'legal', interest_score: 84, trend_pct: 3, tier: 'tier_1', pricing_tier: 'premium' },
-  { niche_key: 'personal_injury', display_name: 'Personal Injury Lawyers', category: 'legal', interest_score: 81, trend_pct: 6, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'workers-comp', display_name: 'Workers Comp Lawyers', category: 'legal', interest_score: 89, trend_pct: 3, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'family-law', display_name: 'Divorce & Family Law', category: 'legal', interest_score: 84, trend_pct: 3, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'personal-injury', display_name: 'Personal Injury Lawyers', category: 'legal', interest_score: 81, trend_pct: 6, tier: 'tier_1', pricing_tier: 'premium' },
   { niche_key: 'bankruptcy', display_name: 'Bankruptcy Lawyers', category: 'legal', interest_score: 80, trend_pct: 2, tier: 'tier_1', pricing_tier: 'standard' },
   
   // Home High-Ticket
-  { niche_key: 'pool_builders', display_name: 'Pool Builders', category: 'home_high_ticket', interest_score: 86, trend_pct: 6, tier: 'tier_1', pricing_tier: 'premium' },
+  { niche_key: 'pool-builders', display_name: 'Pool Builders', category: 'home_high_ticket', interest_score: 86, trend_pct: 6, tier: 'tier_1', pricing_tier: 'premium' },
   { niche_key: 'solar', display_name: 'Solar Panel Installers', category: 'home_high_ticket', interest_score: 82, trend_pct: 10, tier: 'tier_1', pricing_tier: 'premium' }
 ];
 

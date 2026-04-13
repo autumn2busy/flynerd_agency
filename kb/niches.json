@@ -1,6 +1,6 @@
 [
   {
-    "key": "water_damage_restoration",
+    "key": "water-damage-restoration",
     "topics": [
       "emergency_response",
       "inspection_process",
@@ -15,7 +15,7 @@
     ]
   },
   {
-    "key": "senior_home_care",
+    "key": "senior-home-care",
     "topics": [
       "services",
       "caregiver_qualifications",
@@ -30,14 +30,14 @@
     ]
   },
   {
-    "key": "personal_injury_law",
+    "key": "personal-injury-law",
     "topics": [
       "case_types",
       "fees",
       "consultation_process",
       "timelines",
       "evidence",
-      "medical_care_steps",
+      "medical-care_steps",
       "insurance_interactions",
       "settlement_basics",
       "what_to_expect",

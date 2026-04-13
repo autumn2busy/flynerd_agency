@@ -1,0 +1,226 @@
+{
+  "name": "FlyNerd - Master Router (v3 - Category Switch)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0c552f1d-f9ab-44f1-a0f0-1b09944a8a46",
+      "name": "AC Deal Trigger",
+      "type": "n8n-nodes-base.activeCampaignTrigger",
+      "position": [
+        -400,
+        208
+      ],
+      "typeVersion": 1,
+      "webhookId": "55c235dd-db2d-46cc-bb55-6dc86308b6b1"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://www.flynerd.tech/api/kb?niche={{ $json[\"deal\"][\"fields\"][\"LEADNICHE\"] }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-category-node",
+      "name": "Fetch Niche + Category from KB API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -180,
+        208
+      ],
+      "typeVersion": 4.1,
+      "notes": "Calls /api/kb?niche= to get both the category AND the knowledge base items in one request. Replaces the direct Supabase call."
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.category || 'other' }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "medical",
+              "output": 0
+            },
+            {
+              "value2": "legal",
+              "output": 1
+            },
+            {
+              "value2": "home_high_ticket",
+              "output": 2
+            },
+            {
+              "value2": "home_recurring",
+              "output": 3
+            }
+          ]
+        },
+        "fallbackOutput": 4
+      },
+      "id": "e9782905-3796-4867-86fa-400757a0e7c5",
+      "name": "Switch by Category",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        60,
+        208
+      ],
+      "typeVersion": 1,
+      "notes": "Routes on the 'category' field returned by the KB API. Fallback (output 4) goes to General/Other."
+    },
+    {
+      "parameters": {
+        "workflowId": "REPLACE_WITH_MEDICAL_WORKFLOW_ID",
+        "options": {}
+      },
+      "id": "4d7ae75b-867e-4180-abaf-7f6ab0120121",
+      "name": "Execute Medical Agent",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        300,
+        -80
+      ],
+      "typeVersion": 1,
+      "notes": "Import Medical-Agent-v1.json and replace the workflow ID above."
+    },
+    {
+      "parameters": {
+        "workflowId": "REPLACE_WITH_LEGAL_WORKFLOW_ID",
+        "options": {}
+      },
+      "id": "c15f7d4e-aa2d-4f67-9760-42ac2399cf73",
+      "name": "Execute Legal Agent",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        300,
+        60
+      ],
+      "typeVersion": 1,
+      "notes": "Import Legal-Agent-v1.json and replace the workflow ID above."
+    },
+    {
+      "parameters": {
+        "workflowId": "REPLACE_WITH_HOME_HIGH_TICKET_WORKFLOW_ID",
+        "options": {}
+      },
+      "id": "610e1cca-5ecd-4ec3-a469-07cbbba7bbd3",
+      "name": "Execute Home High-Ticket Agent",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        300,
+        200
+      ],
+      "typeVersion": 1,
+      "notes": "Import Home-High-Ticket-Agent-v1.json and replace the workflow ID above. Handles HVAC, Solar, Pool Builders, etc."
+    },
+    {
+      "parameters": {
+        "workflowId": "REPLACE_WITH_HOME_RECURRING_WORKFLOW_ID",
+        "options": {}
+      },
+      "id": "bcd50ad5-7397-480e-977f-bdb8a4e25cb8",
+      "name": "Execute Home Recurring Agent",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        300,
+        340
+      ],
+      "typeVersion": 1,
+      "notes": "Import Home-Recurring-Agent-v1.json and replace the workflow ID above. Handles Cleaning, Pest Control, etc."
+    },
+    {
+      "parameters": {
+        "workflowId": "REPLACE_WITH_GENERAL_WORKFLOW_ID",
+        "options": {}
+      },
+      "id": "98bed779-de25-4960-a519-1e1da78c5dac",
+      "name": "Execute General Agent",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        300,
+        480
+      ],
+      "typeVersion": 1,
+      "notes": "Import General-Agent-v1.json and replace the workflow ID above. Fallback for unrecognized categories."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AC Deal Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Niche + Category from KB API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Niche + Category from KB API": {
+      "main": [
+        [
+          {
+            "node": "Switch by Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by Category": {
+      "main": [
+        [
+          {
+            "node": "Execute Medical Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Legal Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Home High-Ticket Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Home Recurring Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute General Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "flynerd ai agency"
+    }
+  ]
+}
