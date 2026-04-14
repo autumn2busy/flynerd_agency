@@ -7,6 +7,9 @@ interface Props {
   businessName: string;
   niche: string;
   bookingLink: string;
+  inline?: boolean;
+  onOpen?: () => void;
+  onMessageSent?: (messageCount: number) => void;
 }
 
 interface Message {
@@ -14,25 +17,30 @@ interface Message {
   content: string;
 }
 
-export default function DemoChatWidget({ businessName, niche, bookingLink }: Props) {
-  const [open, setOpen] = useState(false);
+export default function DemoChatWidget({ businessName, niche, bookingLink, inline = false, onOpen, onMessageSent }: Props) {
+  const [open, setOpen] = useState(inline);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [locked, setLocked] = useState(false);
+  const hasOpenedRef = useRef(false);
+  const userMessageCountRef = useRef(0);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Seed the opening assistant message when the panel first opens
   useEffect(() => {
+    if (open && !hasOpenedRef.current) {
+      hasOpenedRef.current = true;
+      onOpen?.();
+    }
     if (open && messages.length === 0) {
       setMessages([
         {
           role: "assistant",
-          content: `Hey! I'm your FlyNerd AI preview — ask me anything about what we could build for ${businessName}.`,
+          content: `Hey! I'm your FlyNerd AI preview. Ask me anything about what we could build for ${businessName}.`,
         },
       ]);
     }
-  }, [open, businessName, messages.length]);
+  }, [open, businessName, messages.length, onOpen]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,6 +51,8 @@ export default function DemoChatWidget({ businessName, niche, bookingLink }: Pro
     const userMessage = input.trim();
     setInput("");
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    userMessageCountRef.current += 1;
+    onMessageSent?.(userMessageCountRef.current);
     setLoading(true);
 
     try {
@@ -68,23 +78,28 @@ export default function DemoChatWidget({ businessName, niche, bookingLink }: Pro
     }
   }
 
+  const panelClass = inline
+    ? "relative w-full max-w-2xl mx-auto rounded-2xl border border-white/10 bg-neutral-900 shadow-2xl flex flex-col overflow-hidden"
+    : "fixed bottom-24 right-6 z-50 w-80 rounded-2xl border border-white/10 bg-neutral-900 shadow-2xl flex flex-col overflow-hidden";
+  const panelStyle: React.CSSProperties = { height: inline ? "520px" : "420px" };
+
   return (
     <>
-      {/* Floating toggle button */}
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close chat" : "Open chat"}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
-        style={{ backgroundColor: "var(--color-primary, #D4AF37)" }}
-      >
-        {open ? <X size={22} color="black" /> : <MessageCircle size={22} color="black" />}
-      </button>
+      {!inline && (
+        <button
+          onClick={() => setOpen((o) => !o)}
+          aria-label={open ? "Close chat" : "Open chat"}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-105"
+          style={{ backgroundColor: "var(--color-primary, #D4AF37)" }}
+        >
+          {open ? <X size={22} color="black" /> : <MessageCircle size={22} color="black" />}
+        </button>
+      )}
 
-      {/* Chat panel */}
       {open && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-80 rounded-2xl border border-white/10 bg-neutral-900 shadow-2xl flex flex-col overflow-hidden"
-          style={{ height: "420px" }}
+          className={panelClass}
+          style={panelStyle}
         >
           {/* Header */}
           <div
@@ -95,13 +110,15 @@ export default function DemoChatWidget({ businessName, niche, bookingLink }: Pro
               <p className="font-bold text-black text-sm">FlyNerd AI Preview</p>
               <p className="text-black/60 text-xs">Personalized for {businessName}</p>
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-black/50 hover:text-black transition-colors"
-              aria-label="Close chat"
-            >
-              <X size={16} />
-            </button>
+            {!inline && (
+              <button
+                onClick={() => setOpen(false)}
+                className="text-black/50 hover:text-black transition-colors"
+                aria-label="Close chat"
+              >
+                <X size={16} />
+              </button>
+            )}
           </div>
 
           {/* Messages */}

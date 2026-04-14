@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import HomeChatWidget from "@/components/home/HomeChatWidget";
+import PostHogProvider from "@/components/demo/PostHogProvider";
+import ChromeGate from "@/components/demo/ChromeGate";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
@@ -126,10 +128,12 @@ export default function RootLayout({
       <body
         className={`${instrumentSerif.variable} ${geistMono.variable} font-satoshi antialiased`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <HomeChatWidget />
+        <PostHogProvider>
+          <ChromeGate><Header /></ChromeGate>
+          <main>{children}</main>
+          <ChromeGate><Footer /></ChromeGate>
+          <ChromeGate><HomeChatWidget /></ChromeGate>
+        </PostHogProvider>
       </body>
     </html>
   );
