@@ -29,11 +29,25 @@
         },
         {
             "parameters": {
+                "amount": "={{Math.floor(Math.random() * 4) + 2}}",
+                "unit": "minutes"
+            },
+            "id": "a1b2c3d4-wait-node-humanize-delay",
+            "name": "Humanize Delay (2-5 min)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                1040,
+                360
+            ]
+        },
+        {
+            "parameters": {
                 "method": "POST",
                 "url": "https://your-domain.vercel.app/api/agents/closer",
                 "sendBody": true,
                 "specifyBody": "json",
-                "jsonBody": "={\n  \"From\": \"{{ $json.from.value[0].address }}\",\n  \"TextBody\": \"{{ $json.textPlain }}\"\n}",
+                "jsonBody": "={\n  \"From\": \"{{ $('Gmail Trigger').item.json.from.value[0].address }}\",\n  \"TextBody\": \"{{ $('Gmail Trigger').item.json.textPlain }}\"\n}",
                 "options": {}
             },
             "id": "e6dd5bcb-af91-4cf5-9cd7-f9d273a0a38b",
@@ -41,7 +55,7 @@
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 4.1,
             "position": [
-                1040,
+                1260,
                 360
             ]
         }
@@ -49,6 +63,17 @@
     "pinData": {},
     "connections": {
         "Gmail Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Humanize Delay (2-5 min)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Humanize Delay (2-5 min)": {
             "main": [
                 [
                     {
@@ -64,7 +89,7 @@
     "settings": {
         "executionOrder": "v1"
     },
-    "versionId": "f0412eab-eebb-4131-ab7d-9273f5507567",
+    "versionId": "f0412eab-eebb-4131-ab7d-9273f5507568",
     "meta": {
         "instanceId": "cb402cb7fa1551a81bb1a021025539d"
     },

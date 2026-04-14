@@ -87,7 +87,8 @@ This falls under AI Concierge Bundle ($2,400) or Growth Ops Partner ($1,800/mo).
 Never give away implementation details. Just position it as a custom scope.
 
 ## Booking
-Best next step: https://www.flynerd.tech/contact or https://www.flynerd.tech/pricing
+Book a strategy call: https://calendar.app.google/LJAyZTGZShyjP8QB6
+Pricing page: https://www.flynerd.tech/pricing
 
 ## What We Do NOT Do
 - No static brochure websites
@@ -152,6 +153,31 @@ function extractFromRaw(body: any): string {
     }
   }
   return "";
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROSPECT INTENT EXTRACTION — keyword-based theme tagging for feedback loop
+// ─────────────────────────────────────────────────────────────────────────────
+const INTENT_KEYWORDS: Record<string, string[]> = {
+  pricing: ["price", "cost", "how much", "afford", "budget", "pay", "fee", "rate", "charge", "deposit", "monthly"],
+  customization: ["custom", "personalize", "change", "modify", "brand", "color", "logo", "design"],
+  timeline: ["how long", "when", "timeline", "deadline", "launch", "fast", "quickly", "turnaround"],
+  features: ["feature", "include", "booking", "chat", "agent", "seo", "crm", "automation", "integration"],
+  comparison: ["wix", "squarespace", "wordpress", "competitor", "different", "better", "vs"],
+  support: ["support", "maintenance", "update", "help", "manage", "hosting"],
+  skepticism: ["scam", "legit", "real", "trust", "guarantee", "refund", "cancel"],
+  interest: ["interested", "ready", "book", "call", "schedule", "sign up", "start", "next step"],
+};
+
+function extractIntentThemes(text: string): string[] {
+  const lower = text.toLowerCase();
+  const themes: string[] = [];
+  for (const [theme, keywords] of Object.entries(INTENT_KEYWORDS)) {
+    if (keywords.some((kw) => lower.includes(kw))) {
+      themes.push(theme);
+    }
+  }
+  return themes.length > 0 ? themes : ["general"];
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -250,12 +276,30 @@ export async function POST(req: Request) {
     // Use business name from DB or fall back to email domain
     const businessName = lead?.businessName || leadEmail.split("@")[1]?.split(".")[0] || "there";
 
-    // Update lead status if found
+    // Update lead status and extract prospect intent for feedback loop
     if (lead) {
+      // Extract intent themes from the prospect's message for business intelligence
+      const existingIntel = (lead.intelData as any) || {};
+      const existingRequests = existingIntel.prospectRequests || [];
+      const newRequest = {
+        message: textBody.slice(0, 500),
+        timestamp: new Date().toISOString(),
+        themes: extractIntentThemes(textBody),
+      };
+
       await prisma.agencyLead.update({
         where: { id: lead.id },
-        data: { status: "REPLIED" },
+        data: {
+          status: "REPLIED",
+          lastInteraction: new Date(),
+          intelData: {
+            ...existingIntel,
+            prospectRequests: [...existingRequests, newRequest],
+          },
+        },
       });
+
+      console.log(`[Closer] Prospect intent captured: ${newRequest.themes.join(", ")}`);
     }
 
     // Build conversation history for this thread
@@ -279,8 +323,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "AI returned empty reply" }, { status: 500 });
     }
 
+    // Sanitize: strip em dashes from output (LLMs sometimes ignore formatting rules)
+    const aiReply = aiReplyDraft.replace(/\u2014/g, ",").replace(/\u2013/g, "-");
+
     // Save AI reply to thread history
-    await saveThreadMessage(sessionId, leadEmail, "assistant", aiReplyDraft);
+    await saveThreadMessage(sessionId, leadEmail, "assistant", aiReply);
 
     // ActiveCampaign: tag + move deal
     if (lead) {
@@ -308,7 +355,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       message: "Reply processed. Deal moved to Negotiating.",
-      draftedReply: aiReplyDraft,
+      draftedReply: aiReply,
       threadId: sessionId,
       durationMs,
     });

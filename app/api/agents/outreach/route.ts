@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { upsertContact, addTagToContact, subscribeContactToList, createDeal, updateDealField } from "@/lib/activecampaign";
+import { upsertContact, addTagToContact, subscribeContactToList, createDeal, updateDealField, normalizeNiche } from "@/lib/activecampaign";
 
 // POST /api/agents/outreach
 export async function POST(req: Request) {
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       console.log(`[Outreach Agent] Updating custom fields for Deal ${dealId}...`);
       if (demoSiteUrl) await updateDealField(dealId, "16", demoSiteUrl);
       if (walkthroughVideoUrl) await updateDealField(dealId, "17", walkthroughVideoUrl);
-      const finalNiche = niche || lead?.niche;
+      const finalNiche = normalizeNiche(niche || lead?.niche || "");
       console.log(`[Outreach Agent] Setting Niche (18): ${finalNiche}`);
       if (finalNiche) await updateDealField(dealId, "18", finalNiche);
       
@@ -86,6 +86,7 @@ export async function POST(req: Request) {
     }
 
     await addTagToContact(contactId, "FLYNERD_OUTREACH_PENDING");
+    await addTagToContact(contactId, "COLD_OUTREACH");
 
     const updatedLead = await prisma.agencyLead.update({
       where: { id: leadId },

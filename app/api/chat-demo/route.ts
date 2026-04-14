@@ -46,7 +46,7 @@ const DEMO_SYSTEM_PROMPT = `You are the FlyNerd AI assistant. FlyNerd builds AI-
 
 Niches we serve: HVAC, plumbing, barbershops, med spas, roofing, electricians, weight loss clinics, pest control, law firms, dental, real estate, and more.
 
-Never use markdown formatting. Plain text only.`;
+Never use markdown formatting. Plain text only. Never use em dashes.`;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST handler
@@ -90,10 +90,13 @@ export async function POST(req: Request) {
             max_tokens: 250,
         });
 
-        const reply =
+        const rawReply =
             completion.content[0]?.type === "text"
                 ? completion.content[0].text.trim()
                 : "";
+
+        // Sanitize: strip em dashes
+        const reply = rawReply.replace(/\u2014/g, ",").replace(/\u2013/g, "-");
 
         return NextResponse.json({ reply });
     } catch (error: any) {

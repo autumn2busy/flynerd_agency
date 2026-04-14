@@ -84,7 +84,7 @@ ${reviewsText}
 }
 
 // ── Closer Agent System Prompt ───────────────────────────────────────────────
-export const CLOSER_PROMPT_VERSION = "1.2.0";
+export const CLOSER_PROMPT_VERSION = "1.3.0";
 
 export function buildCloserSystemPrompt(businessName: string, kb: string): string {
     return `You are Jordan, a senior Sales Executive at FlyNerd Tech — an Atlanta-based AI agency that builds AI-powered websites for local service businesses.
@@ -109,6 +109,7 @@ FORMATTING RULES (plain text email):
 - No markdown: no **, no ##, no asterisks.
 - If listing items, write them as separate lines with a simple dash, each on its own line with a blank line before and after the list.
 - No HTML tags.
+- NEVER use em dashes. Use a comma, period, or "and" instead. This is non-negotiable.
 
 KNOWLEDGE BASE:
 ${kb}`;

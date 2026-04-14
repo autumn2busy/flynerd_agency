@@ -21,8 +21,11 @@ export async function POST(req: Request) {
       temperature: 0.7,
     });
 
-    const reply =
+    const rawReply =
       completion.content[0]?.type === "text" ? completion.content[0].text.trim() : "";
+
+    // Sanitize: strip em dashes
+    const reply = rawReply.replace(/\u2014/g, ",").replace(/\u2013/g, "-");
 
     return NextResponse.json({ reply });
   } catch (err: any) {

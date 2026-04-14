@@ -3,6 +3,35 @@ export const AC_CONFIG = {
   apiKey: process.env.ACTIVECAMPAIGN_KEY || "",
 };
 
+const NICHE_MAP: Record<string, string> = {
+  plumber:      "Plumbing",
+  plumbers:     "Plumbing",
+  plumbing:     "Plumbing",
+  hvac:         "HVAC",
+  heating:      "HVAC",
+  "heating and cooling": "HVAC",
+  barber:       "Barbershop",
+  barbershop:   "Barbershop",
+  barbershops:  "Barbershop",
+  electrician:  "Electrical",
+  electrical:   "Electrical",
+  roofer:       "Roofing",
+  roofing:      "Roofing",
+  painter:      "Painting",
+  painting:     "Painting",
+  landscaper:   "Landscaping",
+  landscaping:  "Landscaping",
+  pest:         "Pest Control",
+  "pest control": "Pest Control",
+  cleaning:     "Cleaning",
+  cleaner:      "Cleaning",
+  "pressure washing": "Pressure Washing",
+};
+
+export function normalizeNiche(raw: string): string {
+  return NICHE_MAP[raw.toLowerCase().trim()] || raw;
+}
+
 export async function upsertContact(email: string, firstName: string, lastName: string, phone?: string) {
   console.log(`[AC] Syncing contact: ${email} | Phone: ${phone}`);
   const res = await fetch(`${AC_CONFIG.apiUrl}/api/3/contact/sync`, {
