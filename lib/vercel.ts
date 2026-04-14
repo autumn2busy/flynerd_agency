@@ -1,4 +1,4 @@
-﻿const FALLBACK_BASE_URL = "https://flynerd-demo-lead.vercel.app";
+const FALLBACK_BASE_URL = "https://flynerd-demo-lead.vercel.app";
 
 export function getCanonicalDemoUrl(leadId: string, deploymentHost?: string) {
   const base = deploymentHost ? `https://${deploymentHost}` : FALLBACK_BASE_URL;
@@ -47,7 +47,7 @@ export async function cloneAndDeployTemplate(
         target: "production",
         gitSource: {
           type: "github",
-          repo: "autumn2busy/FN-real-estate",
+          repo: "autumn2busy/flynerd_agency",
           ref: "main"
         }
       }),
