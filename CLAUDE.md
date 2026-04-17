@@ -121,3 +121,19 @@ Format each entry as:
 ```
 
 Always append to the end of the file. Never overwrite previous entries.
+
+---
+
+## Agent Deletion Protocol
+
+Any task that deletes, collapses, or replaces a component, route, API endpoint, database column, or architectural primitive MUST:
+
+1. Log a changelog entry with the literal prefix "DELETED:" in the title
+2. List the deleted artifact(s) by file path
+3. List what replaces them (by file path) or confirm nothing replaces them
+4. State the reason in 1-2 sentences
+5. Be flagged for owner review before merge, not after
+
+Consolidation is a form of deletion. Refactoring that removes a component the owner has previously seen in the codebase counts as deletion.
+
+If in doubt, ask the owner before deleting. A clarifying question costs 5 minutes. A silent deletion costs hours of reverse-engineering.
