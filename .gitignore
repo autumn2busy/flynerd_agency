@@ -41,3 +41,12 @@ yarn-error.log*
 next-env.d.ts
 
 /lib/generated/prisma
+
+# AIDesigner
+.aidesigner/
+.mcp.json.aidesigner-backup
+
+# scratch / debugging files (root-scoped so src/ test paths are unaffected)
+/tmp-*.mjs
+/tmp-*.json
+/test_*.mjs
