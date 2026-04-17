@@ -85,8 +85,11 @@ export async function POST(req: Request) {
       await updateDealField(dealId, "20", painPointsStr);
     }
 
-    await addTagToContact(contactId, "FLYNERD_OUTREACH_PENDING");
+    // Order matters: COLD_OUTREACH is attribution only, FLYNERD_OUTREACH_PENDING
+    // is what triggers AC's automated email send per ac-tag-sync-workflow-spec.md.
+    // Apply attribution first so it's set before the automation fires.
     await addTagToContact(contactId, "COLD_OUTREACH");
+    await addTagToContact(contactId, "FLYNERD_OUTREACH_PENDING");
 
     const updatedLead = await prisma.agencyLead.update({
       where: { id: leadId },
