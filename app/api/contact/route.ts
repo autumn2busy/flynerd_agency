@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { updateContactField } from "@/lib/activecampaign";
+
+// Contact custom field IDs (Option A — niche lives on the contact).
+const CONTACT_FIELD_NICHE = 167;
 
 const TARGET_NICHES = [
   "Water Damage Restoration",
@@ -87,6 +91,17 @@ export async function POST(req: Request) {
     const contactData = await contactRes.json();
     const contactId = contactData.contact.id;
 
+    // 1b. Write niche to contact-level custom field (Option A).
+    // Previously written to deal field 33, which was the wrong field ID
+    // (the intended deal field was 18, now retired in favor of contact-level).
+    if (industry) {
+      try {
+        await updateContactField(contactId, String(CONTACT_FIELD_NICHE), industry);
+      } catch (fieldErr) {
+        console.error("Failed to write contact niche field (non-blocking):", fieldErr);
+      }
+    }
+
     // 2. Handle Tagging
     const tagName = "FLYNERD-FORM-PENDING";
     const tagQuery = await fetch(`${apiUrl}/api/3/tags?search=${tagName}`, {
@@ -141,11 +156,13 @@ export async function POST(req: Request) {
       dealId = dealData.deal.id;
 
       // 4. Sync Custom Fields to Deal
+      // Niche moved to contact-level field 167 above (Option A).
+      // Stale `{ id: 33, value: industry }` write removed — field 33 was the
+      // wrong field ID and has never held correct niche data.
       const customFields = [
         { id: 21, value: business_name },
         { id: 37, value: business_name }, // Organization Name for outreach
         { id: 22, value: industry },      // Legacy Industry field
-        { id: 33, value: industry },      // LEAD_NICHE for outreach
         { id: 23, value: revenue },
         { id: 24, value: challenge },
         { id: 25, value: tools },
