@@ -1,6 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { upsertContact, addTagToContact, subscribeContactToList, createDeal, updateDealField, normalizeNiche } from "@/lib/activecampaign";
+import {
+  upsertContact,
+  addTagToContact,
+  subscribeContactToList,
+  createDeal,
+  updateDealField,
+  updateContactField,
+  normalizeNiche,
+} from "@/lib/activecampaign";
+
+// Contact custom field IDs (Option A — niche, demo_url, and the
+// Supabase agency_lead_id all live on the contact so Hov's reply closer
+// and Kris Jenner's post-call closer can look them up without deal context.)
+const CONTACT_FIELD_AGENCY_LEAD_ID = 165;
+const CONTACT_FIELD_NICHE = 167;
+const CONTACT_FIELD_DEMO_URL = 168;
 
 // POST /api/agents/outreach
 export async function POST(req: Request) {
@@ -36,11 +51,30 @@ export async function POST(req: Request) {
 
     if (!contactId) {
       console.error("[Outreach Agent] FAILED to get contactId. Response:", contactRes);
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: "Failed to sync contact to ActiveCampaign",
-        details: contactRes 
+        details: contactRes
       }, { status: 500 });
     }
+
+    // 1b. Write contact-level custom fields BEFORE the FLYNERD_OUTREACH_PENDING
+    // tag is applied at the bottom of this route — AC personalization tags
+    // (%NICHE%, %DEMOURL%, %AGENCYLEADID%) are evaluated at send-time, and
+    // the automation fires the instant that tag lands. Any write happening
+    // after the tag risks a race where the email ships with empty tokens.
+    const normalizedNicheForContact = normalizeNiche(niche || lead?.niche || "");
+    console.log(
+      `[Outreach Agent] Writing contact fields. contactId=${contactId} agencyLeadId=${leadId} niche=${normalizedNicheForContact} demoUrl=${demoSiteUrl}`
+    );
+    await Promise.all([
+      updateContactField(contactId, String(CONTACT_FIELD_AGENCY_LEAD_ID), leadId),
+      normalizedNicheForContact
+        ? updateContactField(contactId, String(CONTACT_FIELD_NICHE), normalizedNicheForContact)
+        : Promise.resolve(),
+      demoSiteUrl
+        ? updateContactField(contactId, String(CONTACT_FIELD_DEMO_URL), demoSiteUrl)
+        : Promise.resolve(),
+    ]);
 
     // 2. Subscription
     const subRes = await subscribeContactToList(contactId, "29");
@@ -66,14 +100,11 @@ export async function POST(req: Request) {
     console.log(`[Outreach Agent] Created Deal ID: ${dealId}`);
 
     if (dealId && lead) {
-      // 4. Map the Deal Custom Fields (Matches definitive AC Audit)
-      console.log(`[Outreach Agent] Updating custom fields for Deal ${dealId}...`);
-      if (demoSiteUrl) await updateDealField(dealId, "16", demoSiteUrl);
+      // 4. Map the Deal Custom Fields (Option A: niche and demo_url moved to
+      //    contact-level above; only deal-scoped fields remain here.)
+      console.log(`[Outreach Agent] Updating deal-scoped custom fields for Deal ${dealId}...`);
       if (walkthroughVideoUrl) await updateDealField(dealId, "17", walkthroughVideoUrl);
-      const finalNiche = normalizeNiche(niche || lead?.niche || "");
-      console.log(`[Outreach Agent] Setting Niche (18): ${finalNiche}`);
-      if (finalNiche) await updateDealField(dealId, "18", finalNiche);
-      
+
       if (businessName) await updateDealField(dealId, "40", businessName);
       if (lead.intelScore !== null) await updateDealField(dealId, "19", lead.intelScore.toString());
       
