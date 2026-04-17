@@ -3,15 +3,19 @@ import {
   upsertContact,
   addTagToContact,
   createDeal,
+  updateContactField,
 } from "@/lib/activecampaign";
 
 // ActiveCampaign IDs — FlyNerd Inbound pipeline
 const AC_PIPELINE_INBOUND = 4;
 const AC_STAGE_DEMO_COMPLETED = 17;
 
-// Deal custom field IDs
-const FIELD_DEMOSITEURL = 16;
-const FIELD_LEADNICHE = 18;
+// Contact custom field IDs (Option A — niche/demo_url live on the contact so
+// they survive across add-on deals without needing to be copied forward.)
+const CONTACT_FIELD_NICHE = 167;
+const CONTACT_FIELD_DEMO_URL = 168;
+
+// Deal custom field IDs (still deal-scoped)
 const FIELD_BUSINESS_NAME = 21;
 
 const VALID_NICHES = [
@@ -80,18 +84,23 @@ export async function POST(req: Request) {
       });
     }
 
-    // b + c. Apply tags (parallel)
-    debugLog.push("Applying tags...");
+    // b + c. Apply tags and write contact-level custom fields (parallel)
+    debugLog.push("Applying tags and contact custom fields...");
     await Promise.all([
       addTagToContact(contactId, "demo_completed"),
       addTagToContact(contactId, "inbound_demo"),
+      updateContactField(contactId, String(CONTACT_FIELD_NICHE), niche),
+      updateContactField(
+        contactId,
+        String(CONTACT_FIELD_DEMO_URL),
+        websiteUrl.trim(),
+      ),
     ]);
-    debugLog.push("Tags applied");
+    debugLog.push("Tags and contact custom fields applied");
 
-    // d. Create deal with custom fields inline
+    // d. Create deal with business name on the deal (niche + demo_url now
+    // live on the contact and do not need to be copied forward per add-on).
     const dealFields = [
-      { customFieldId: FIELD_LEADNICHE, fieldValue: niche },
-      { customFieldId: FIELD_DEMOSITEURL, fieldValue: websiteUrl.trim() },
       { customFieldId: FIELD_BUSINESS_NAME, fieldValue: businessName.trim() },
     ];
 
