@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
         await prisma.agencyLead.update({
           where: { id: lead.id },
-          data: { status: "EXPIRED" },
+          data: { status: "DEMO_EXPIRED" },
         });
 
         return { leadId: lead.id, projectName, passwordProtected: ok, error };

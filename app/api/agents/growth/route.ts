@@ -17,9 +17,9 @@ export async function POST(req: Request) {
 
     if (leadId) {
       const singleLead = await prisma.agencyLead.findUnique({ where: { id: leadId } });
-      if (singleLead && singleLead.status === "ACTIVE") leadsToProcess.push(singleLead);
+      if (singleLead && singleLead.status === "CLIENT_ACTIVE") leadsToProcess.push(singleLead);
     } else {
-      leadsToProcess = await prisma.agencyLead.findMany({ where: { status: "ACTIVE" } });
+      leadsToProcess = await prisma.agencyLead.findMany({ where: { status: "CLIENT_ACTIVE" } });
     }
 
     if (leadsToProcess.length === 0) {
