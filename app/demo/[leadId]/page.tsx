@@ -2,9 +2,15 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Lock } from "lucide-react";
+import { Suspense } from "react";
 import { SERVICES } from "@/app/pricing/services-data";
 import DemoExperience, { DemoService } from "@/components/demo/DemoExperience";
-import { getNicheBullets } from "@/components/demo/nicheConfig";
+import MedspaExperience from "@/components/demo/MedspaExperience";
+import { getNicheBullets, getNicheType } from "@/components/demo/nicheConfig";
+import {
+  normalizeBookingPlatform,
+  type Treatment,
+} from "@/components/demo/medspaDefaults";
 
 export default async function LeadDemoPage({
   params,
@@ -60,15 +66,79 @@ export default async function LeadDemoPage({
     );
   }
 
-  let expiresLabel: string | null = null;
+  let expiresLabelP1: string | null = null; // Profile 1: "Expires in 48h"
+  let expiresLabelP2: string | null = null; // Profile 2: "48h remaining"
   if (lead.validUntil) {
     const hoursLeft = Math.max(
       0,
       Math.ceil((new Date(lead.validUntil).getTime() - Date.now()) / (1000 * 60 * 60))
     );
-    expiresLabel = hoursLeft > 0 ? `Expires in ${hoursLeft}h` : "Expiring soon";
+    expiresLabelP1 = hoursLeft > 0 ? `Expires in ${hoursLeft}h` : "Expiring soon";
+    expiresLabelP2 = hoursLeft > 0 ? `${hoursLeft}h remaining` : "Expiring soon";
   }
 
+  // -------- Profile routing --------
+  // Default = underserved_local. Route to Profile 2 medspa template when:
+  //  - niche matches medspa vocabulary, OR
+  //  - intelData.qualificationProfile is explicitly "tech_enabled_premium"
+  const nicheType = getNicheType(niche);
+  const explicitProfile =
+    typeof intelData.qualificationProfile === "string"
+      ? (intelData.qualificationProfile as string)
+      : null;
+  const isProfile2 =
+    nicheType === "medspa" || explicitProfile === "tech_enabled_premium";
+
+  if (isProfile2) {
+    // Profile 2: pull new optional intel fields, fall back gracefully.
+    const heroHook =
+      typeof intelData.heroHook === "string" ? (intelData.heroHook as string) : null;
+
+    const rawTreatments = Array.isArray(intelData.treatments)
+      ? (intelData.treatments as unknown[])
+      : null;
+    const treatments: Treatment[] | null = rawTreatments
+      ? rawTreatments
+          .filter((t): t is Record<string, unknown> => typeof t === "object" && t !== null)
+          .map((t) => ({
+            name: typeof t.name === "string" ? t.name : "Treatment",
+            description:
+              typeof t.description === "string" ? t.description : "Consult-based service.",
+            imageSlug: typeof t.imageSlug === "string" ? t.imageSlug : "generic",
+          }))
+      : null;
+
+    const bookingPlatform = normalizeBookingPlatform(intelData.bookingPlatform);
+
+    const stripeDepositLink = process.env.STRIPE_PROFILE2_DEPOSIT_LINK ?? null;
+    const calKickoffLink = process.env.CAL_COM_KICKOFF_LINK ?? null;
+
+    return (
+      <Suspense fallback={null}>
+        <MedspaExperience
+          leadId={leadId}
+          businessName={businessName}
+          niche={niche}
+          intelScore={lead.intelScore}
+          painPoints={painPoints}
+          reputationSummary={reputationSummary}
+          rating={rating}
+          reviewCount={reviewCount}
+          walkthroughVideoUrl={lead.walkthroughVideoUrl}
+          expiresLabel={expiresLabelP2}
+          heroHook={heroHook}
+          treatments={treatments}
+          bookingPlatform={bookingPlatform}
+          rawPrimary={brandColors.primary}
+          rawAccent={brandColors.accent}
+          stripeDepositLink={stripeDepositLink}
+          calKickoffLink={calKickoffLink}
+        />
+      </Suspense>
+    );
+  }
+
+  // -------- Profile 1: existing template, unchanged --------
   function pickService(slug: string): DemoService {
     const s = SERVICES.find((svc) => svc.slug === slug);
     if (!s) throw new Error(`services-data missing slug: ${slug}`);
@@ -111,7 +181,7 @@ export default async function LeadDemoPage({
         reviewCount={reviewCount}
         walkthroughVideoUrl={lead.walkthroughVideoUrl}
         nicheBullets={nicheBullets}
-        expiresLabel={expiresLabel}
+        expiresLabel={expiresLabelP1}
         services={services}
       />
     </>
