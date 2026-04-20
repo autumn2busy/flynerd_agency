@@ -57,6 +57,14 @@ interface ClientSpec {
   invoices: CustomInvoiceSpec[];
 }
 
+// Booking link surfaced in every invoice footer so the client always sees
+// the next step right next to "amount due". Falls back to a generic /contact
+// URL if the env var isn't set yet.
+const KICKOFF_BOOKING_URL =
+  process.env.CAL_KICKOFF_URL ??
+  process.env.NEXT_PUBLIC_CAL_KICKOFF_URL ??
+  "https://flynerd.tech/contact";
+
 const CLIENTS: Record<string, ClientSpec> = {
   raid: {
     key: "raid",
@@ -71,25 +79,51 @@ const CLIENTS: Record<string, ClientSpec> = {
       {
         quoteId: "raid_email_migration_2026_04_20",
         invoiceDescription: "FlyNerd Tech - Email Migration (Phase 1)",
-        lineDescription:
-          "Email Migration (founding-client rate). Scope: setup Google Workspace account; migrate existing mailboxes (1-10) from Smarterasp to Google Workspace; transfer current email only (no historical archive); connect admin@raidsecuritycorp.com to Wix-hosted DNS; verify incoming + outgoing email. 7-day delivery.",
+        // Newlines render on the Stripe hosted invoice page as a scoped bullet list.
+        lineDescription: [
+          "Email Migration (founding-client rate)",
+          "",
+          "Scope:",
+          "- Set up Google Workspace account",
+          "- Migrate existing mailboxes (1-10) from Smarterasp to Google Workspace",
+          "- Transfer current email only (no historical archive)",
+          "- Connect admin@raidsecuritycorp.com to Wix-hosted DNS",
+          "- Verify incoming + outgoing email",
+          "",
+          "Delivery: 7 days from kickoff.",
+        ].join("\n"),
         amountCents: 60000, // $600
         sendNow: true,
         dueOnReceipt: true,
-        memo:
-          "Founding-client rate for RAID Security Corp. Public list price $995. Historical email archive (Phase 2) is quoted separately at $250 and billed only on client confirmation after site4now is live.",
+        memo: [
+          `Next step after payment: book your kickoff call at ${KICKOFF_BOOKING_URL}`,
+          "",
+          "Founding-client rate. Public list price $995.",
+          "",
+          "Phase 2 (Historical Email Transfer, $250) is quoted separately and billed only on your written go-ahead after site4now is live.",
+        ].join("\n"),
       },
       {
         quoteId: "raid_email_historical_2026_04_20",
         invoiceDescription:
           "FlyNerd Tech - Historical Email Transfer (Phase 2, draft)",
-        lineDescription:
-          "Historical Email Transfer (founding-client rate). Scope: ingest prior Smarterasp email archives into the new Google Workspace mailboxes, preserving folder structure. Upsell to Phase 1 Email Migration. Billed only upon written go-ahead from RAID Security Corp after site4now is live.",
+        lineDescription: [
+          "Historical Email Transfer (founding-client rate)",
+          "",
+          "Scope:",
+          "- Ingest prior Smarterasp email archives into the new Google Workspace mailboxes",
+          "- Preserve folder structure",
+          "",
+          "Upsell to Phase 1 Email Migration. Billed only upon written go-ahead from RAID Security Corp after site4now is live.",
+        ].join("\n"),
         amountCents: 25000, // $250
         sendNow: false, // leave as DRAFT
         dueOnReceipt: true,
-        memo:
-          "Draft invoice. Finalize + send only after Jovel confirms she wants historical archives migrated (decision is made once site4now is live; invoice sent within 24h of confirmation).",
+        memo: [
+          "Draft invoice. Finalize and send only after Jovel confirms she wants historical archives migrated. Decision happens once site4now is live; invoice is sent within 24h of confirmation.",
+          "",
+          "Founding-client rate. Public list price $495.",
+        ].join("\n"),
       },
     ],
   },
@@ -216,9 +250,20 @@ async function findInvoiceByQuoteId(
   // Stripe invoices.list doesn't filter by metadata. Scan up to 100
   // recent invoices for this customer. Customer-scoped + bounded is fine
   // for our per-client volume.
+  //
+  // Skip VOIDED and DELETED invoices so that voiding an invoice in the
+  // dashboard effectively "resets" the idempotency slot — the next script
+  // run will create a fresh invoice for the same quoteId.
   if (customerId.startsWith("(dry-run")) return null;
   const resp = await stripe.invoices.list({ customer: customerId, limit: 100 });
-  return resp.data.find((inv) => inv.metadata?.quote_id === quoteId) ?? null;
+  const DEAD_STATUSES = new Set(["void", "deleted"]);
+  return (
+    resp.data.find(
+      (inv) =>
+        inv.metadata?.quote_id === quoteId &&
+        !DEAD_STATUSES.has(String(inv.status ?? "")),
+    ) ?? null
+  );
 }
 
 // ─────────────────────────────────────────────────────────────
