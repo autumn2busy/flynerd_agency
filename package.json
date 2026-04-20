@@ -7,7 +7,10 @@
     "dev:n8n": "next dev -p 3010",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "stripe:bootstrap:dry": "tsx scripts/stripe-catalog-bootstrap.ts --mode=test --dry-run",
+    "stripe:bootstrap:test": "tsx scripts/stripe-catalog-bootstrap.ts --mode=test",
+    "stripe:bootstrap:live": "tsx scripts/stripe-catalog-bootstrap.ts --mode=live"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
@@ -35,7 +38,9 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "prisma": "^5.22.0",
+    "stripe": "^22.0.2",
     "tailwindcss": "^4",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }
