@@ -1,3 +1,7 @@
+// Load STRIPE_API_KEY (and any other env) from flynerd-agency/.env.
+// Keeps the live secret out of argv and out of shell history.
+import "dotenv/config";
+
 /**
  * FlyNerd Stripe Catalog Bootstrap
  * ================================
@@ -279,6 +283,28 @@ const CATALOG: CatalogItem[] = [
     fileField: "addons[].stripeMonthlyPriceId / addons[].stripeMonthlyLink",
     notes: "Same-business-day response",
   },
+
+  // ── Add-ons: Email ──────────────────────────────────────────
+  {
+    lookupKey: "flynerd_email_migration_onetime_v1",
+    name: "Email Migration",
+    amountUsd: 995,
+    offerType: "addon_email",
+    qualificationProfile: "all",
+    fileField: "addons[].stripeDepositPriceId / addons[].stripeDepositLink",
+    notes:
+      "Wix / GoDaddy / IMAP -> Google Workspace; up to 10 mailboxes; current email only (no historical archive); 7-day delivery",
+  },
+  {
+    lookupKey: "flynerd_email_historical_onetime_v1",
+    name: "Historical Email Transfer",
+    amountUsd: 495,
+    offerType: "addon_email",
+    qualificationProfile: "all",
+    fileField: "addons[].stripeDepositPriceId / addons[].stripeDepositLink",
+    notes:
+      "Upsell to Email Migration; ingest PST/MBOX archives into Google Workspace mailboxes; standalone allowed",
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -329,6 +355,30 @@ function validateKey(key: string, mode: "test" | "live"): void {
     );
     process.exit(1);
   }
+}
+
+/**
+ * Resolve the Stripe API key for the requested mode. Priority:
+ *   test  -> STRIPE_TEST_API_KEY, then STRIPE_API_KEY
+ *   live  -> STRIPE_LIVE_API_KEY, then STRIPE_API_KEY
+ * This lets the same .env hold both keys without juggling which is "active".
+ */
+function resolveKey(mode: "test" | "live"): string {
+  const specific =
+    mode === "test"
+      ? process.env.STRIPE_TEST_API_KEY
+      : process.env.STRIPE_LIVE_API_KEY;
+  const fallback = process.env.STRIPE_API_KEY;
+  const key = specific ?? fallback;
+  if (!key) {
+    const wanted =
+      mode === "test" ? "STRIPE_TEST_API_KEY" : "STRIPE_LIVE_API_KEY";
+    console.error(
+      `[bootstrap] No key found. Set ${wanted} (preferred) or STRIPE_API_KEY in .env.`,
+    );
+    process.exit(1);
+  }
+  return key;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -555,11 +605,7 @@ function writeMd(
 async function main(): Promise<void> {
   const { mode, dryRun } = parseArgs();
 
-  const key = process.env.STRIPE_API_KEY;
-  if (!key) {
-    console.error("[bootstrap] STRIPE_API_KEY environment variable is required");
-    process.exit(1);
-  }
+  const key = resolveKey(mode);
   validateKey(key, mode);
 
   console.log(
