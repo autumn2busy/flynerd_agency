@@ -178,7 +178,7 @@ export const SERVICES: Service[] = [
     process: [
       { title: "Intake Form", description: "Short pre-call form covering your current tools, team size, and top three operational headaches. Takes 5 minutes." },
       { title: "Strategy Session", description: "60-90 minute video call. We go deep on your workflow and map the full automation landscape." },
-      { title: "Audit + Analysis", description: "We document your stack, score each automation opportunity, and build your prioritized roadmap within 48 hours of the call." },
+      { title: "Audit + Analysis", description: "We document your stack, score each automation opportunity, and build your prioritized roadmap within a few business days of the call." },
       { title: "Roadmap Delivery", description: "Written 30-day roadmap delivered with tool recommendations, priority order, and estimated time savings." },
     ],
     milestones: [

@@ -17,7 +17,7 @@ const PRODUCT_COPY: Record<string, { title: string; bullets: string[] }> = {
     bullets: [
       "Book your 20-minute kickoff call to lock in your 7-day build timeline.",
       "You will receive your Stripe receipt by email. The final 50% is due at launch.",
-      "Within 48 hours we will send an intake email confirming your brand colors, services, and reputation data.",
+      "Within 1 business day we will send an intake email confirming your brand colors, services, and reputation data.",
     ],
   },
   flynerd_website_tp_deposit_v1: {
@@ -33,7 +33,7 @@ const PRODUCT_COPY: Record<string, { title: string; bullets: string[] }> = {
     bullets: [
       "Book your 60-90 minute strategy session.",
       "A pre-call intake form arrives by email within an hour.",
-      "Your written roadmap is delivered within 48 hours of the session.",
+      "Your written roadmap is delivered within a few business days of the session.",
     ],
   },
   flynerd_email_migration_onetime_v1: {

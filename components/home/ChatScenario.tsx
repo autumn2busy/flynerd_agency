@@ -72,7 +72,7 @@ const scenarios = [
             { from: "customer", text: "I was rear-ended on the highway today. Do you handle auto accident cases?", delay: 0 },
             { from: "ai", text: "Yes, auto accidents are our focus. Were you injured, and did you get a police report?", delay: 1200 },
             { from: "customer", text: "My neck and back are hurting. Yes, police filed a report.", delay: 2400 },
-            { from: "ai", text: "Important — see a doctor within 48 hours if you haven't already. I can book you a free case evaluation tomorrow. Would 9 AM or 2 PM work?", delay: 3800 },
+            { from: "ai", text: "Important — see a doctor as soon as possible if you haven't already. I can book you a free case evaluation tomorrow. Would 9 AM or 2 PM work?", delay: 3800 },
             { from: "customer", text: "9 AM please.", delay: 4800 },
             { from: "ai", text: "✓ Free consultation booked for 9 AM. Bring the police report and any medical records. We'll handle the rest.", delay: 5800 },
         ] as Message[],

@@ -77,7 +77,13 @@ const CLIENTS: Record<string, ClientSpec> = {
     },
     invoices: [
       {
-        quoteId: "raid_email_migration_2026_04_20",
+        // quoteId bumped to _b on 2026-04-21 after original finalized live
+        // invoice was voided. Original quoteId was
+        // "raid_email_migration_2026_04_20"; that invoice (in_1TOS2mRVuKVVmtoDXZFr4Vu1)
+        // has been voided in Stripe dashboard. This new quoteId causes the
+        // idempotency check in send-custom-invoice.ts to treat this as a
+        // fresh issue and create + send a corrected invoice.
+        quoteId: "raid_email_migration_2026_04_20b",
         invoiceDescription: "FlyNerd Tech - Email Migration (Phase 1)",
         // Newlines render on the Stripe hosted invoice page as a scoped bullet list.
         lineDescription: [
@@ -90,7 +96,8 @@ const CLIENTS: Record<string, ClientSpec> = {
           "- Connect admin@raidsecuritycorp.com to Wix-hosted DNS",
           "- Verify incoming + outgoing email",
           "",
-          "Delivery: 7 days from kickoff.",
+          "Kickoff: within 48 hours of receipt of payment (founding-client priority).",
+          "Delivery: within 7 days of kickoff.",
         ].join("\n"),
         amountCents: 60000, // $600
         sendNow: true,

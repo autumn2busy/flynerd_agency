@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | FlyNerd Tech",
   },
   description:
-    "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 48-hour launch. Atlanta-based, serving clients globally.",
+    "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Atlanta-based, serving clients globally.",
   keywords: [
     "AI-powered website for local business",
     "AI booking agent",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "digital employee website",
     "AI automation agency Atlanta",
     "local SEO website",
-    "48 hour website launch",
+    "7 day website launch",
     "AI concierge for small business",
   ],
   authors: [{ name: "FlyNerd Tech" }],
@@ -101,7 +101,7 @@ export default function RootLayout({
               url: "https://flynerd.tech",
               logo: "https://flynerd.tech/logo.png",
               description:
-                "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO architecture, and 48-hour launch.",
+                "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO architecture, and 7-day launch.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Atlanta",

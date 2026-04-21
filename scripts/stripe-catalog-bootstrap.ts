@@ -139,7 +139,7 @@ const CATALOG: CatalogItem[] = [
     lookupKey: "flynerd_audit_deposit_v1",
     name: "Automation Audit + Roadmap",
     description:
-      "Paid scoping session: 60-90 minute strategy call plus a written 30-day roadmap delivered within 48 hours. Identifies your three highest-ROI automations and ranks every opportunity. $495 credits back toward any build purchased within 30 days.",
+      "Paid scoping session: 60-90 minute strategy call plus a written 30-day roadmap delivered within a few business days. Identifies your three highest-ROI automations and ranks every opportunity. $495 credits back toward any build purchased within 30 days.",
     amountUsd: 495,
     offerType: "strategy",
     qualificationProfile: "all",

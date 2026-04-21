@@ -48,7 +48,7 @@ const deployments = [
     branch: "main",
     author: "simon_qa",
     timeAgo: "3w ago",
-    duration: "48h",
+    duration: "2d",
   },
 ];
 

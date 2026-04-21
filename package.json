@@ -13,6 +13,7 @@
     "stripe:bootstrap:live": "tsx scripts/stripe-catalog-bootstrap.ts --mode=live",
     "invoice:raid:dry": "tsx scripts/send-custom-invoice.ts --client=raid --mode=test --dry-run",
     "invoice:raid:test": "tsx scripts/send-custom-invoice.ts --client=raid --mode=test",
+    "invoice:raid:live:dry": "tsx scripts/send-custom-invoice.ts --client=raid --mode=live --dry-run",
     "invoice:raid:live": "tsx scripts/send-custom-invoice.ts --client=raid --mode=live"
   },
   "dependencies": {
