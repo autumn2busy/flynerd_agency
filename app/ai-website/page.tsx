@@ -1,10 +1,24 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, CheckCircle, Clock, Cpu, Globe, Zap, BarChart3, Shield } from "lucide-react";
+import { SERVICES } from "@/app/pricing/services-data";
+
+// Pull both core-build tiers from the canonical catalog so this page never
+// drifts from app/pricing. Starting price in <meta description> comes from
+// the UL tier (the lower of the two).
+const ulCore = SERVICES.find((s) => s.slug === "ai-website-quickstart-ul")!;
+const tpCore = SERVICES.find((s) => s.slug === "ai-website-concierge-tp")!;
+
+// Derive deposit dollar display from milestones so it stays in sync with
+// any future split changes (50/50, 40/60, etc.).
+function depositDisplay(slug: string): string {
+  const s = SERVICES.find((svc) => svc.slug === slug);
+  return s?.milestones.find((m) => /deposit/i.test(m.label))?.price ?? "";
+}
 
 export const metadata: Metadata = {
     title: "AI-Powered Websites | FlyNerd Tech",
-    description: "FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Starting at $1,250.",
+    description: `FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Starting at ${ulCore.priceDisplay}.`,
 };
 
 const timeline = [
@@ -15,38 +29,43 @@ const timeline = [
     { day: "Day 7", title: "Live", description: "Domain connected, SSL live, AI agent active. Your digital employee starts its first shift." },
 ];
 
+// Two core-build tiers sourced from the canonical catalog. Copy (bullets,
+// "best for", CTA label) is page-specific and lives here, but every price
+// and payment link is sourced from SERVICES.
 const packages = [
     {
         name: "Quickstart Build",
-        setup: "$1,250",
-        monthly: "$197/mo",
-        best: "Local service businesses ready to upgrade from no site or a static site",
+        setup: ulCore.priceDisplay,
+        monthly: "$997/mo (optional Care Plan)",
+        best: "Underserved local service businesses: HVAC, plumbing, salons, home care",
         includes: [
-            "Custom niche design (AI-informed from your reviews)",
-            "AI booking & support agent (trained on your services)",
-            "Local SEO architecture (Next.js headless)",
-            "High-speed Vercel hosting",
-            "Monthly maintenance + minor AI updates",
+            "Custom AI-informed design from your reputation data",
+            "24/7 AI booking agent trained on your services",
+            "Lead capture + CRM routing (ActiveCampaign/HubSpot)",
+            "Local SEO foundation + schema markup",
+            "High-speed Vercel hosting + SSL",
             "7-day launch guarantee",
         ],
-        stripe: process.env.STRIPE_LINK_BUILD_DEPOSIT || "/contact?package=build",
-        cta: "Start — Pay $625 Deposit",
+        stripe: ulCore.stripeDepositLink ?? "/contact?package=ai-website-quickstart-ul",
+        cta: `Start — Pay ${depositDisplay("ai-website-quickstart-ul")} Deposit`,
+        detailHref: "/pricing/ai-website-quickstart-ul",
     },
     {
         name: "AI Concierge Bundle",
-        setup: "$2,400",
-        monthly: "$750/mo",
-        best: "High lead volume businesses or multi-location operations",
+        setup: tpCore.priceDisplay,
+        monthly: "$1,997/mo (optional Growth Ops)",
+        best: "Tech-enabled premium: med spas, aesthetics, solar, legal, high-ticket services",
         includes: [
             "Everything in Quickstart Build",
-            "Advanced AI support agents (custom knowledge base)",
-            "CRM automation via ActiveCampaign",
-            "Lead qualification + smart routing",
-            "Monthly iterative improvements (2 tickets/mo)",
-            "Quarterly roadmap review",
+            "Treatment/service detail pages with brand-tier design",
+            "Advanced booking integration (Zenoti, Vagaro, Cal.com)",
+            "CRM deep wire: lead scoring + pipeline stages",
+            "Concierge project management through launch",
+            "14-day concierge support post-launch",
         ],
-        stripe: process.env.STRIPE_LINK_AGENT_DEPOSIT || "/contact?package=agent",
-        cta: "Launch — Pay $1,200 Deposit",
+        stripe: tpCore.stripeDepositLink ?? "/contact?package=ai-website-concierge-tp",
+        cta: `Launch — Pay ${depositDisplay("ai-website-concierge-tp")} Deposit`,
+        detailHref: "/pricing/ai-website-concierge-tp",
         featured: true,
     },
 ];
@@ -95,7 +114,7 @@ export default function AIWebsitePage() {
                             FlyNerd Tech builds AI-powered websites that answer questions, book appointments, and qualify leads — around the clock, without you being involved. Live in 7 days, built from your real reputation.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/pricing/ai-website-quickstart" className="btn btn-primary text-lg px-10 py-4">
+                            <Link href="/pricing/ai-website-quickstart-ul" className="btn btn-primary text-lg px-10 py-4">
                                 See Pricing <ArrowUpRight size={20} />
                             </Link>
                             <Link href="/contact" className="btn btn-ghost text-lg px-8 py-4">
@@ -206,7 +225,7 @@ export default function AIWebsitePage() {
                                     ))}
                                 </ul>
                                 <Link
-                                    href={pkg.name === "Quickstart Build" ? "/pricing/ai-website-quickstart" : "/pricing/ai-concierge-bundle"}
+                                    href={pkg.detailHref}
                                     className={`btn w-full ${pkg.featured ? "btn-primary" : "btn-ghost"}`}
                                 >
                                     View Full Details <ArrowUpRight size={16} />

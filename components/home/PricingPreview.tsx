@@ -1,42 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, CheckCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import ScrollReveal from "@/components/home/ScrollReveal";
+import { SERVICES } from "@/app/pricing/services-data";
+
+// Homepage pricing preview. Price points pulled from the canonical catalog
+// so this card never drifts from app/pricing. Copy + visual styling (target
+// audience, CTA label, accent color, feature bullets) are page-specific and
+// stay local.
+const ulCore = SERVICES.find((s) => s.slug === "ai-website-quickstart-ul")!;
+const tpCore = SERVICES.find((s) => s.slug === "ai-website-concierge-tp")!;
 
 const packages = [
   {
     name: "Quickstart Build",
-    price: "$1,250",
-    monthly: "+ $197/mo",
-    target: "Local service businesses",
+    price: ulCore.priceDisplay,
+    monthly: "+ Care Plan $997/mo (optional)",
+    target: "Underserved local service",
     description: "A high-conversion AI site built from your real reputation, live in 7 days.",
     features: [
-      "Custom niche design from your brand palette",
-      "AI booking agent (trained on your services)",
-      "Local SEO architecture",
+      "Custom AI-informed design from your reputation",
+      "24/7 AI booking agent on your services",
+      "Local SEO foundation + schema",
       "High-speed Vercel hosting",
-      "Monthly maintenance included",
+      "Lead capture wired to your CRM",
     ],
-    href: "/apply?package=build",
+    href: "/pricing/ai-website-quickstart-ul",
     cta: "Start Build",
     accent: "#E8B923",
     featured: false,
   },
   {
     name: "AI Concierge Bundle",
-    price: "$2,400",
-    monthly: "+ $750/mo",
-    target: "High lead volume businesses",
-    description: "The full system — website, AI agents, CRM automation, ongoing optimization.",
+    price: tpCore.priceDisplay,
+    monthly: "+ Growth Ops $1,997/mo (optional)",
+    target: "Tech-enabled premium",
+    description: "Premium AI website for med spas, solar, and high-ticket services.",
     features: [
       "Everything in Quickstart Build",
-      "Advanced AI agents (custom knowledge base)",
-      "CRM automation via ActiveCampaign",
-      "Lead qualification + smart routing",
-      "Monthly iterative improvements",
+      "Treatment/service detail pages",
+      "Booking integration (Zenoti, Vagaro, Cal.com)",
+      "CRM deep wire + lead scoring",
+      "Concierge project management",
     ],
-    href: "/apply?package=agent",
+    href: "/pricing/ai-website-concierge-tp",
     cta: "Launch Concierge",
     featured: true,
     accent: "#10b981",

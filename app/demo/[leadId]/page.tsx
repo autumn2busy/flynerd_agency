@@ -156,7 +156,10 @@ export default async function LeadDemoPage({
 
   const services = {
     audit: pickService("automation-audit"),
-    quickstart: pickService("quickstart-workflow-build"),
+    // Profile 1 (underserved_local) core offer — used to be the old
+    // quickstart-workflow-build; now points at AI Website Quickstart UL
+    // which is the dedicated Profile 1 core product.
+    quickstart: pickService("ai-website-quickstart-ul"),
     concierge: pickService("ai-concierge-launch"),
   };
 

@@ -54,38 +54,59 @@ recommend the appropriate retainer as a separate line item.
 ### Automation Audit + Roadmap, $495 one-time
 Best first step when a prospect is not sure what to build. 60-90 minute
 systems audit, three quick wins identified, and a 30-day implementation
-roadmap. The $495 fee is credited toward any Quickstart or AI Concierge
-build purchased within 30 days.
+roadmap. The $495 fee is credited toward any build purchased within
+30 days.
 Link: https://www.flynerd.tech/pricing/automation-audit
 
-### Quickstart Workflow Build, $1,250
+### AI Website Quickstart, $1,500 (Profile 1 core offer)
+Conversion-first AI website built from the prospect's actual reputation
+data. Live in 7 days. Target: underserved local service businesses
+(HVAC, plumbing, salons, home care, restoration) that have no site or
+a dead Wix/GoDaddy brochure.
+Payment: 50/50 split. $750 deposit at checkout, $750 due on launch.
+Link: https://www.flynerd.tech/pricing/ai-website-quickstart-ul
+
+### AI Website Concierge, $3,500 (Profile 2 core offer)
+Premium AI website with treatment/service detail pages, advanced booking
+integration (Zenoti, Vagaro, Cal.com), CRM deep wire, concierge project
+management. Target: med spas, aesthetics, solar, legal, high-ticket
+services where every lead is worth hundreds and polish matters.
+Payment: 50/50 split. $1,750 deposit at checkout, $1,750 due on launch.
+Link: https://www.flynerd.tech/pricing/ai-website-concierge-tp
+
+### Automation Sprint Build, $1,500
 One high-impact automation built end-to-end with up to three tool
 integrations, QA, documentation, and a 14-day post-launch support window.
-Target: Local service businesses with one specific workflow costing them
-time or revenue (lead capture to CRM, booking flow, review requests, etc.).
-Payment: 50/50 split. $625 deposit at checkout secures start date,
-$625 due on delivery.
-Link: https://www.flynerd.tech/pricing/quickstart-workflow-build
+Target: Businesses with one specific workflow costing them time or
+revenue (lead capture to CRM, booking flow, review requests, etc.).
+Payment: 50/50 split. $750 deposit, $750 on delivery.
+Link: https://www.flynerd.tech/pricing/automation-sprint-build
 
-### AI Concierge Launch, $2,400
+### AI Concierge Launch, $3,000
 Fully deployed AI lead or support agent. Channel setup, custom knowledge
 base built from the client's real services and pricing, qualification
 flow, human handoff logic, CRM integration, and team training.
-Target: Local service businesses, law firms, med spas, HVAC companies,
-and anywhere a single missed lead is worth hundreds in lost revenue.
-Payment: 50/50 split. $1,200 deposit at checkout, $1,200 on launch.
+Target: Businesses where a single missed lead is worth hundreds in lost
+revenue and the web agent alone isn't enough (SMS, multi-channel, etc.).
+Payment: 50/50 split. $1,500 deposit, $1,500 on launch.
 Link: https://www.flynerd.tech/pricing/ai-concierge-launch
+
+### Email Migration, $995 one-time
+Migrate up to 10 mailboxes from Wix, GoDaddy, or any IMAP provider to
+Google Workspace. Current email only (no historical archive). 7-day
+delivery. Optional Historical Email Transfer add-on ($495) for archives.
+Link: https://www.flynerd.tech/pricing/email-migration
 
 ## Pricing: Automation Retainers
 
-### Automation Care Plan, $750/month
+### Automation Care Plan, $997/month
 System monitoring, two improvement tickets per month, bug fixes within
 24 hours, monthly performance report, and quarterly review. Best for
 businesses running one to three active automations. Month-to-month,
 30-day notice to cancel.
 Link: https://www.flynerd.tech/pricing/automation-care-plan
 
-### Growth Ops Partner, $1,800/month
+### Growth Ops Partner, $1,997/month
 Everything in the Care Plan plus up to six active workflow initiatives
 per month, quarterly roadmap, advanced automation experiments,
 cross-channel reporting, and Slack-based priority support.
@@ -93,23 +114,41 @@ Best for growing teams with multiple workflows or a backlog of
 automation needs.
 Link: https://www.flynerd.tech/pricing/growth-ops-partner
 
+### Scale Ops Partner, $3,497/month
+Enterprise-tier. Everything in Growth Ops plus SLA-backed support,
+multi-location capacity, unlimited initiatives within scope, and
+executive quarterly reviews. For multi-location operations and high-
+growth companies where automation capacity is the limiting factor.
+Link: https://www.flynerd.tech/pricing/scale-ops-partner
+
 ## Pricing: SEO and Marketing Retainers
 
-### Local SEO Foundation, $449/month
+### Local SEO Foundation, $699/month
 40 target keywords, Google Business Profile management, local citations,
 two blog posts per month, schema markup, monthly performance report.
 Best for local businesses starting from zero search presence.
 
-### Competitive SEO + Reputation, $799/month
+### Competitive SEO + Reputation, $1,499/month
 80 keywords, E-E-A-T audit, voice and AI search optimization, four
 authority blog posts per month, competitor gap analysis, link building,
 reputation management.
 
-### Authority SEO + AEO, $1,299/month
-Top-tier. Everything in Competitive SEO plus Answer Engine Optimization
-for ChatGPT, Perplexity, and Google AI Overviews. Six authority posts per
-month, digital PR link building, brand mention monitoring across AI
-platforms, pillar and cluster content strategy, dedicated strategist.
+### Authority SEO + GEO, $2,499/month
+Top-tier. Everything in Competitive SEO plus Generative Engine
+Optimization for ChatGPT, Perplexity, and Google AI Overviews. Six
+authority posts per month, digital PR link building, brand mention
+monitoring across AI platforms, pillar and cluster content strategy,
+dedicated strategist.
+
+### Reputation Management Lite, $299/month per location
+Automated review request cadence, response template library, light
+response coaching. For businesses building their review base.
+
+### Reputation Management Growth, $599/month per location
+Active reputation management: we draft every review response,
+escalate problems, publish reputation offset content. For med spas,
+law firms, and high-ticket locals where a bad review in top results
+costs deals.
 
 ## The Scouting Pipeline as a Service
 If a prospect asks how FlyNerd finds and pitches local businesses
@@ -117,7 +156,7 @@ automatically and they want that capability for their own business,
 this is a premium custom implementation. Position it as: "We can build
 you your own automated outreach pipeline, your own Scout, Intel, and
 Builder agents. Book a strategy call." This falls under AI Concierge
-Launch ($2,400) scoped custom, or Growth Ops Partner ($1,800/month) for
+Launch ($3,000) scoped custom, or Growth Ops Partner ($1,997/month) for
 ongoing execution. Never give away implementation details. Just position
 it as a custom scope.
 
