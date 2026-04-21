@@ -237,7 +237,7 @@ function ApplyForm() {
               </h2>
               <p className="text-[var(--text-secondary)]">
                 Your personalized demo is being built right now and will land
-                in your inbox within 15 minutes. Meanwhile, lock in a 20-minute
+                in your inbox within 20 minutes. Meanwhile, lock in a 20-minute
                 strategy call below so we can review it together.
               </p>
             </div>
@@ -294,7 +294,7 @@ function ApplyForm() {
             <strong className="text-white">{urlParam}</strong> and hand-build a
             personalized preview of your AI website + concierge. Share a few
             details so we know what to build, then lock in a strategy call
-            slot. Your demo arrives within 15 minutes of submitting.
+            slot. Your demo arrives within 20 minutes of submitting.
           </p>
         </>
       ) : (
@@ -305,7 +305,7 @@ function ApplyForm() {
           <p className="text-[var(--text-secondary)] mb-8">
             Share a few details about your business and we&apos;ll hand-build a
             personalized preview of your AI website + concierge. Then pick a
-            strategy call slot. Your demo arrives within 15 minutes.
+            strategy call slot. Your demo arrives within 20 minutes.
           </p>
         </>
       )}
@@ -599,7 +599,7 @@ function ApplyForm() {
           <p className="text-center mt-4 text-xs text-[var(--text-muted)]">
             {mode === "checkout"
               ? "Safely redirected to Stripe Checkout"
-              : "No payment at this step. Your demo will be emailed within 15 minutes."}
+              : "No payment at this step. Your demo will be emailed within 20 minutes."}
           </p>
         </div>
       </form>

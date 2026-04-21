@@ -64,7 +64,7 @@ const FLOW_COPY: Record<string, { title: string; bullets: string[] }> = {
     title: "Your personalized demo is being built.",
     bullets: [
       "We will analyze your site, extract your brand signals, and hand-build a preview of your AI website + concierge.",
-      "You will receive an email with the demo link within one business day.",
+      "You will receive an email with the demo link within 20 minutes.",
       "Want to accelerate it? Book a quick strategy call below and we will prioritize your build.",
     ],
   },
@@ -161,7 +161,7 @@ export default async function ThanksPage({ searchParams }: ThanksPageProps) {
             <p className="flex items-center justify-center gap-2">
               <Mail size={12} />
               {flow === "demo-pending"
-                ? "Demo link will be emailed to you within one business day. Check spam if you don't see it."
+                ? "Demo link will be emailed to you within 20 minutes. Check spam if you don't see it."
                 : "Receipt sent to your email. Check spam if you don't see it within 5 minutes."}
             </p>
             {session_id && (
