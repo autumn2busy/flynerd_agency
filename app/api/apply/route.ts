@@ -163,26 +163,34 @@ export async function POST(req: Request) {
     const normalizedUrl = normalizeUrl(website_url);
     const applyId = crypto.randomUUID();
 
+    // Hoisted to outer scope so dispatchWarmApplyToSonata can pass it
+    // through to sonata-stack for the AC writeback of the demo URL.
+    let contactId: string | null = null;
+
     if (!apiUrl || !apiKey) {
       console.warn(
         "[apply] Missing ActiveCampaign credentials. Skipping AC sync.",
       );
     } else {
+      // Each step wrapped independently so a single failure doesn't
+      // cascade into missing-deal / missing-fields symptoms like the
+      // 2026-04-21 smoke test where applyTag threw and blocked
+      // downstream deal creation.
+      let firstName = name;
+      let lastName = "";
+      if (name && name.includes(" ")) {
+        const parts = String(name).split(" ");
+        firstName = parts[0];
+        lastName = parts.slice(1).join(" ");
+      }
+
+      const headers = {
+        "Api-Token": apiKey,
+        "Content-Type": "application/json",
+      };
+
+      // ── Step 1: sync contact ───────────────────────────
       try {
-        // 1. Sync contact
-        let firstName = name;
-        let lastName = "";
-        if (name && name.includes(" ")) {
-          const parts = String(name).split(" ");
-          firstName = parts[0];
-          lastName = parts.slice(1).join(" ");
-        }
-
-        const headers = {
-          "Api-Token": apiKey,
-          "Content-Type": "application/json",
-        };
-
         const contactRes = await fetch(`${apiUrl}/api/3/contact/sync`, {
           method: "POST",
           headers,
@@ -190,34 +198,65 @@ export async function POST(req: Request) {
             contact: { email, firstName, lastName },
           }),
         });
-
-        if (contactRes.ok) {
+        if (!contactRes.ok) {
+          const body = await contactRes.text().catch(() => "");
+          console.error(
+            `[apply][step=contact_sync] AC returned ${contactRes.status} body=${body.slice(0, 300)}`,
+          );
+        } else {
           const contactData = await contactRes.json();
-          const contactId: string = contactData.contact.id;
-
-          // 2. Write niche to contact-level field 167
-          if (niche) {
-            try {
-              await fetch(`${apiUrl}/api/3/fieldValues`, {
-                method: "POST",
-                headers,
-                body: JSON.stringify({
-                  fieldValue: {
-                    contact: contactId,
-                    field: String(CONTACT_FIELD_NICHE),
-                    value: niche,
-                  },
-                }),
-              });
-            } catch (err) {
-              console.error("[apply] niche write failed (non-blocking):", err);
-            }
+          contactId = contactData?.contact?.id ?? null;
+          if (!contactId) {
+            console.error(
+              "[apply][step=contact_sync] response missing contact.id:",
+              JSON.stringify(contactData).slice(0, 300),
+            );
           }
+        }
+      } catch (err) {
+        console.error("[apply][step=contact_sync] threw:", err);
+      }
 
-          // 3. Apply DEMO_QUALIFIED tag (this prospect finished the form)
+      // Without a contactId we can't do anything else AC-side. Skip the
+      // rest but still fire Resend + warm-apply (which don't need it).
+      if (contactId) {
+        // ── Step 2: write niche to contact field 167 ────────
+        if (niche) {
+          try {
+            const nicheRes = await fetch(`${apiUrl}/api/3/fieldValues`, {
+              method: "POST",
+              headers,
+              body: JSON.stringify({
+                fieldValue: {
+                  contact: contactId,
+                  field: String(CONTACT_FIELD_NICHE),
+                  value: niche,
+                },
+              }),
+            });
+            if (!nicheRes.ok) {
+              const body = await nicheRes.text().catch(() => "");
+              console.error(
+                `[apply][step=niche_write] AC returned ${nicheRes.status} body=${body.slice(0, 300)}`,
+              );
+            }
+          } catch (err) {
+            console.error("[apply][step=niche_write] threw:", err);
+          }
+        }
+
+        // ── Step 3: apply DEMO_QUALIFIED tag ─────────────────
+        try {
           await applyTag(apiUrl, apiKey, contactId, "DEMO_QUALIFIED");
+        } catch (err) {
+          // Critical: this used to propagate and kill deal creation.
+          // Now it's caught and the flow continues.
+          console.error("[apply][step=apply_tag] threw (non-blocking):", err);
+        }
 
-          // 4. Create deal with all qualification fields
+        // ── Step 4: create deal ─────────────────────────────
+        let dealId: string | null = null;
+        try {
           const dealRes = await fetch(`${apiUrl}/api/3/deals`, {
             method: "POST",
             headers,
@@ -232,28 +271,45 @@ export async function POST(req: Request) {
               },
             }),
           });
-
-          if (dealRes.ok) {
+          if (!dealRes.ok) {
+            const body = await dealRes.text().catch(() => "");
+            console.error(
+              `[apply][step=create_deal] AC returned ${dealRes.status} body=${body.slice(0, 400)}`,
+            );
+          } else {
             const dealData = await dealRes.json();
-            const dealId = dealData.deal.id;
+            dealId = dealData?.deal?.id ?? null;
+            if (!dealId) {
+              console.error(
+                "[apply][step=create_deal] response missing deal.id:",
+                JSON.stringify(dealData).slice(0, 300),
+              );
+            }
+          }
+        } catch (err) {
+          console.error("[apply][step=create_deal] threw:", err);
+        }
 
-            // 5. Populate deal custom fields
-            const fieldPayload: Record<string, string> = {
-              business_name: business_name ?? "",
-              niche: niche ?? "",
-              pain_point: pain_point ?? "",
-              tools: tools ?? "",
-              timeline: timeline ?? "",
-              website_url: normalizedUrl,
-              services: services ?? "",
-              lead_volume: lead_volume ?? "",
-            };
+        // ── Step 5: populate deal custom fields ──────────────
+        if (dealId) {
+          const fieldPayload: Record<string, string> = {
+            business_name: business_name ?? "",
+            niche: niche ?? "",
+            pain_point: pain_point ?? "",
+            tools: tools ?? "",
+            timeline: timeline ?? "",
+            website_url: normalizedUrl,
+            services: services ?? "",
+            lead_volume: lead_volume ?? "",
+          };
 
-            for (const { id, key } of AC_DEAL_FIELDS) {
-              const value = fieldPayload[key];
-              if (!value) continue;
-              try {
-                await fetch(`${apiUrl}/api/3/dealCustomFieldData`, {
+          for (const { id, key, label } of AC_DEAL_FIELDS) {
+            const value = fieldPayload[key];
+            if (!value) continue;
+            try {
+              const fieldRes = await fetch(
+                `${apiUrl}/api/3/dealCustomFieldData`,
+                {
                   method: "POST",
                   headers,
                   body: JSON.stringify({
@@ -263,18 +319,22 @@ export async function POST(req: Request) {
                       fieldValue: value,
                     },
                   }),
-                });
-              } catch (err) {
+                },
+              );
+              if (!fieldRes.ok) {
+                const body = await fieldRes.text().catch(() => "");
                 console.error(
-                  `[apply] deal field ${id} write failed (non-blocking):`,
-                  err,
+                  `[apply][step=deal_field][id=${id}][${label}] AC returned ${fieldRes.status} body=${body.slice(0, 200)}`,
                 );
               }
+            } catch (err) {
+              console.error(
+                `[apply][step=deal_field][id=${id}][${label}] threw:`,
+                err,
+              );
             }
           }
         }
-      } catch (acErr) {
-        console.error("[apply] AC sync failed (non-blocking):", acErr);
       }
     }
 
@@ -334,6 +394,7 @@ export async function POST(req: Request) {
       timeline,
       tools: tools ?? "",
       applyId,
+      contactId: contactId ?? undefined,
     });
 
     return NextResponse.json({
