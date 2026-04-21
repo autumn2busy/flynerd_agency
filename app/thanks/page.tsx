@@ -55,15 +55,43 @@ const DEFAULT_COPY = {
   ],
 };
 
+// Non-payment flow variants. Keyed off the `flow` query param.
+// When /apply submits in "demo" mode (URL-only, no package), the user lands
+// here with ?flow=demo-pending — no payment happened, so we show different
+// copy that sets correct expectations.
+const FLOW_COPY: Record<string, { title: string; bullets: string[] }> = {
+  "demo-pending": {
+    title: "Your personalized demo is being built.",
+    bullets: [
+      "We will analyze your site, extract your brand signals, and hand-build a preview of your AI website + concierge.",
+      "You will receive an email with the demo link within one business day.",
+      "Want to accelerate it? Book a quick strategy call below and we will prioritize your build.",
+    ],
+  },
+};
+
+// Eyebrow label above the hero title, picked from the flow.
+const FLOW_EYEBROW: Record<string, string> = {
+  "demo-pending": "We got it",
+};
+
 interface ThanksPageProps {
-  searchParams: Promise<{ session_id?: string; lookup_key?: string }>;
+  searchParams: Promise<{
+    session_id?: string;
+    lookup_key?: string;
+    flow?: string;
+  }>;
 }
 
 export default async function ThanksPage({ searchParams }: ThanksPageProps) {
-  const { session_id, lookup_key } = await searchParams;
+  const { session_id, lookup_key, flow } = await searchParams;
 
+  // Precedence: explicit flow param > lookup_key product match > generic payment default
   const copy =
-    (lookup_key ? PRODUCT_COPY[lookup_key] : undefined) ?? DEFAULT_COPY;
+    (flow ? FLOW_COPY[flow] : undefined) ??
+    (lookup_key ? PRODUCT_COPY[lookup_key] : undefined) ??
+    DEFAULT_COPY;
+  const eyebrow = (flow && FLOW_EYEBROW[flow]) ?? "Payment received";
 
   // Server component — reads non-public env directly. Matches the var
   // name convention used in app/demo/[leadId]/page.tsx. Hardcoded final
@@ -81,13 +109,14 @@ export default async function ThanksPage({ searchParams }: ThanksPageProps) {
             <CheckCircle size={32} className="text-[var(--gold-400)]" />
           </div>
 
-          <span className="section-label">Payment received</span>
+          <span className="section-label">{eyebrow}</span>
           <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight mt-4 mb-6 leading-[1.15]">
             {copy.title}
           </h1>
           <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-12">
-            Thanks for choosing FlyNerd Tech. Your payment is confirmed and a
-            receipt is on its way.
+            {flow === "demo-pending"
+              ? "Thanks for sharing your URL. We will get to work right away and email you the demo link as soon as it is ready."
+              : "Thanks for choosing FlyNerd Tech. Your payment is confirmed and a receipt is on its way."}
           </p>
 
           <div className="glass-card rounded-2xl p-8 text-left mb-10">
@@ -131,8 +160,9 @@ export default async function ThanksPage({ searchParams }: ThanksPageProps) {
           <div className="text-xs text-[var(--text-muted)] space-y-2">
             <p className="flex items-center justify-center gap-2">
               <Mail size={12} />
-              Receipt sent to your email. Check spam if you don't see it within
-              5 minutes.
+              {flow === "demo-pending"
+                ? "Demo link will be emailed to you within one business day. Check spam if you don't see it."
+                : "Receipt sent to your email. Check spam if you don't see it within 5 minutes."}
             </p>
             {session_id && (
               <p>

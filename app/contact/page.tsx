@@ -3,6 +3,43 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
+import { SERVICES } from "@/app/pricing/services-data";
+
+// Build the "Which offer are you most interested in?" dropdown from the
+// canonical catalog so this form never drifts from live Stripe pricing.
+// Order follows the SERVICES array (core builds → project → retainer → SEO).
+function formatServiceLabel(priceDisplay: string, priceSub: string): string {
+    const isMonthly = priceSub.toLowerCase().includes("/month");
+    return `(${priceDisplay}${isMonthly ? "/mo" : ""})`;
+}
+
+const SERVICE_OPTIONS: string[] = [
+    ...SERVICES.map(
+        (s) => `${s.name} ${formatServiceLabel(s.priceDisplay, s.priceSub)}`,
+    ),
+    "Not sure yet",
+];
+
+// Map deep-link query param slug -> pre-filled display label.
+// Keys are the slugs used in ctaHref throughout the app; values match the
+// dropdown labels above so selecting "package=audit" in the URL pre-fills
+// the right option in the dropdown.
+const packageMap: Record<string, string> = Object.fromEntries(
+    SERVICES.flatMap((s) => {
+        const label = `${s.name} ${formatServiceLabel(s.priceDisplay, s.priceSub)}`;
+        // Canonical slug always maps.
+        const entries: Array<[string, string]> = [[s.slug, label]];
+        // Short aliases for legacy deep links.
+        if (s.slug === "ai-website-quickstart-ul") entries.push(["build", label]);
+        if (s.slug === "ai-website-concierge-tp") entries.push(["concierge", label]);
+        if (s.slug === "automation-audit") entries.push(["audit", label]);
+        if (s.slug === "automation-sprint-build") entries.push(["sprint", label]);
+        if (s.slug === "ai-concierge-launch") entries.push(["agent", label]);
+        if (s.slug === "automation-care-plan") entries.push(["care-plan", label]);
+        if (s.slug === "growth-ops-partner") entries.push(["growth-partner", label]);
+        return entries;
+    }),
+);
 
 const intakeQuestions = [
     {
@@ -24,6 +61,12 @@ const intakeQuestions = [
         placeholder: "Acme Inc.",
     },
     {
+        id: "website_url",
+        label: "What's your website URL? (optional, but helps us build your demo faster)",
+        type: "text",
+        placeholder: "yourbusiness.com",
+    },
+    {
         id: "industry",
         label: "What industry or niche are you in?",
         type: "text",
@@ -33,15 +76,7 @@ const intakeQuestions = [
         id: "package",
         label: "Which offer are you most interested in?",
         type: "select",
-        options: [
-            "Automation Audit + Roadmap ($495)",
-            "Quickstart Workflow Build ($1,250)",
-            "AI Concierge Agent Launch ($2,400)",
-            "Email Revenue Sprint ($900)",
-            "Automation Care Plan ($750/mo)",
-            "Growth Ops Partner ($1,800/mo)",
-            "Not sure yet",
-        ],
+        options: SERVICE_OPTIONS,
     },
     {
         id: "revenue",
@@ -104,16 +139,6 @@ const intakeQuestions = [
         ],
     },
 ];
-
-const packageMap: Record<string, string> = {
-    "automation-audit": "Automation Audit + Roadmap ($495)",
-    "quickstart-build": "Quickstart Workflow Build ($1,250)",
-    "agent-launch": "AI Concierge Agent Launch ($2,400)",
-    "ai-concierge": "AI Concierge Agent Launch ($2,400)",
-    "email-revenue-sprint": "Email Revenue Sprint ($900)",
-    "care-plan": "Automation Care Plan ($750/mo)",
-    "growth-partner": "Growth Ops Partner ($1,800/mo)",
-};
 
 export default function ContactPage() {
     const [formData, setFormData] = useState<Record<string, string>>({});

@@ -33,6 +33,7 @@ export async function POST(req: Request) {
       name,
       email,
       business_name,
+      website_url,
       industry,
       revenue,
       challenge,
@@ -200,6 +201,7 @@ export async function POST(req: Request) {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Business Name:</strong> ${business_name}</p>
+          <p><strong>Website URL:</strong> ${website_url || '(not provided)'}</p>
           <p><strong>Industry:</strong> ${industry}</p>
           <p><strong>Revenue Range:</strong> ${revenue}</p>
           <p><strong>Biggest Challenge:</strong> ${challenge}</p>
