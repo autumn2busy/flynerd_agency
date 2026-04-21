@@ -140,6 +140,9 @@ export async function POST(req: Request) {
       case "BOOKING_CANCELLED":
         await handleBookingCancelled(attendeeEmail, payload);
         break;
+      case "MEETING_ENDED":
+        await handleMeetingEnded(attendeeEmail, payload);
+        break;
       default:
         console.log(
           `[cal-webhook] ignoring unhandled event: ${triggerEvent}`,
@@ -226,6 +229,96 @@ async function handleBookingCancelled(
   console.log(
     `[cal-webhook] applied CALL_CANCELLED tag to contactId=${contactId} uid=${payload.uid}`,
   );
+}
+
+// Cal.com fires MEETING_ENDED when a scheduled meeting's end time passes.
+// Fires based on calendar time, NOT actual attendance — so no-shows still
+// trigger this. For v1 that's acceptable: Autumn can manually remove the
+// CALL_COMPLETED tag for no-shows to stop the Kris automation from sending
+// a payment link to someone who didn't attend.
+//
+// Upgrade path (later): cross-reference Google Meet attendance via the
+// Google Calendar API before tagging. Out of scope right now.
+//
+// Tagging CALL_COMPLETED here is the trigger for AC automation 502
+// ("FlyNerd — Call Completed Post-Call Close") which fires the Kris
+// webhook. Do not tag both CALL_COMPLETED and CALL_COMPLETED_PROCESSED
+// from this handler — the AC automation itself handles the transition
+// between those two as part of its internal idempotency bookkeeping.
+async function handleMeetingEnded(
+  email: string,
+  payload: CalBookingPayload["payload"],
+): Promise<void> {
+  const apiUrl = process.env.ACTIVECAMPAIGN_URL;
+  const apiKey = process.env.ACTIVECAMPAIGN_KEY;
+  if (!apiUrl || !apiKey) {
+    console.warn(
+      `[cal-webhook] AC creds missing — can't apply CALL_COMPLETED tag for email=${email}`,
+    );
+    return;
+  }
+
+  const contactId = await findContactIdByEmail(apiUrl, apiKey, email);
+  if (!contactId) {
+    console.error(
+      `[cal-webhook] meeting ended but no AC contact found for email=${email} uid=${payload.uid}`,
+    );
+    return;
+  }
+
+  // Guard against double-processing. If the contact already has the
+  // CALL_COMPLETED_PROCESSED tag from a prior meeting, don't re-fire the
+  // post-call automation. This matters when a lead has multiple bookings
+  // over time (e.g. discovery call + separate kickoff call).
+  const alreadyProcessed = await hasTag(
+    apiUrl,
+    apiKey,
+    contactId,
+    "CALL_COMPLETED_PROCESSED",
+  );
+  if (alreadyProcessed) {
+    console.log(
+      `[cal-webhook] skipping CALL_COMPLETED: contactId=${contactId} already has CALL_COMPLETED_PROCESSED`,
+    );
+    return;
+  }
+
+  await applyTag(apiUrl, apiKey, contactId, "CALL_COMPLETED");
+  console.log(
+    `[cal-webhook] applied CALL_COMPLETED tag to contactId=${contactId} after MEETING_ENDED (uid=${payload.uid}, endTime=${payload.endTime}). AC automation 502 should fire next.`,
+  );
+}
+
+// Lightweight check: does the given contact have the specified tag?
+// Used to skip CALL_COMPLETED re-application when the post-call automation
+// has already run once.
+async function hasTag(
+  apiUrl: string,
+  apiKey: string,
+  contactId: string,
+  tagName: string,
+): Promise<boolean> {
+  const headers = { "Api-Token": apiKey };
+  // Look up the tag's numeric ID first
+  const tagLookup = await fetch(
+    `${apiUrl}/api/3/tags?search=${encodeURIComponent(tagName)}`,
+    { headers },
+  );
+  if (!tagLookup.ok) return false;
+  const tagData = await tagLookup.json();
+  const tagId = tagData?.tags?.[0]?.id;
+  if (!tagId) return false;
+
+  // Then check if this contact has that tag ID applied
+  const contactTagsRes = await fetch(
+    `${apiUrl}/api/3/contacts/${contactId}/contactTags`,
+    { headers },
+  );
+  if (!contactTagsRes.ok) return false;
+  const contactTagsData = await contactTagsRes.json();
+  const contactTags: Array<{ tag: string | number }> =
+    contactTagsData?.contactTags ?? [];
+  return contactTags.some((ct) => String(ct.tag) === String(tagId));
 }
 
 // ─────────────────────────────────────────────────────────────
