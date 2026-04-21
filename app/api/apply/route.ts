@@ -315,20 +315,26 @@ export async function POST(req: Request) {
     }
 
     // ───────────────────────────────────────────────────
-    // TODO — fire Dre demo build for this warm lead.
-    //
-    // Next turn: POST to sonata-stack's /webhooks/warm-apply endpoint
-    // (or MCP tool) passing { applyId, email, business_name,
-    // website_url, niche, services, pain_point, lead_volume, timeline }.
-    // Sonata-stack creates the AgencyLead row, runs Simon+Yoncé+Dre
-    // against the URL, populates intelData + demoSiteUrl, writes %DEMOURL%
-    // back to AC contact field 168, then triggers the pre-call email.
-    //
-    // For now we log the intent so the flow shape is clear in logs.
+    // Dispatch warm-apply to sonata-stack. Fire-and-forget: the user
+    // shouldn't wait for Dre (30-90s) before seeing the Cal.com step.
+    // We also don't capture the returned contactId here — /api/apply
+    // creates the AC contact above and could thread that value through,
+    // but refactoring to do so is a scope creep item. Sonata-stack will
+    // look up the contact by email on its side if contactId isn't passed.
     // ───────────────────────────────────────────────────
-    console.log(
-      `[apply] DEMO_QUALIFIED applyId=${applyId} email=${email} url=${normalizedUrl} — TODO: trigger Dre`,
-    );
+    dispatchWarmApplyToSonata({
+      email,
+      name,
+      businessName: business_name,
+      websiteUrl: normalizedUrl,
+      niche,
+      services,
+      painPoint: pain_point,
+      leadVolume: lead_volume,
+      timeline,
+      tools: tools ?? "",
+      applyId,
+    });
 
     return NextResponse.json({
       success: true,
@@ -349,6 +355,76 @@ export async function POST(req: Request) {
 // ─────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────
+// Dispatch to sonata-stack warm-apply webhook.
+//
+// Fire-and-forget — we don't await this because Dre takes 30-90s and we
+// want the /apply page to reveal the Cal.com step immediately. Errors
+// are logged but don't fail the caller's request.
+//
+// Env:
+//   SONATA_STACK_URL           — e.g. https://sonata-stack-production.up.railway.app
+//   SONATA_WEBHOOK_SECRET      — shared secret, matches sonata-stack's WEBHOOK_SECRET
+// ─────────────────────────────────────────────────────────────
+interface WarmApplyDispatch {
+  email: string;
+  name: string;
+  businessName: string;
+  websiteUrl: string;
+  niche: string;
+  services: string;
+  painPoint: string;
+  leadVolume: string;
+  timeline: string;
+  tools: string;
+  applyId: string;
+  contactId?: string;
+}
+
+function dispatchWarmApplyToSonata(input: WarmApplyDispatch): void {
+  const sonataUrl = process.env.SONATA_STACK_URL;
+  const sonataSecret = process.env.SONATA_WEBHOOK_SECRET;
+
+  if (!sonataUrl || !sonataSecret) {
+    console.warn(
+      `[apply] SONATA_STACK_URL or SONATA_WEBHOOK_SECRET missing — skipping Dre dispatch for applyId=${input.applyId}. Demo will not be auto-built.`,
+    );
+    return;
+  }
+
+  // Strip any trailing slash so we construct a clean URL.
+  const base = sonataUrl.replace(/\/$/, "");
+  const target = `${base}/webhooks/warm-apply`;
+
+  // Fire-and-forget. Intentional void — we do not await.
+  void fetch(target, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-webhook-secret": sonataSecret,
+    },
+    body: JSON.stringify(input),
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        console.log(
+          `[apply] warm-apply dispatched applyId=${input.applyId} email=${input.email} status=${res.status}`,
+        );
+      } else {
+        const preview = (await res.text().catch(() => "")).slice(0, 200);
+        console.error(
+          `[apply] warm-apply dispatch FAILED applyId=${input.applyId} status=${res.status} body=${preview}`,
+        );
+      }
+    })
+    .catch((err) => {
+      console.error(
+        `[apply] warm-apply dispatch threw for applyId=${input.applyId}:`,
+        err,
+      );
+    });
+}
 
 async function tagContact(
   apiUrl: string,

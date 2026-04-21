@@ -183,26 +183,22 @@ async function handleBookingCreated(
     `[cal-webhook] applied CALL_BOOKED tag to contactId=${contactId} for email=${email}`,
   );
 
-  // TODO (next turn): fire Dre demo build for this lead.
+  // Safety-net Dre dispatch. The primary trigger is /api/apply (which
+  // fires warm-apply on qualification submit), but if someone books via
+  // a direct Cal.com link without going through /apply, this ensures
+  // a demo still gets built.
   //
-  // Call sonata-stack's warm-lead builder endpoint (or MCP tool) with
-  // the payload we captured. sonata-stack creates the AgencyLead row,
-  // runs Simon+Yoncé+Dre, writes %DEMOURL% to AC contact field 168.
+  // Sonata-stack's warm-apply handler is idempotent via Supabase placeId
+  // upserts + deterministic getCanonicalDemoUrl — if /api/apply already
+  // triggered a build for this email, we get the same demo URL back
+  // rather than a duplicate row. So firing here is safe whether or not
+  // /api/apply already ran for this contact.
   //
-  // Dispatch pattern (fire-and-forget, don't block the webhook response):
-  //   const sonataUrl = process.env.SONATA_STACK_URL;
-  //   const sonataSecret = process.env.SONATA_WEBHOOK_SECRET;
-  //   if (sonataUrl && sonataSecret) {
-  //     void fetch(`${sonataUrl}/webhooks/warm-apply`, {
-  //       method: "POST",
-  //       headers: { "x-webhook-secret": sonataSecret },
-  //       body: JSON.stringify({ email, name, contactId, startTime: payload.startTime, ... }),
-  //     }).catch(err => console.error("[cal-webhook] Dre dispatch failed:", err));
-  //   }
-
-  console.log(
-    `[cal-webhook] TODO trigger Dre for email=${email} startTime=${payload.startTime}`,
-  );
+  // Caveat: we don't have the full qualification data here (Cal.com only
+  // gives us name/email/notes). If /api/apply DIDN'T fire first, the
+  // demo builds from whatever's in the Cal.com notes field + form
+  // defaults, which will be sparse. Better than no demo though.
+  dispatchWarmApplyFromBooking(email, name, contactId, payload);
 }
 
 async function handleBookingRescheduled(
@@ -263,6 +259,98 @@ async function syncContactId(
   }
   const data = await res.json();
   return data?.contact?.id ?? null;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Sonata-stack warm-apply safety-net dispatch.
+//
+// Parses Cal.com's booking notes (we set these via the Cal.com embed's
+// ?notes= prefill param) to reconstruct a minimum viable warm-apply
+// payload. If the notes are missing the expected fields (because the
+// booker came via a direct Cal.com link, not through /apply), we fall
+// back to placeholder strings — Dre will produce a sparse demo, but a
+// demo nonetheless.
+//
+// Fire-and-forget: we do not await.
+// ─────────────────────────────────────────────────────────────
+function dispatchWarmApplyFromBooking(
+  email: string,
+  name: string,
+  _contactId: string,
+  payload: CalBookingPayload["payload"],
+): void {
+  const sonataUrl = process.env.SONATA_STACK_URL;
+  const sonataSecret = process.env.SONATA_WEBHOOK_SECRET;
+
+  if (!sonataUrl || !sonataSecret) {
+    console.warn(
+      `[cal-webhook] SONATA_STACK_URL or SONATA_WEBHOOK_SECRET missing — skipping safety-net Dre dispatch for email=${email}`,
+    );
+    return;
+  }
+
+  // Parse notes block. /api/apply sets notes to:
+  //   Business: Acme Aesthetics
+  //   Website: https://acme.com
+  //   Niche: Med Spa / Aesthetics
+  //   Apply ID: <uuid>
+  const notes = payload.additionalNotes ?? "";
+  const pick = (label: string): string => {
+    const re = new RegExp(`^${label}:\\s*(.+)$`, "im");
+    const m = notes.match(re);
+    return m ? m[1].trim() : "";
+  };
+
+  const businessName = pick("Business") || name || "Unknown business";
+  const websiteUrl = pick("Website") || "(no website provided)";
+  const niche = pick("Niche") || "Unknown";
+
+  const base = sonataUrl.replace(/\/$/, "");
+  const target = `${base}/webhooks/warm-apply`;
+
+  const body = {
+    email,
+    name: name || "Unknown",
+    businessName,
+    websiteUrl,
+    niche,
+    // Sparse defaults when we came from a direct Cal.com booking (no /apply)
+    services: "(to be determined on call)",
+    painPoint:
+      "Direct Cal.com booking — qualification info will be collected on the strategy call.",
+    leadVolume: "Unknown",
+    timeline: "Unknown",
+    tools: "",
+    applyId: payload.uid ?? "",
+    contactId: _contactId,
+  };
+
+  void fetch(target, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-webhook-secret": sonataSecret,
+    },
+    body: JSON.stringify(body),
+  })
+    .then(async (res) => {
+      if (res.ok) {
+        console.log(
+          `[cal-webhook] warm-apply safety-net dispatched email=${email} bookingUid=${payload.uid} status=${res.status}`,
+        );
+      } else {
+        const preview = (await res.text().catch(() => "")).slice(0, 200);
+        console.error(
+          `[cal-webhook] warm-apply dispatch FAILED email=${email} status=${res.status} body=${preview}`,
+        );
+      }
+    })
+    .catch((err) => {
+      console.error(
+        `[cal-webhook] warm-apply dispatch threw for email=${email}:`,
+        err,
+      );
+    });
 }
 
 async function findContactIdByEmail(
