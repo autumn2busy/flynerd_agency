@@ -65,8 +65,12 @@ export default async function ThanksPage({ searchParams }: ThanksPageProps) {
   const copy =
     (lookup_key ? PRODUCT_COPY[lookup_key] : undefined) ?? DEFAULT_COPY;
 
+  // Server component — reads non-public env directly. Matches the var
+  // name convention used in app/demo/[leadId]/page.tsx. Hardcoded final
+  // fallback so the page works even if env isn't wired in Vercel yet.
   const bookingUrl =
-    process.env.NEXT_PUBLIC_CAL_KICKOFF_URL ?? "/contact";
+    process.env.CAL_COM_KICKOFF_LINK ??
+    "https://calendar.app.google/ZPyA64TEyjD7E99P8";
   const bookingIsExternal = bookingUrl.startsWith("http");
 
   return (

@@ -58,12 +58,12 @@ interface ClientSpec {
 }
 
 // Booking link surfaced in every invoice footer so the client always sees
-// the next step right next to "amount due". Falls back to a generic /contact
-// URL if the env var isn't set yet.
+// the next step right next to "amount due". Env var CAL_COM_KICKOFF_LINK
+// matches the convention already used in app/demo/[leadId]/page.tsx.
+// Hardcoded final fallback keeps the memo usable even if env isn't loaded.
 const KICKOFF_BOOKING_URL =
-  process.env.CAL_KICKOFF_URL ??
-  process.env.NEXT_PUBLIC_CAL_KICKOFF_URL ??
-  "https://flynerd.tech/contact";
+  process.env.CAL_COM_KICKOFF_LINK ??
+  "https://calendar.app.google/ZPyA64TEyjD7E99P8";
 
 const CLIENTS: Record<string, ClientSpec> = {
   raid: {
