@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -18,6 +18,31 @@ const instrumentSerif = Instrument_Serif({
 const geistMono = Geist_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Fonts for the new landing (landing-v2). Exposed under *-v2 variable names
+// so they coexist with the existing --font-serif / --font-mono tokens that
+// other pages depend on.
+const interV2 = Inter({
+  variable: "--font-sans-v2",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const instrumentSerifV2 = Instrument_Serif({
+  variable: "--font-serif-v2",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const jetBrainsMonoV2 = JetBrains_Mono({
+  variable: "--font-mono-v2",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -126,7 +151,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${instrumentSerif.variable} ${geistMono.variable} font-satoshi antialiased`}
+        className={`${instrumentSerif.variable} ${geistMono.variable} ${interV2.variable} ${instrumentSerifV2.variable} ${jetBrainsMonoV2.variable} font-satoshi antialiased`}
       >
         <PostHogProvider>
           <ChromeGate><Header /></ChromeGate>
