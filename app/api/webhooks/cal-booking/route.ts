@@ -143,6 +143,18 @@ export async function POST(req: Request) {
       case "MEETING_ENDED":
         await handleMeetingEnded(attendeeEmail, payload);
         break;
+      case "BOOKING_NO_SHOW_UPDATED":
+        // Fires when someone manually marks a booking as no-show in the
+        // Cal.com dashboard (Autumn's primary path for Google Meet).
+        await handleBookingNoShow(attendeeEmail, payload);
+        break;
+      case "AFTER_GUESTS_CAL_VIDEO_NO_SHOW":
+        // Fires automatically when Cal Video detects no guest joined
+        // within the configured window. Only works with Cal Video
+        // (NOT Google Meet). Safe to have registered either way — if
+        // using Google Meet, Cal.com simply never fires it.
+        await handleBookingNoShow(attendeeEmail, payload);
+        break;
       default:
         console.log(
           `[cal-webhook] ignoring unhandled event: ${triggerEvent}`,
@@ -228,6 +240,79 @@ async function handleBookingCancelled(
   await applyTag(apiUrl, apiKey, contactId, "CALL_CANCELLED");
   console.log(
     `[cal-webhook] applied CALL_CANCELLED tag to contactId=${contactId} uid=${payload.uid}`,
+  );
+}
+
+// Cal.com fires BOOKING_NO_SHOW_UPDATED when a host manually flips the
+// no-show flag on a booking (dashboard or API). Also called from the
+// AFTER_GUESTS_CAL_VIDEO_NO_SHOW handler above for the auto-detection
+// path when using Cal Video.
+//
+// Flow: abort the post-call automation mid-grace-period by stripping
+// CALL_COMPLETED (which triggers automation 502). Also strip CALL_BOOKED
+// since they effectively didn't have a call. Then apply WARM_LEAD_NO_SHOW
+// so a re-engagement automation can fire.
+//
+// Payload caveat: Cal.com sends BOOKING_NO_SHOW_UPDATED for both
+// marking AND unmarking (rare — someone flips back to "attended" after a
+// typo). We check the payload's noShow field when present; if missing or
+// falsy, we skip the state change.
+async function handleBookingNoShow(
+  email: string,
+  payload: CalBookingPayload["payload"],
+): Promise<void> {
+  const apiUrl = process.env.ACTIVECAMPAIGN_URL;
+  const apiKey = process.env.ACTIVECAMPAIGN_KEY;
+  if (!apiUrl || !apiKey) {
+    console.warn(
+      `[cal-webhook] AC creds missing — can't process no-show for email=${email}`,
+    );
+    return;
+  }
+
+  // Cal.com payload may include a `noShow` boolean or an attendee-level
+  // noShow flag. Check both shapes. If explicitly false, this is an
+  // unmark action — don't apply the no-show tag.
+  const payloadAny = payload as unknown as Record<string, unknown>;
+  const topLevelNoShow =
+    typeof payloadAny.noShow === "boolean" ? payloadAny.noShow : null;
+  const attendeeNoShow =
+    (payload.attendees?.[0] as unknown as Record<string, unknown> | undefined)
+      ?.noShow;
+  const isMarkedNoShow =
+    topLevelNoShow === true ||
+    attendeeNoShow === true ||
+    // Fallback: if no explicit flag, treat the event as a no-show signal
+    // (AFTER_GUESTS_CAL_VIDEO_NO_SHOW sometimes omits the flag in payload).
+    (topLevelNoShow === null && attendeeNoShow === undefined);
+
+  if (!isMarkedNoShow) {
+    console.log(
+      `[cal-webhook] BOOKING_NO_SHOW_UPDATED for ${email} but noShow=false — skipping (unmark action)`,
+    );
+    return;
+  }
+
+  const contactId = await findContactIdByEmail(apiUrl, apiKey, email);
+  if (!contactId) {
+    console.error(
+      `[cal-webhook] no-show fired but no AC contact found for email=${email} uid=${payload.uid}`,
+    );
+    return;
+  }
+
+  // Abort automation 502 mid-wait: remove CALL_COMPLETED. Also clear
+  // CALL_BOOKED since effectively they didn't have a call. Order matters:
+  // remove before applying WARM_LEAD_NO_SHOW so no race with a tag-add
+  // trigger on the new tag checking for CALL_COMPLETED absence.
+  await Promise.all([
+    removeTag(apiUrl, apiKey, contactId, "CALL_COMPLETED"),
+    removeTag(apiUrl, apiKey, contactId, "CALL_BOOKED"),
+  ]);
+
+  await applyTag(apiUrl, apiKey, contactId, "WARM_LEAD_NO_SHOW");
+  console.log(
+    `[cal-webhook] no-show processed: removed CALL_COMPLETED + CALL_BOOKED, applied WARM_LEAD_NO_SHOW for contactId=${contactId} (uid=${payload.uid})`,
   );
 }
 
@@ -500,4 +585,52 @@ async function applyTag(
     headers,
     body: JSON.stringify({ contactTag: { contact: contactId, tag: tagId } }),
   });
+}
+
+// Remove a tag from a contact. Tolerant of the tag not being applied
+// (the tag-lookup-then-contactTag-find resolves to a no-op) and of
+// arbitrary AC quirks by swallowing errors with logging.
+async function removeTag(
+  apiUrl: string,
+  apiKey: string,
+  contactId: string,
+  tagName: string,
+): Promise<void> {
+  try {
+    const headers = { "Api-Token": apiKey };
+
+    // 1. Find the tag's numeric ID
+    const tagQuery = await fetch(
+      `${apiUrl}/api/3/tags?search=${encodeURIComponent(tagName)}`,
+      { headers },
+    );
+    if (!tagQuery.ok) return;
+    const tagData = await tagQuery.json();
+    const tagId = tagData?.tags?.[0]?.id;
+    if (!tagId) return; // Tag doesn't exist in AC; nothing to remove
+
+    // 2. Find the contactTag join record that links contact + tag
+    const ctRes = await fetch(
+      `${apiUrl}/api/3/contacts/${contactId}/contactTags`,
+      { headers },
+    );
+    if (!ctRes.ok) return;
+    const ctData = await ctRes.json();
+    const join = (ctData?.contactTags ?? []).find(
+      (row: { id?: string | number; tag?: string | number }) =>
+        String(row.tag) === String(tagId),
+    );
+    if (!join?.id) return; // Tag isn't currently applied
+
+    // 3. Delete the join record
+    await fetch(`${apiUrl}/api/3/contactTags/${join.id}`, {
+      method: "DELETE",
+      headers,
+    });
+  } catch (err) {
+    console.error(
+      `[cal-webhook] removeTag failed for contactId=${contactId} tag=${tagName}:`,
+      err,
+    );
+  }
 }
