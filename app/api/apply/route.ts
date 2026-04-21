@@ -74,19 +74,25 @@ function validateQualification(data: Record<string, unknown>): string | null {
   return null;
 }
 
-// AC custom field ID -> form key. Used to populate the deal custom fields.
-// IDs match what /api/contact/route.ts already uses where possible so we
-// share the same custom field schema across both intake forms.
-const AC_DEAL_FIELDS: Array<{ id: number; key: string }> = [
-  { id: 21, key: "business_name" }, // Business Name
-  { id: 37, key: "business_name" }, // Organization Name for outreach
-  { id: 22, key: "niche" }, // Legacy Industry field
-  { id: 24, key: "pain_point" }, // Biggest challenge
-  { id: 25, key: "tools" }, // Current tools
-  { id: 27, key: "timeline" }, // Timeline
-  { id: 29, key: "website_url" }, // Website URL (assigned here; create in AC if not existing)
-  { id: 30, key: "services" }, // Services offered
-  { id: 31, key: "lead_volume" }, // Inquiry volume per week
+// AC deal custom fields populated on qualification.
+// IDs match what /api/contact/route.ts already uses for shared fields,
+// plus the three dedicated fields Autumn created 2026-04-21 for the
+// /apply qualification path.
+const AC_DEAL_FIELDS: Array<{
+  id: number;
+  key: string;
+  personalization: string;
+  label: string;
+}> = [
+  { id: 21, key: "business_name", personalization: "%DEAL_BUSINESS_NAME%", label: "Business Name" },
+  { id: 37, key: "business_name", personalization: "%DEAL_ORGANIZATION_NAME%", label: "Organization Name (outreach)" },
+  { id: 22, key: "niche", personalization: "%DEAL_INDUSTRY%", label: "Industry (legacy)" },
+  { id: 24, key: "pain_point", personalization: "%DEAL_CHALLENGE%", label: "Biggest challenge" },
+  { id: 25, key: "tools", personalization: "%DEAL_TOOLS%", label: "Current tools" },
+  { id: 27, key: "timeline", personalization: "%DEAL_TIMELINE%", label: "Timeline" },
+  { id: 48, key: "website_url", personalization: "%DEAL_WEBSITE_URL%", label: "Website URL" },
+  { id: 49, key: "services", personalization: "%DEAL_SERVICES%", label: "Services" },
+  { id: 50, key: "lead_volume", personalization: "%DEAL_LEAD_VOLUME%", label: "Lead Volume" },
 ];
 
 const CONTACT_FIELD_NICHE = 167;
