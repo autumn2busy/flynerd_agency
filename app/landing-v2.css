@@ -1158,6 +1158,31 @@
   color: oklch(80% 0.16 var(--lv2-accent-h));
 }
 
+/* Closer trust strip — small, muted, below the CTA buttons. */
+.landing-v2 .lv2-cta-trust {
+  margin: 24px auto 0;
+  max-width: 560px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  font-family: var(--lv2-mono);
+  font-size: 12px;
+  color: var(--lv2-ink-muted);
+  letter-spacing: 0.02em;
+}
+.landing-v2 .lv2-cta-trust > span[aria-hidden="true"] {
+  opacity: 0.4;
+}
+@media (max-width: 480px) {
+  .landing-v2 .lv2-cta-trust {
+    gap: 6px 10px;
+    font-size: 11px;
+  }
+}
+
 /* ─────────────────────────────────────
    REDUCED MOTION
 ───────────────────────────────────── */
