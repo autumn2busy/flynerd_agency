@@ -102,6 +102,24 @@ const CONTACT_FIELD_NICHE = 167;
 // field to resolve which Supabase row a tag event corresponds to.
 const CONTACT_FIELD_AGENCY_LEAD_ID = 165;
 
+// Warm-lead AC pipeline + initial stage IDs. Configurable via env so the
+// code doesn't need to change when AC pipeline structure evolves. Defaults
+// to pipeline 4 (FlyNerd Automation Agency Inbound/Warm) per 2026-04-22
+// setup. If AC_WARM_INITIAL_STAGE_ID is unset, deal creation logs a clear
+// error rather than hitting AC's 422 "stage does not exist".
+const AC_WARM_PIPELINE_ID = process.env.AC_WARM_PIPELINE_ID ?? "4";
+const AC_WARM_INITIAL_STAGE_ID = process.env.AC_WARM_INITIAL_STAGE_ID ?? "";
+
+// Normalize a base URL: trim whitespace + trailing slash, prepend https://
+// if the scheme is missing. Prevents `TypeError: Failed to parse URL`
+// when someone sets SONATA_STACK_URL without an http(s):// prefix.
+function normalizeBaseUrl(raw: string): string {
+  const trimmed = raw.trim().replace(/\/+$/, "");
+  if (!trimmed) return trimmed;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -335,39 +353,52 @@ export async function POST(req: Request) {
         }
 
         // ── Step 6: create deal ─────────────────────────────
+        // Pipeline + stage come from env so this route doesn't need a
+        // code change when the AC pipeline structure is reshuffled.
+        // AC_WARM_PIPELINE_ID defaults to "4" (FlyNerd Automation Agency
+        // Inbound/Warm). AC_WARM_INITIAL_STAGE_ID must be set explicitly —
+        // there's no sensible default without knowing the user's stage IDs.
         let dealId: string | null = null;
-        try {
-          const dealRes = await fetch(`${apiUrl}/api/3/deals`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify({
-              deal: {
-                title: `Warm lead: ${business_name} (${name})`,
-                contact: contactId,
-                value: 0,
-                currency: "usd",
-                group: "3",
-                stage: "8",
-              },
-            }),
-          });
-          if (!dealRes.ok) {
-            const body = await dealRes.text().catch(() => "");
-            console.error(
-              `[apply][step=create_deal] AC returned ${dealRes.status} body=${body.slice(0, 400)}`,
-            );
-          } else {
-            const dealData = await dealRes.json();
-            dealId = dealData?.deal?.id ?? null;
-            if (!dealId) {
+        if (!AC_WARM_INITIAL_STAGE_ID) {
+          console.error(
+            "[apply][step=create_deal] SKIPPED — AC_WARM_INITIAL_STAGE_ID env var not set. Set it on Vercel to the numeric stage ID where new warm leads should enter pipeline " +
+              AC_WARM_PIPELINE_ID +
+              ".",
+          );
+        } else {
+          try {
+            const dealRes = await fetch(`${apiUrl}/api/3/deals`, {
+              method: "POST",
+              headers,
+              body: JSON.stringify({
+                deal: {
+                  title: `Warm lead: ${business_name} (${name})`,
+                  contact: contactId,
+                  value: 0,
+                  currency: "usd",
+                  group: AC_WARM_PIPELINE_ID,
+                  stage: AC_WARM_INITIAL_STAGE_ID,
+                },
+              }),
+            });
+            if (!dealRes.ok) {
+              const body = await dealRes.text().catch(() => "");
               console.error(
-                "[apply][step=create_deal] response missing deal.id:",
-                JSON.stringify(dealData).slice(0, 300),
+                `[apply][step=create_deal] AC returned ${dealRes.status} pipeline=${AC_WARM_PIPELINE_ID} stage=${AC_WARM_INITIAL_STAGE_ID} body=${body.slice(0, 400)}`,
               );
+            } else {
+              const dealData = await dealRes.json();
+              dealId = dealData?.deal?.id ?? null;
+              if (!dealId) {
+                console.error(
+                  "[apply][step=create_deal] response missing deal.id:",
+                  JSON.stringify(dealData).slice(0, 300),
+                );
+              }
             }
+          } catch (err) {
+            console.error("[apply][step=create_deal] threw:", err);
           }
-        } catch (err) {
-          console.error("[apply][step=create_deal] threw:", err);
         }
 
         // ── Step 7: populate deal custom fields ──────────────
@@ -541,7 +572,7 @@ async function syncWarmLeadWithSonata(
     return null;
   }
 
-  const base = sonataUrl.replace(/\/$/, "");
+  const base = normalizeBaseUrl(sonataUrl);
   const target = `${base}/webhooks/warm-apply`;
 
   const controller = new AbortController();

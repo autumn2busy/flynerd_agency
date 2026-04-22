@@ -483,7 +483,11 @@ function dispatchWarmApplyFromBooking(
   const websiteUrl = pick("Website") || "(no website provided)";
   const niche = pick("Niche") || "Unknown";
 
-  const base = sonataUrl.replace(/\/$/, "");
+  // Normalize: trim, drop trailing slash, prepend https:// if missing.
+  // Without the scheme check, fetch() throws ERR_INVALID_URL which caused
+  // 100% of 2026-04-22 warm-apply dispatches to fail silently.
+  const trimmed = sonataUrl.trim().replace(/\/+$/, "");
+  const base = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
   const target = `${base}/webhooks/warm-apply`;
 
   const body = {
