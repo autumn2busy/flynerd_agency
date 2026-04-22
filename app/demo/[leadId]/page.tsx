@@ -164,6 +164,7 @@ export default async function LeadDemoPage({
   };
 
   const nicheBullets = getNicheBullets(niche);
+  const rawServices = typeof intelData.services === "string" ? intelData.services : undefined;
 
   return (
     <>
@@ -185,6 +186,7 @@ export default async function LeadDemoPage({
         walkthroughVideoUrl={lead.walkthroughVideoUrl}
         nicheBullets={nicheBullets}
         expiresLabel={expiresLabelP1}
+        rawServices={rawServices}
         services={services}
       />
     </>

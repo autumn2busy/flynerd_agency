@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { MoveRight, Star, Zap, Shield, Sparkles, ArrowRight, MessageCircle, Calendar } from "lucide-react";
 import DemoChatWidget from "./DemoChatWidget";
+import SitePreview from "./SitePreview";
 import { capture, identifyLead } from "@/lib/posthog";
 import type { NicheBullet } from "./nicheConfig";
 
@@ -30,6 +31,7 @@ interface Props {
   walkthroughVideoUrl: string | null;
   nicheBullets: NicheBullet[];
   expiresLabel: string | null;
+  rawServices?: string;
   services: {
     audit: DemoService;
     quickstart: DemoService;
@@ -327,6 +329,18 @@ export default function DemoExperience(p: Props) {
           </p>
         </div>
       </section>
+
+      {/* SITE PREVIEW */}
+      <SitePreview
+        businessName={p.businessName}
+        niche={p.niche}
+        nicheBullets={p.nicheBullets}
+        painPoints={p.painPoints}
+        rating={p.rating}
+        reviewCount={p.reviewCount}
+        rawServices={p.rawServices}
+        bookCtaHref={p.services.audit.stripeDepositLink || bookCallHref}
+      />
 
       {/* FOOTER */}
       <footer className="border-t border-white/5 py-10 px-6 md:px-12 text-center text-sm text-neutral-500 space-y-2">

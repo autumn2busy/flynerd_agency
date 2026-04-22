@@ -6,6 +6,7 @@ export interface NicheBullet {
 const MEDSPA_KEYWORDS = [
   "medspa", "med spa", "medispa", "aesthetics", "botox", "laser",
   "dermatology", "skincare", "beauty", "cosmetic", "facial",
+  "saas", "digital",
 ];
 const HOME_SERVICES_KEYWORDS = [
   "hvac", "plumbing", "plumb", "water damage", "roofing", "landscaping", "pest",
@@ -21,6 +22,30 @@ export function getNicheType(niche: string): NicheType {
   if (MEDSPA_KEYWORDS.some((k) => lower.includes(k))) return "medspa";
   if (HOME_SERVICES_KEYWORDS.some((k) => lower.includes(k))) return "home-services";
   return "general";
+}
+
+export interface NicheColors {
+  primary: string;
+  accent: string;
+  bg: string;
+  text: string;
+}
+
+export function getNicheColors(niche: string): NicheColors {
+  const lower = (niche || "").toLowerCase();
+  if (MEDSPA_KEYWORDS.some((k) => lower.includes(k) && !["saas", "digital"].includes(k))) {
+    return { primary: "#C2185B", accent: "#F8BBD9", bg: "#FFF0F5", text: "#2d1b2e" };
+  }
+  if (lower.includes("saas") || lower.includes("digital") || lower.includes("software") || lower.includes("tech")) {
+    return { primary: "#5C35D5", accent: "#E8E0FF", bg: "#F5F3FF", text: "#1a1030" };
+  }
+  if (lower.includes("hvac") || lower.includes("plumb") || lower.includes("electrical") || lower.includes("roofing") || lower.includes("contractor")) {
+    return { primary: "#1565C0", accent: "#BBDEFB", bg: "#F0F7FF", text: "#0d1b2e" };
+  }
+  if (lower.includes("cleaning") || lower.includes("landscaping") || lower.includes("pest")) {
+    return { primary: "#2E7D32", accent: "#C8E6C9", bg: "#F1F8F2", text: "#1b2e1d" };
+  }
+  return { primary: "#1B365D", accent: "#D4AF37", bg: "#FFFDF5", text: "#1a2030" };
 }
 
 export function getNicheBullets(niche: string): NicheBullet[] {
