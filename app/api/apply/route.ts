@@ -96,6 +96,11 @@ const AC_DEAL_FIELDS: Array<{
 ];
 
 const CONTACT_FIELD_NICHE = 167;
+// AC contact field for agency_lead_id (Supabase AgencyLead.id uuid).
+// Populated by /api/apply after sonata-stack confirms the Supabase row
+// was inserted. n8n's tag-sync workflow (d42cyp27QDIqZczu) reads this
+// field to resolve which Supabase row a tag event corresponds to.
+const CONTACT_FIELD_AGENCY_LEAD_ID = 165;
 
 export async function POST(req: Request) {
   try {
@@ -163,9 +168,10 @@ export async function POST(req: Request) {
     const normalizedUrl = normalizeUrl(website_url);
     const applyId = crypto.randomUUID();
 
-    // Hoisted to outer scope so dispatchWarmApplyToSonata can pass it
-    // through to sonata-stack for the AC writeback of the demo URL.
+    // Hoisted to outer scope so they can be threaded into the
+    // sonata-stack dispatch + returned in the final response.
     let contactId: string | null = null;
+    let agencyLeadId: string | null = null;
 
     if (!apiUrl || !apiKey) {
       console.warn(
@@ -245,16 +251,90 @@ export async function POST(req: Request) {
           }
         }
 
-        // ── Step 3: apply DEMO_QUALIFIED tag ─────────────────
+        // ── Step 3: sync warm-lead with sonata-stack (BEFORE tag) ─
+        // Creates Supabase AgencyLead row synchronously so n8n's
+        // tag-sync workflow can resolve it when DEMO_QUALIFIED fires.
+        // Returns agencyLeadId (uuid) so we can stamp it on AC field 165.
+        // Uses the outer-scoped agencyLeadId.
         try {
-          await applyTag(apiUrl, apiKey, contactId, "DEMO_QUALIFIED");
+          const sonataResult = await syncWarmLeadWithSonata({
+            email,
+            name,
+            businessName: business_name,
+            websiteUrl: normalizedUrl,
+            niche,
+            services,
+            painPoint: pain_point,
+            leadVolume: lead_volume,
+            timeline,
+            tools: tools ?? "",
+            applyId,
+            contactId,
+          });
+          agencyLeadId = sonataResult?.agencyLeadId ?? null;
         } catch (err) {
-          // Critical: this used to propagate and kill deal creation.
-          // Now it's caught and the flow continues.
-          console.error("[apply][step=apply_tag] threw (non-blocking):", err);
+          console.error("[apply][step=sonata_sync] threw:", err);
         }
 
-        // ── Step 4: create deal ─────────────────────────────
+        // ── Step 4: write agencyLeadId to AC contact field 165 ────
+        // Required for n8n's AC→Supabase sync workflow to look up the
+        // right AgencyLead row. Skipped if sonata-stack sync failed.
+        if (agencyLeadId) {
+          try {
+            const agencyLeadIdRes = await fetch(
+              `${apiUrl}/api/3/fieldValues`,
+              {
+                method: "POST",
+                headers,
+                body: JSON.stringify({
+                  fieldValue: {
+                    contact: contactId,
+                    field: String(CONTACT_FIELD_AGENCY_LEAD_ID),
+                    value: agencyLeadId,
+                  },
+                }),
+              },
+            );
+            if (!agencyLeadIdRes.ok) {
+              const body = await agencyLeadIdRes.text().catch(() => "");
+              console.error(
+                `[apply][step=agency_lead_id_write] AC returned ${agencyLeadIdRes.status} body=${body.slice(0, 200)}`,
+              );
+            } else {
+              console.log(
+                `[apply][step=agency_lead_id_write] wrote agencyLeadId=${agencyLeadId} to AC contact field ${CONTACT_FIELD_AGENCY_LEAD_ID} for contactId=${contactId}`,
+              );
+            }
+          } catch (err) {
+            console.error("[apply][step=agency_lead_id_write] threw:", err);
+          }
+        } else {
+          // Sonata sync failed or skipped — tag the contact as an orphan
+          // so Autumn can manually trigger Dre later. Do NOT apply
+          // DEMO_QUALIFIED since the pre-call email would have an empty
+          // %DEMOURL% button.
+          try {
+            await applyTag(apiUrl, apiKey, contactId, "WARM_APPLY_ORPHAN");
+            console.log(
+              `[apply][step=orphan_tag] applied WARM_APPLY_ORPHAN to contactId=${contactId} — sonata sync failed, DEMO_QUALIFIED skipped`,
+            );
+          } catch (err) {
+            console.error("[apply][step=orphan_tag] threw:", err);
+          }
+        }
+
+        // ── Step 5: apply DEMO_QUALIFIED tag ─────────────────
+        // Only fires if sonata sync succeeded — guarantees the Supabase
+        // row exists before n8n's tag-sync workflow sees this tag.
+        if (agencyLeadId) {
+          try {
+            await applyTag(apiUrl, apiKey, contactId, "DEMO_QUALIFIED");
+          } catch (err) {
+            console.error("[apply][step=apply_tag] threw (non-blocking):", err);
+          }
+        }
+
+        // ── Step 6: create deal ─────────────────────────────
         let dealId: string | null = null;
         try {
           const dealRes = await fetch(`${apiUrl}/api/3/deals`, {
@@ -290,7 +370,7 @@ export async function POST(req: Request) {
           console.error("[apply][step=create_deal] threw:", err);
         }
 
-        // ── Step 5: populate deal custom fields ──────────────
+        // ── Step 7: populate deal custom fields ──────────────
         if (dealId) {
           const fieldPayload: Record<string, string> = {
             business_name: business_name ?? "",
@@ -375,32 +455,17 @@ export async function POST(req: Request) {
     }
 
     // ───────────────────────────────────────────────────
-    // Dispatch warm-apply to sonata-stack. Fire-and-forget: the user
-    // shouldn't wait for Dre (30-90s) before seeing the Cal.com step.
-    // We also don't capture the returned contactId here — /api/apply
-    // creates the AC contact above and could thread that value through,
-    // but refactoring to do so is a scope creep item. Sonata-stack will
-    // look up the contact by email on its side if contactId isn't passed.
+    // Warm-apply sync already fired above (Step 3) BEFORE DEMO_QUALIFIED
+    // was applied. Sonata-stack continues Dre build async in the
+    // background and writes %DEMOURL% to AC field 168 when ready.
+    // No additional dispatch needed here.
     // ───────────────────────────────────────────────────
-    dispatchWarmApplyToSonata({
-      email,
-      name,
-      businessName: business_name,
-      websiteUrl: normalizedUrl,
-      niche,
-      services,
-      painPoint: pain_point,
-      leadVolume: lead_volume,
-      timeline,
-      tools: tools ?? "",
-      applyId,
-      contactId: contactId ?? undefined,
-    });
 
     return NextResponse.json({
       success: true,
       mode: "demo-pending",
       applyId,
+      agencyLeadId,
       message:
         "Qualification captured. Cal.com booking step should now render on the client.",
     });
@@ -418,11 +483,23 @@ export async function POST(req: Request) {
 // ─────────────────────────────────────────────────────────────
 
 // ─────────────────────────────────────────────────────────────
-// Dispatch to sonata-stack warm-apply webhook.
+// Sync warm-lead with sonata-stack (blocking — ~1-2s normal, 10s max).
 //
-// Fire-and-forget — we don't await this because Dre takes 30-90s and we
-// want the /apply page to reveal the Cal.com step immediately. Errors
-// are logged but don't fail the caller's request.
+// Sonata-stack's /webhooks/warm-apply handler is two-phase:
+//   Phase 1 (sync): insert AgencyLead row in Supabase, return 202 with
+//                   agencyLeadId in the body. ~200-500ms.
+//   Phase 2 (async): Dre build + AC field 168 writeback. 30-90s.
+//
+// /api/apply awaits the 202 response to Phase 1 so it has agencyLeadId
+// BEFORE applying the DEMO_QUALIFIED tag. That closes the race where
+// n8n's tag-sync workflow would fire on DEMO_QUALIFIED, look up Supabase
+// by email / agency_lead_id, not find the row yet, and fall back to the
+// orphan list.
+//
+// AbortController with 10s timeout guards against sonata-stack hanging.
+// On timeout or failure, we return null so the caller can apply the
+// WARM_APPLY_ORPHAN tag and skip DEMO_QUALIFIED (preventing the pre-call
+// email from firing with an empty %DEMOURL%).
 //
 // Env:
 //   SONATA_STACK_URL           — e.g. https://sonata-stack-production.up.railway.app
@@ -443,49 +520,80 @@ interface WarmApplyDispatch {
   contactId?: string;
 }
 
-function dispatchWarmApplyToSonata(input: WarmApplyDispatch): void {
+interface SonataWarmApplyResponse {
+  status?: string;
+  agent?: string;
+  email?: string;
+  agencyLeadId?: string;
+  error?: string;
+}
+
+async function syncWarmLeadWithSonata(
+  input: WarmApplyDispatch,
+): Promise<{ agencyLeadId: string } | null> {
   const sonataUrl = process.env.SONATA_STACK_URL;
   const sonataSecret = process.env.SONATA_WEBHOOK_SECRET;
 
   if (!sonataUrl || !sonataSecret) {
     console.warn(
-      `[apply] SONATA_STACK_URL or SONATA_WEBHOOK_SECRET missing — skipping Dre dispatch for applyId=${input.applyId}. Demo will not be auto-built.`,
+      `[apply] SONATA_STACK_URL or SONATA_WEBHOOK_SECRET missing — skipping warm-apply sync for applyId=${input.applyId}. No Supabase row will be created.`,
     );
-    return;
+    return null;
   }
 
-  // Strip any trailing slash so we construct a clean URL.
   const base = sonataUrl.replace(/\/$/, "");
   const target = `${base}/webhooks/warm-apply`;
 
-  // Fire-and-forget. Intentional void — we do not await.
-  void fetch(target, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-webhook-secret": sonataSecret,
-    },
-    body: JSON.stringify(input),
-  })
-    .then(async (res) => {
-      if (res.ok) {
-        console.log(
-          `[apply] warm-apply dispatched applyId=${input.applyId} email=${input.email} status=${res.status}`,
-        );
-      } else {
-        const preview = (await res.text().catch(() => "")).slice(0, 200);
-        console.error(
-          `[apply] warm-apply dispatch FAILED applyId=${input.applyId} status=${res.status} body=${preview}`,
-        );
-      }
-    })
-    .catch((err) => {
-      console.error(
-        `[apply] warm-apply dispatch threw for applyId=${input.applyId}:`,
-        err,
-      );
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10_000);
+
+  try {
+    const res = await fetch(target, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-webhook-secret": sonataSecret,
+      },
+      body: JSON.stringify(input),
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
+
+    if (!res.ok) {
+      const preview = (await res.text().catch(() => "")).slice(0, 300);
+      console.error(
+        `[apply] warm-apply sync FAILED applyId=${input.applyId} status=${res.status} body=${preview}`,
+      );
+      return null;
+    }
+
+    const data = (await res.json()) as SonataWarmApplyResponse;
+    if (!data?.agencyLeadId) {
+      console.error(
+        `[apply] warm-apply sync returned 2xx but no agencyLeadId applyId=${input.applyId} body=${JSON.stringify(data).slice(0, 200)}`,
+      );
+      return null;
+    }
+
+    console.log(
+      `[apply] warm-apply synced applyId=${input.applyId} email=${input.email} agencyLeadId=${data.agencyLeadId}`,
+    );
+    return { agencyLeadId: data.agencyLeadId };
+  } catch (err: unknown) {
+    clearTimeout(timeout);
+    const msg = err instanceof Error ? err.message : String(err);
+    const isTimeout = msg.includes("aborted") || msg.includes("timeout");
+    console.error(
+      `[apply] warm-apply sync threw ${isTimeout ? "(TIMEOUT)" : ""} applyId=${input.applyId}: ${msg}`,
+    );
+    return null;
+  }
 }
+
+// DELETED: dispatchWarmApplyToSonata — removed 2026-04-21 because
+// /api/apply now uses the sync variant (syncWarmLeadWithSonata) above
+// and /api/webhooks/cal-booking has its own local dispatchWarmApplyFromBooking.
+// Nothing else called it.
 
 async function tagContact(
   apiUrl: string,
