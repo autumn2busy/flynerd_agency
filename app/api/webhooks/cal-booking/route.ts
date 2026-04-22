@@ -198,22 +198,23 @@ async function handleBookingCreated(
     `[cal-webhook] applied CALL_BOOKED tag to contactId=${contactId} for email=${email}`,
   );
 
-  // Safety-net Dre dispatch. The primary trigger is /api/apply (which
-  // fires warm-apply on qualification submit), but if someone books via
-  // a direct Cal.com link without going through /apply, this ensures
-  // a demo still gets built.
+  // Safety-net Dre dispatch. Only fires when the booking did NOT come
+  // through /api/apply (i.e. the booker used a direct Cal.com link).
   //
-  // Sonata-stack's warm-apply handler is idempotent via Supabase placeId
-  // upserts + deterministic getCanonicalDemoUrl — if /api/apply already
-  // triggered a build for this email, we get the same demo URL back
-  // rather than a duplicate row. So firing here is safe whether or not
-  // /api/apply already ran for this contact.
-  //
-  // Caveat: we don't have the full qualification data here (Cal.com only
-  // gives us name/email/notes). If /api/apply DIDN'T fire first, the
-  // demo builds from whatever's in the Cal.com notes field + form
-  // defaults, which will be sparse. Better than no demo though.
-  dispatchWarmApplyFromBooking(email, name, contactId, payload);
+  // When /api/apply runs first it embeds "Apply ID: <uuid>" in the
+  // Cal.com notes via ?notes= prefill. We detect that here and skip
+  // the dispatch to prevent a second AgencyLead row being created for
+  // the same person. If "Apply ID:" is absent, this is a direct
+  // Cal.com booking and we still build a sparse demo as a fallback.
+  const notes = payload.additionalNotes ?? "";
+  const cameFromApplyForm = /^Apply ID:/im.test(notes);
+  if (cameFromApplyForm) {
+    console.log(
+      `[cal-webhook] skipping safety-net Dre dispatch — booking came through /apply (Apply ID found in notes) for email=${email}`,
+    );
+  } else {
+    dispatchWarmApplyFromBooking(email, name, contactId, payload);
+  }
 }
 
 async function handleBookingRescheduled(
