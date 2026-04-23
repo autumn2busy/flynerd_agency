@@ -3,10 +3,14 @@ export interface NicheBullet {
   desc: string;
 }
 
+// Only medspa-adjacent keywords. SaaS/digital/premium niches should NOT be
+// routed to MedspaExperience — that template has hardcoded medspa treatments
+// (Botox, HydraFacial, etc.) and booking-assistant copy that doesn't adapt.
+// Non-medspa leads use Profile 1 (DemoExperience + SitePreview) which is
+// fully driven by AI-generated copy from intelData.
 const MEDSPA_KEYWORDS = [
   "medspa", "med spa", "medispa", "aesthetics", "botox", "laser",
   "dermatology", "skincare", "beauty", "cosmetic", "facial",
-  "saas", "digital",
 ];
 const HOME_SERVICES_KEYWORDS = [
   "hvac", "plumbing", "plumb", "water damage", "roofing", "landscaping", "pest",

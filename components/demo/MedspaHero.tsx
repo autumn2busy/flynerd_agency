@@ -102,26 +102,29 @@ export default function MedspaHero({
               }}
             />
 
-            {/* Walkthrough video card (bottom-left floating) — only if video exists */}
+            {/* Walkthrough video card (bottom-left floating) — only if video exists.
+                 Uses controls (not autoplay-muted) so the prospect can actually
+                 hear the personalized pitch. Sized to be a real video, not a
+                 decorative thumbnail. */}
             {walkthroughVideoUrl && (
               <div
-                className="absolute bottom-4 left-4 w-40 md:w-48 rounded-xl overflow-hidden shadow-2xl border"
+                className="absolute bottom-4 left-4 w-64 md:w-80 rounded-xl overflow-hidden shadow-2xl border bg-black"
                 style={{ borderColor: "rgba(255,255,255,0.6)" }}
               >
                 {walkthroughVideoUrl.includes(".mp4") ? (
                   <video
                     src={walkthroughVideoUrl}
-                    autoPlay
-                    loop
-                    muted
+                    controls
                     playsInline
+                    preload="metadata"
                     className="w-full h-auto"
                   />
                 ) : (
                   <iframe
                     src={walkthroughVideoUrl.replace("/share/", "/embed/")}
                     className="w-full aspect-video border-0"
-                    allow="autoplay"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
                   />
                 )}
               </div>
