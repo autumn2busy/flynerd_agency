@@ -32,6 +32,11 @@ interface Props {
   nicheBullets: NicheBullet[];
   expiresLabel: string | null;
   rawServices?: string;
+  heroHook?: string | null;
+  heroSubline?: string | null;
+  noticedLine?: string | null;
+  tagline?: string | null;
+  serviceCards?: NicheBullet[] | null;
   services: {
     audit: DemoService;
     quickstart: DemoService;
@@ -110,11 +115,15 @@ export default function DemoExperience(p: Props) {
     capture(event, { ...baseProps, ...props });
   }
 
-  const hookLine = p.painPoints[0]
-    ? `${p.businessName}, you're missing ${p.painPoints[0].toLowerCase()}. Here's the fix.`
-    : `${p.businessName}, here's what a conversion-first build looks like for ${p.niche}.`;
+  const hookLine = p.heroHook
+    || (p.painPoints[0]
+      ? `${p.businessName}, you're missing ${p.painPoints[0].toLowerCase()}. Here's the fix.`
+      : `${p.businessName}, here's what a conversion-first build looks like for ${p.niche}.`);
 
-  const noticedLine = p.painPoints[1] || p.painPoints[0] || null;
+  const sublineCopy = p.heroSubline
+    || `A conversion-focused site and AI concierge, tuned to how your local customers actually search and buy.`;
+
+  const noticedLine = p.noticedLine || p.painPoints[1] || p.painPoints[0] || null;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans">
@@ -143,7 +152,7 @@ export default function DemoExperience(p: Props) {
               {hookLine}
             </h1>
             <p className="text-lg text-neutral-400 leading-relaxed max-w-xl">
-              A conversion-focused site and AI concierge, tuned to how your local customers actually search and buy.
+              {sanitize(sublineCopy)}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <a
@@ -339,6 +348,8 @@ export default function DemoExperience(p: Props) {
         rating={p.rating}
         reviewCount={p.reviewCount}
         rawServices={p.rawServices}
+        tagline={p.tagline}
+        serviceCards={p.serviceCards}
         bookCtaHref={p.services.audit.stripeDepositLink || bookCallHref}
       />
 

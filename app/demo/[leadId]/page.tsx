@@ -166,6 +166,21 @@ export default async function LeadDemoPage({
   const nicheBullets = getNicheBullets(niche);
   const rawServices = typeof intelData.services === "string" ? intelData.services : undefined;
 
+  const heroHook = typeof intelData.heroHook === "string" ? (intelData.heroHook as string) : null;
+  const heroSubline = typeof intelData.heroSubline === "string" ? (intelData.heroSubline as string) : null;
+  const noticedLine = typeof intelData.noticedLine === "string" ? (intelData.noticedLine as string) : null;
+  const tagline = typeof intelData.tagline === "string" ? (intelData.tagline as string) : null;
+  const rawServiceCards = Array.isArray(intelData.serviceCards)
+    ? (intelData.serviceCards as unknown[])
+        .filter((c): c is Record<string, unknown> => typeof c === "object" && c !== null)
+        .map((c) => ({
+          title: typeof c.title === "string" ? c.title : "",
+          desc: typeof c.desc === "string" ? c.desc : "",
+        }))
+        .filter((c) => c.title && c.desc)
+    : null;
+  const serviceCards = rawServiceCards && rawServiceCards.length > 0 ? rawServiceCards : null;
+
   return (
     <>
       <style>{`
@@ -187,6 +202,11 @@ export default async function LeadDemoPage({
         nicheBullets={nicheBullets}
         expiresLabel={expiresLabelP1}
         rawServices={rawServices}
+        heroHook={heroHook}
+        heroSubline={heroSubline}
+        noticedLine={noticedLine}
+        tagline={tagline}
+        serviceCards={serviceCards}
         services={services}
       />
     </>
