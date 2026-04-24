@@ -14,56 +14,7 @@ const navLinks = [
   { href: "/about", label: "About" },
 ];
 
-function Logo() {
-  return (
-    <svg
-      className="w-[100px] h-9"
-      viewBox="0 0 120 50"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <rect
-        x="5"
-        y="12"
-        width="40"
-        height="25"
-        rx="4"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        fill="none"
-      />
-      <rect
-        x="75"
-        y="12"
-        width="40"
-        height="25"
-        rx="4"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        fill="none"
-      />
-      <path
-        d="M45 24 Q60 18 75 24"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        fill="none"
-      />
-      <path
-        d="M5 20 L-5 15"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M115 20 L125 15"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function Header() {
   const pathname = usePathname();
@@ -89,7 +40,7 @@ export function Header() {
           <nav className="flex items-center justify-between py-4">
             {/* Logo */}
             <Link href="/" aria-label="FlyNerd home" className="shrink-0">
-              <Logo />
+              <BrandLogo />
             </Link>
 
             {/* Center nav links — Space Mono */}
@@ -150,7 +101,7 @@ export function Header() {
               className="absolute right-0 top-0 h-full w-[80vw] max-w-[320px] bg-[var(--bg-base)] border-l border-[var(--text-primary)] flex flex-col p-8"
             >
               <div className="flex items-center justify-between mb-10">
-                <Logo />
+                <BrandLogo />
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"

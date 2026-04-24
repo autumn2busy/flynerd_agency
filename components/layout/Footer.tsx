@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 const footerLinks = {
   services: [
@@ -34,23 +35,8 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand column */}
           <div className="lg:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-3 mb-6">
-              <svg
-                className="w-20 h-8"
-                viewBox="0 0 120 50"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect x="5" y="12" width="40" height="25" rx="4" stroke="#0D0D0D" strokeWidth="2.5" fill="none" />
-                <rect x="75" y="12" width="40" height="25" rx="4" stroke="#0D0D0D" strokeWidth="2.5" fill="none" />
-                <path d="M45 24 Q60 18 75 24" stroke="#0D0D0D" strokeWidth="2.5" fill="none" />
-              </svg>
-              <span
-                className="text-xl font-bold tracking-wider text-[var(--text-primary)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                FLYNERD<span className="text-[var(--accent)]">TECH</span>
-              </span>
+            <Link href="/" className="inline-flex items-center mb-6">
+              <BrandLogo size="lg" />
             </Link>
 
             <div className="max-w-md">

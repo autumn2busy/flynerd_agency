@@ -262,6 +262,78 @@ function ApplyForm() {
           Can&apos;t find a slot that works? Reply to the confirmation email and
           we&apos;ll make it work.
         </p>
+
+        {/* Post-booking expectations + exit CTAs. Renders alongside the
+            iframe so it's visible both before and after the prospect
+            picks a slot — gives them context about the parallel flow
+            (demo build, pre-call email) plus a clear "you can leave
+            this page" signal. */}
+        <div className="glass-card rounded-3xl p-8 lg:p-10 border border-[var(--glass-border)]">
+          <h3 className="text-xl font-semibold mb-5 flex items-center gap-2">
+            <CheckCircle2 size={20} className="text-[var(--gold-400)]" />
+            What happens next
+          </h3>
+          <ol className="space-y-4 mb-8">
+            <li className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--bg-elevated)] border border-[var(--glass-border)] flex items-center justify-center text-xs font-semibold text-[var(--gold-400)]">
+                1
+              </span>
+              <span className="leading-relaxed pt-0.5">
+                <strong className="text-white">Within 20 minutes</strong> —
+                your personalized demo lands in your inbox. Open it, share
+                it with your team, or just come back to it before our call.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--bg-elevated)] border border-[var(--glass-border)] flex items-center justify-center text-xs font-semibold text-[var(--gold-400)]">
+                2
+              </span>
+              <span className="leading-relaxed pt-0.5">
+                <strong className="text-white">After you book</strong> —
+                you&apos;ll get a calendar invite with a Google Meet link.
+                Save it to your calendar. That&apos;s it until our call.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--bg-elevated)] border border-[var(--glass-border)] flex items-center justify-center text-xs font-semibold text-[var(--gold-400)]">
+                3
+              </span>
+              <span className="leading-relaxed pt-0.5">
+                <strong className="text-white">On the call</strong> —
+                we&apos;ll walk through your demo together, answer any
+                questions about scope or timeline, and decide if FlyNerd is
+                the right fit. If yes, you&apos;ll get a deposit link by
+                email right after we hang up.
+              </span>
+            </li>
+          </ol>
+
+          <div className="pt-6 border-t border-[var(--glass-border)]">
+            <p className="text-xs text-[var(--text-muted)] mb-4">
+              You can safely close this tab. We&apos;ll take it from here.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm border border-[var(--glass-border)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-white transition-colors"
+              >
+                ← Back to home
+              </a>
+              <a
+                href="/pricing"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm border border-[var(--glass-border)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-white transition-colors"
+              >
+                Explore pricing
+              </a>
+              <a
+                href="/work"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm border border-[var(--glass-border)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-white transition-colors"
+              >
+                See our work
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
