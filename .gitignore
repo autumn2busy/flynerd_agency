@@ -55,3 +55,9 @@ next-env.d.ts
 # Live-mode outputs (stripe_catalog_mapping.csv / .md) are committed.
 docs/billing/stripe_catalog_mapping.test.csv
 docs/billing/stripe_catalog_mapping.test.md
+# Additional temporary scratch files
+/tmp-*.txt
+/scratch-*.json
+/*.tmp.json
+/test-*.json
+/test-output/
