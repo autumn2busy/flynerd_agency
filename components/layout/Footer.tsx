@@ -18,8 +18,6 @@ const footerLinks = {
     { href: "/contact", label: "Contact" },
   ],
   connect: [
-    { href: "https://linkedin.com/company/flynerdtech", label: "LinkedIn", external: true },
-    { href: "https://twitter.com/flynerdtech", label: "X (Twitter)", external: true },
     { href: "https://instagram.com/flynerdofficial", label: "Instagram", external: true },
     { href: "https://flynerdofficial.com", label: "FlyNerd Official", external: true },
   ],

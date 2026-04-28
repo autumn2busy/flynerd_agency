@@ -457,7 +457,7 @@ export async function POST(req: Request) {
       if (process.env.RESEND_API_KEY) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
-          from: "FlyNerd /apply <info@flynerdtech.com>",
+          from: "FlyNerd /apply <info@flynerd.tech>",
           to: ["hello@flynerd.tech"],
           subject: `Qualified demo request: ${business_name}`,
           html: `

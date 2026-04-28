@@ -193,7 +193,7 @@ export async function POST(req: Request) {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
-        from: 'FlyNerd Contact Form <info@flynerdtech.com>',
+        from: 'FlyNerd Contact Form <info@flynerd.tech>',
         to: ['hello@flynerd.tech'],
         subject: `New Inquiry from ${business_name}`,
         html: `

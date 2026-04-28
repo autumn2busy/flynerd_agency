@@ -237,8 +237,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h3 className="font-semibold mb-1">Email</h3>
-                                        <a href="mailto:hello@flynerdtech.com" className="text-[var(--text-secondary)] hover:text-[var(--gold-400)]">
-                                            hello@flynerdtech.com
+                                        <a href="mailto:hello@flynerd.tech" className="text-[var(--text-secondary)] hover:text-[var(--gold-400)]">
+                                            hello@flynerd.tech
                                         </a>
                                     </div>
                                 </div>

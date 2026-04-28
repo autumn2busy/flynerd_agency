@@ -8,11 +8,12 @@ This document serves as the master blueprint for your AI-first agency operations
 
 | Repository | Purpose | Key Directories/Files |
 | :--- | :--- | :--- |
-| **`flynerdtech`** | **The Brain (Backend)** | `app/api/agents/`, `app/api/orchestrator/`, `lib/activecampaign.ts`, `prisma/schema.prisma` |
-| **`flynerd-agency`** | **The Face (Frontend)** | `app/page.tsx`, `app/pricing/`, `app/demo/`, `public/n8n-niche-workflows/` |
+| **`sonata-stack`** | **Agent Orchestration Layer** | MCP tools, lifecycle agents, Supabase pipeline writes, ActiveCampaign handoffs |
+| **`flynerd-agency`** | **Public Storefront and Admin Surface** | `app/page.tsx`, `app/pricing/`, `app/demo/`, `app/api/webhooks/` |
+| **`flynerd-demo-lead`** | **Demo Hosting Deployment** | Demo URLs generated for prospect walkthroughs |
 
 > [!IMPORTANT]
-> **Logic Rule**: All heavy AI processing (Intel, Scout, Builder) happens in `flynerdtech`. The `flynerd-agency` site calls these endpoints via server-side fetches or webhooks.
+> **Logic Rule**: Sonata-stack is the agent orchestration layer. flynerd-agency is the public storefront and admin surface. flynerd-demo-lead is the demo hosting deployment. The legacy app has been removed.
 
 ---
 

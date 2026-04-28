@@ -5,8 +5,9 @@ Marketing site + outbound agent pipeline for FlyNerd Tech (flynerd.tech).
 Deployed to Vercel. Next.js 15 + Tailwind + TypeScript.
 
 ## Related repos
-- **Brain:** flynerdtech (client demo site template)
-- **Agent Core:** sonata-stack (MCP server on Railway)
+- **Agent Orchestration Layer:** sonata-stack (MCP server on Railway)
+- **Public Storefront and Admin Surface:** flynerd-agency
+- **Demo Hosting Deployment:** flynerd-demo-lead
 
 ## Architecture
 - app/page.tsx — homepage (ChatScenario NOT yet imported — fix is pending)

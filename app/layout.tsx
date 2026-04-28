@@ -137,8 +137,6 @@ export default function RootLayout({
               serviceType: "AI-Powered Website Development",
               sameAs: [
                 "https://flynerdofficial.com",
-                "https://linkedin.com/company/flynerdtech",
-                "https://twitter.com/flynerdtech",
                 "https://instagram.com/flynerdofficial",
               ],
               contactPoint: {

@@ -20,7 +20,7 @@ export default function PrivacyPage() {
                                 <p className="text-[var(--text-secondary)] leading-relaxed">
                                     FlyNerd Tech (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy.
                                     This Privacy Policy explains how we collect, use, disclose, and safeguard your information
-                                    when you visit our website flynerdtech.com or engage with our services.
+                                    when you visit our website flynerd.tech or engage with our services.
                                 </p>
                             </section>
 
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                                 <p className="text-[var(--text-secondary)] leading-relaxed">
                                     You have the right to access, correct, or delete your personal information.
                                     You may also opt out of marketing communications at any time. To exercise these
-                                    rights, contact us at hello@flynerdtech.com.
+                                    rights, contact us at hello@flynerd.tech.
                                 </p>
                             </section>
 
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                                 <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
                                 <p className="text-[var(--text-secondary)] leading-relaxed">
                                     If you have questions about this Privacy Policy, please contact us at:<br />
-                                    <strong className="text-white">Email:</strong> info@flynerdtech.com<br />
+                                    <strong className="text-white">Email:</strong> info@flynerd.tech<br />
                                     <strong className="text-white">Location:</strong> Atlanta, GA
                                 </p>
                             </section>

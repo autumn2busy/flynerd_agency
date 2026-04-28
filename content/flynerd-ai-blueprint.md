@@ -109,7 +109,7 @@ This blueprint gives you the framework. But implementation is where the magic ha
 
 No pressure. No obligation. Just honest advice about what would work for your business.
 
-**Schedule your call:** flynerdtech.com/contact
+**Schedule your call:** flynerd.tech/contact
 
 ---
 
