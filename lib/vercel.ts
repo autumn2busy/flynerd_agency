@@ -1,4 +1,6 @@
-const FALLBACK_BASE_URL = "https://flynerd-demo-lead.vercel.app";
+const TARGET_PROJECT = process.env.VERCEL_TARGET_PROJECT ?? "flynerd-demo-lead";
+const FALLBACK_BASE_URL =
+  process.env.VERCEL_FALLBACK_BASE_URL ?? "https://flynerd-demo-lead.vercel.app";
 
 export function getCanonicalDemoUrl(leadId: string, deploymentHost?: string) {
   const base = deploymentHost ? `https://${deploymentHost}` : FALLBACK_BASE_URL;
@@ -14,7 +16,7 @@ export async function cloneAndDeployTemplate(
   if (!token) throw new Error("Missing VERCEL_API_TOKEN");
 
   const teamId = "team_uSLsRZHA5u8JAkI9tVVipAFi";
-  const targetProject = "flynerd-demo-lead";
+  const targetProject = TARGET_PROJECT;
 
   console.log(`[Vercel API] Triggering deployment for ${targetProject} (Lead: ${projectName})...`);
 
