@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:n8n": "next dev -p 3010",
-    "build": "prisma generate && next build",
+    "check:statuses": "node scripts/check-status-literals.mjs",
+    "build": "node scripts/check-status-literals.mjs && prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "stripe:bootstrap:dry": "tsx scripts/stripe-catalog-bootstrap.ts --mode=test --dry-run",

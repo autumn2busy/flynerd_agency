@@ -9,9 +9,9 @@ import { passwordProtectDeployment } from "@/lib/vercel";
 // Vercel Cron job (see vercel.json cron config below).
 //
 // What it does:
-//   1. Finds all DEMO_BUILT leads where validUntil < now() and status != "EXPIRED"
+//   1. Finds all DEMO_BUILT leads where validUntil < now()
 //   2. Enables password protection on the Vercel project for each
-//   3. Marks the lead status as "EXPIRED" in the DB
+//   3. Marks the lead status as "DEMO_EXPIRED" in the DB
 //
 // Can also be called with { leadId } to expire a single lead immediately.
 // ─────────────────────────────────────────────────────────────────────────────

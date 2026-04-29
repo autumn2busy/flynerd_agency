@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { AGENCY_LEAD_STATUSES, CLIENT_STATUSES } from "@/lib/status-contract";
 
 // POST /api/webhooks/ac-upsell
 // ActiveCampaign webhook for "Client Retainer" upsell (MAINTENANCE -> GROWTH)
@@ -26,18 +27,40 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Client not found, ignoring webhook" });
     }
 
-    // Upgrade client sequence internally mapping AC logic directly into Database state
-    const updatedClient = await prisma.client.update({
-      where: { id: client.id },
-      data: {
-        plan: "GROWTH",
-        status: "CLIENT_ACTIVE",
-      }
-    });
+    if (!client.originLeadId) {
+      return NextResponse.json(
+        { error: "Client is missing originLeadId; cannot update linked AgencyLead status" },
+        { status: 409 }
+      );
+    }
+
+    // Keep raw status literals centralized in lib/status-contract.ts.
+    const activeClientStatus = CLIENT_STATUSES[2];
+    const convertedLeadStatus = AGENCY_LEAD_STATUSES[12];
+    const now = new Date();
+
+    // Upgrade both lifecycle records atomically so Client and AgencyLead cannot drift.
+    const [updatedClient, updatedLead] = await prisma.$transaction([
+      prisma.client.update({
+        where: { id: client.id },
+        data: {
+          plan: "GROWTH",
+          status: activeClientStatus,
+          updatedAt: now,
+        }
+      }),
+      prisma.agencyLead.update({
+        where: { id: client.originLeadId },
+        data: {
+          status: convertedLeadStatus,
+          updatedAt: now,
+        }
+      })
+    ]);
 
     console.log(`[AC Webhook] Client retained! Upgraded ${client.businessName} to GROWTH sequences.`);
 
-    return NextResponse.json({ success: true, client: updatedClient });
+    return NextResponse.json({ success: true, client: updatedClient, agencyLead: updatedLead });
   } catch (error: any) {
     console.error("[AC Webhook] Error processing upsell:", error);
     return NextResponse.json({ error: "Internal server error", message: error.message }, { status: 500 });

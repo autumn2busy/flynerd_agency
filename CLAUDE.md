@@ -16,7 +16,12 @@ Deployed to Vercel. Next.js 15 + Tailwind + TypeScript.
 - lib/prompts.ts — versioned prompt registry (ALWAYS update version on changes)
 - lib/activecampaign.ts, lib/vercel.ts, lib/heygen.ts — external integrations
 - components/home/ChatScenario.tsx — live chat widget (complete, needs import in page.tsx)
-- prisma/schema.prisma — AgencyLead model, status FSM: PROSPECT→AUDITED→BUILT→OUTREACH_SENT→ACTIVE→EXPIRED
+- prisma/schema.prisma — AgencyLead model. Canonical status set:
+  PROSPECT, DISCOVERED, AUDITED, DEMO_BUILT, OUTREACH_SENT, REPLIED,
+  CALL_BOOKED, CLOSED_WON, CLOSED_LOST, OUTREACH_EXHAUSTED,
+  DEMO_EXPIRED, INBOUND_NEW, CLIENT_ACTIVE.
+  Client model. Canonical status set: ONBOARDING, MIGRATING, ACTIVE,
+  PAUSED, CHURNED.
 
 ## LLM migration status
 - chat-demo/route.ts: MIGRATE Groq → claude-haiku-4-5-20251001
