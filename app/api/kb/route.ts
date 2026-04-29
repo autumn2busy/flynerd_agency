@@ -3,6 +3,11 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+function normalizeCategory(cat: string | null | undefined): string {
+  if (!cat) return "other";
+  return cat.toLowerCase().replace(/[\s-]+/g, "_");
+}
+
 /**
  * GET /api/kb?niche=[niche_key]
  * Centralized KB Loader for n8n workflows.
@@ -46,7 +51,8 @@ export async function GET(req: Request) {
 
     return NextResponse.json({
       niche: nicheKey,
-      category: nicheConfig?.category || "other",
+      category: normalizeCategory(nicheConfig?.category),
+      category_display: nicheConfig?.category ?? null,
       display_name: nicheConfig?.display_name || nicheKey,
       count: kbItems.length,
       items: kbItems
