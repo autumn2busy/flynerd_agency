@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import { ArrowUpRight, Zap, Sparkles, Cpu, Globe, FileText, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Automation Services | FlyNerd Tech",
-    description: "AI automation, CRM operations, AI agents, and workflow systems for businesses ready to scale. Supporting services to complement your AI-powered website.",
+    title: "Capabilities | FlyNerd Tech",
+    description: "AI automation, CRM operations, AI agents, and workflow systems for businesses ready to scale. Supporting capabilities to complement your AI-powered website.",
 };
 
 const services = [
@@ -21,7 +21,6 @@ const services = [
             "AI-powered decision logic",
             "Performance monitoring dashboards",
         ],
-        startingAt: "Custom",
     },
     {
         slug: "marketing-operations",
@@ -36,7 +35,6 @@ const services = [
             "Attribution modeling",
             "Marketing analytics setup",
         ],
-        startingAt: "$2,500",
         featured: true,
     },
 
@@ -53,7 +51,6 @@ const services = [
             "Content generation assistants",
             "Multi-platform integration",
         ],
-        startingAt: "$1,500",
     },
     {
         slug: "website-design",
@@ -68,7 +65,6 @@ const services = [
             "Analytics integration",
             "Performance optimization",
         ],
-        startingAt: "$3,000",
     },
     {
         slug: "content-systems",
@@ -83,7 +79,6 @@ const services = [
             "Repurposing pipelines",
             "AI content assistance",
         ],
-        startingAt: "$1,000",
     },
 ];
 
@@ -94,13 +89,13 @@ export default function ServicesPage() {
             <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
                 <div className="section-container">
                     <div className="max-w-3xl">
-                        <span className="section-label">Automation Services</span>
+                        <span className="section-label">Our Capabilities</span>
                         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-semibold mt-4 mb-6">
                             The systems <span className="gradient-text">behind the site.</span>
                         </h1>
                         <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-4">
                             Every FlyNerd AI website includes a built-in booking agent and local SEO foundation.
-                            These services go deeper — for businesses that want to automate operations,
+                            These capabilities go deeper — for businesses that want to automate operations,
                             marketing, and lead pipelines beyond the site itself.
                         </p>
                         <p className="text-sm text-[var(--text-muted)]">
@@ -153,10 +148,7 @@ export default function ServicesPage() {
                                         ))}
                                     </ul>
 
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm text-[var(--text-muted)]">
-                                            Starting at <span className="text-white font-semibold">{service.startingAt}</span>
-                                        </span>
+                                    <div className="flex items-center justify-end">
                                         <span className="flex items-center gap-2 text-sm text-[var(--gold-400)] opacity-0 group-hover:opacity-100 transition-opacity">
                                             Learn more <ArrowUpRight size={16} />
                                         </span>

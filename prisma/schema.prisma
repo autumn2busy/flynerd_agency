@@ -58,6 +58,40 @@ model AgencyLead {
   @@index([stage], map: "agency_lead_stage_idx")
 }
 
+enum LeadEventType {
+  LEAD_CREATED
+  LEAD_DISCOVERED
+  LEAD_AUDITED
+  DEMO_BUILT
+  OUTREACH_SENT
+  LEAD_REPLIED
+  CALL_BOOKED
+  CLOSED_WON
+  CLOSED_LOST
+  OUTREACH_EXHAUSTED
+  DEMO_EXPIRED
+  INBOUND_CREATED
+  CLIENT_ACTIVATED
+  STATUS_SET
+}
+
+enum LeadEventSource {
+  SONATA @map("sonata")
+  N8N    @map("n8n")
+}
+
+model LeadEvent {
+  id         String          @id
+  lead_id    String
+  event_type LeadEventType
+  payload    Json            @default("{}")
+  source     LeadEventSource
+  created_at DateTime        @default(now()) @db.Timestamptz(6)
+
+  @@index([event_type], map: "idx_lead_event_event_type")
+  @@index([lead_id, created_at], map: "idx_lead_event_lead_created_at")
+}
+
 model Client {
   id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   businessName            String
@@ -167,15 +201,17 @@ model estimate_results {
 }
 
 model kb_items {
-  id         BigInt                 @id @default(autoincrement())
-  niche      String
-  question   String
-  answer     String
-  topic      String?
-  tags       String[]
-  content    String?
-  embedding  Unsupported("vector")?
+  id           BigInt                 @id @default(autoincrement())
+  niche        String
+  question     String
+  answer       String
+  topic        String?
+  tags         String[]
+  content      String?
+  embedding    Unsupported("vector")?
   business_key String?
+  is_active    Boolean                @default(true)
+  updated_at   DateTime               @default(now()) @db.Timestamptz(6)
   created_at   DateTime?              @default(now()) @db.Timestamptz(6)
 
   @@unique([niche, question, business_key])

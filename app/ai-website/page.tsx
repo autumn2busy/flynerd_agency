@@ -1,24 +1,10 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, CheckCircle, Clock, Cpu, Globe, Zap, BarChart3, Shield } from "lucide-react";
-import { SERVICES } from "@/app/pricing/services-data";
-
-// Pull both core-build tiers from the canonical catalog so this page never
-// drifts from app/pricing. Starting price in <meta description> comes from
-// the UL tier (the lower of the two).
-const ulCore = SERVICES.find((s) => s.slug === "ai-website-quickstart-ul")!;
-const tpCore = SERVICES.find((s) => s.slug === "ai-website-concierge-tp")!;
-
-// Derive deposit dollar display from milestones so it stays in sync with
-// any future split changes (50/50, 40/60, etc.).
-function depositDisplay(slug: string): string {
-  const s = SERVICES.find((svc) => svc.slug === slug);
-  return s?.milestones.find((m) => /deposit/i.test(m.label))?.price ?? "";
-}
 
 export const metadata: Metadata = {
     title: "AI-Powered Websites | FlyNerd Tech",
-    description: `FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and 7-day launch guarantee. Starting at ${ulCore.priceDisplay}.`,
+    description: `FlyNerd Tech builds AI-powered websites for local service businesses. 24/7 AI booking agent, local SEO, and fast launch guarantee.`,
 };
 
 const timeline = [
@@ -29,14 +15,10 @@ const timeline = [
     { day: "Day 7", title: "Live", description: "Domain connected, SSL live, AI agent active. Your digital employee starts its first shift." },
 ];
 
-// Two core-build tiers sourced from the canonical catalog. Copy (bullets,
-// "best for", CTA label) is page-specific and lives here, but every price
-// and payment link is sourced from SERVICES.
+// Two vertical variants of the AI Website offering
 const packages = [
     {
-        name: "Quickstart Build",
-        setup: ulCore.priceDisplay,
-        monthly: "$997/mo (optional Care Plan)",
+        name: "For Local Trades",
         best: "Underserved local service businesses: HVAC, plumbing, salons, home care",
         includes: [
             "Custom AI-informed design from your reputation data",
@@ -46,26 +28,22 @@ const packages = [
             "High-speed Vercel hosting + SSL",
             "7-day launch guarantee",
         ],
-        stripe: ulCore.stripeDepositLink ?? "/contact?package=ai-website-quickstart-ul",
-        cta: `Start — Pay ${depositDisplay("ai-website-quickstart-ul")} Deposit`,
-        detailHref: "/pricing/ai-website-quickstart-ul",
+        cta: `View Details`,
+        detailHref: "/ai-website/trades",
     },
     {
-        name: "AI Concierge Bundle",
-        setup: tpCore.priceDisplay,
-        monthly: "$1,997/mo (optional Growth Ops)",
+        name: "For Premium Services",
         best: "Tech-enabled premium: med spas, aesthetics, solar, legal, high-ticket services",
         includes: [
-            "Everything in Quickstart Build",
+            "Everything in Local Trades",
             "Treatment/service detail pages with brand-tier design",
             "Advanced booking integration (Zenoti, Vagaro, Cal.com)",
             "CRM deep wire: lead scoring + pipeline stages",
             "Concierge project management through launch",
             "14-day concierge support post-launch",
         ],
-        stripe: tpCore.stripeDepositLink ?? "/contact?package=ai-website-concierge-tp",
-        cta: `Launch — Pay ${depositDisplay("ai-website-concierge-tp")} Deposit`,
-        detailHref: "/pricing/ai-website-concierge-tp",
+        cta: `View Details`,
+        detailHref: "/ai-website/premium-services",
         featured: true,
     },
 ];
@@ -114,8 +92,8 @@ export default function AIWebsitePage() {
                             FlyNerd Tech builds AI-powered websites that answer questions, book appointments, and qualify leads — around the clock, without you being involved. Live in 7 days, built from your real reputation.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/pricing/ai-website-quickstart-ul" className="btn btn-primary text-lg px-10 py-4">
-                                See Pricing <ArrowUpRight size={20} />
+                            <Link href="/pricing" className="btn btn-primary text-lg px-10 py-4">
+                                See Packages <ArrowUpRight size={20} />
                             </Link>
                             <Link href="/contact" className="btn btn-ghost text-lg px-8 py-4">
                                 Book a Free Call
@@ -188,12 +166,12 @@ export default function AIWebsitePage() {
             <section id="pricing" className="py-24 lg:py-32 bg-[var(--bg-elevated)]">
                 <div className="section-container">
                     <div className="text-center mb-16">
-                        <span className="section-label">Pricing</span>
+                        <span className="section-label">Solutions</span>
                         <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-semibold mt-4">
-                            Two tiers. One outcome: <span className="gradient-text">more customers.</span>
+                            Two paths. One outcome: <span className="gradient-text">more customers.</span>
                         </h2>
                         <p className="text-[var(--text-secondary)] mt-4 max-w-xl mx-auto">
-                            Setup is split 50/50 — half to start, half on delivery. Monthly is billed after launch, cancel anytime.
+                            Choose the path that best matches your business needs and technical maturity.
                         </p>
                     </div>
 
@@ -205,18 +183,14 @@ export default function AIWebsitePage() {
                             >
                                 {pkg.featured && (
                                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-[var(--bg-base)] bg-[var(--gold-400)] px-4 py-1 rounded-full whitespace-nowrap">
-                                        Most Popular
+                                        Premium
                                     </span>
                                 )}
                                 <div className="mb-4">
                                     <h3 className="text-xl font-semibold">{pkg.name}</h3>
                                     <p className="text-xs text-[var(--text-muted)] mt-1">{pkg.best}</p>
                                 </div>
-                                <div className="mb-6">
-                                    <span className="text-4xl font-bold">{pkg.setup}</span>
-                                    <span className="text-[var(--text-muted)] ml-2 text-sm">setup + {pkg.monthly}</span>
-                                </div>
-                                <ul className="space-y-3 mb-8 flex-1">
+                                <ul className="space-y-3 mb-8 flex-1 mt-4">
                                     {pkg.includes.map((f, i) => (
                                         <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
                                             <CheckCircle size={15} className="text-[var(--gold-400)] flex-shrink-0 mt-0.5" />
@@ -228,7 +202,7 @@ export default function AIWebsitePage() {
                                     href={pkg.detailHref}
                                     className={`btn w-full ${pkg.featured ? "btn-primary" : "btn-ghost"}`}
                                 >
-                                    View Full Details <ArrowUpRight size={16} />
+                                    {pkg.cta} <ArrowUpRight size={16} />
                                 </Link>
                             </div>
                         ))}

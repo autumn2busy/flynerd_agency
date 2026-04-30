@@ -5,10 +5,10 @@ import { BrandLogo } from "@/components/ui/BrandLogo";
 const footerLinks = {
   services: [
     { href: "/ai-website", label: "AI-Powered Websites" },
-    { href: "/ai-website#pricing", label: "Quickstart Build" },
-    { href: "/ai-website#pricing", label: "AI Concierge Bundle" },
-    { href: "/services", label: "Automation Services" },
-    { href: "/pricing", label: "All Pricing" },
+    { href: "/ai-website/trades", label: "AI Websites for Trades" },
+    { href: "/ai-website/premium-services", label: "AI Websites for Premium Services" },
+    { href: "/services", label: "Our Capabilities" },
+    { href: "/pricing", label: "Pricing & Packages" },
   ],
   company: [
     { href: "/work", label: "Case Studies" },

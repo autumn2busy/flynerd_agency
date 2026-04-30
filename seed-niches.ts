@@ -76,26 +76,38 @@ async function main() {
   console.log('\nSeeding HVAC knowledge base into kb_source...');
   for (const item of hvacKbItems) {
     try {
-      await prisma.kb_source.upsert({
+      const updated = await prisma.kb_source.updateMany({
         where: {
-          niche_question: { niche: 'hvac', question: item.question }
-        },
-        update: {
-          answer: item.answer,
-          topic: item.topic,
-          tags: item.tags
-        },
-        create: {
           niche: 'hvac',
           question: item.question,
+          business_key: null
+        },
+        data: {
           answer: item.answer,
           topic: item.topic,
-          tags: item.tags
+          tags: item.tags,
+          is_active: true,
+          updated_at: new Date()
         }
       });
+
+      if (updated.count === 0) {
+        await prisma.kb_source.create({
+          data: {
+            niche: 'hvac',
+            question: item.question,
+            answer: item.answer,
+            topic: item.topic,
+            tags: item.tags,
+            business_key: null,
+            is_active: true
+          }
+        });
+      }
       console.log(`Upserted KB Q: ${item.question.substring(0, 30)}...`);
-    } catch (e) {
-      console.error(`Error inserting KB item: ${e.message}`);
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e);
+      console.error(`Error inserting KB item: ${message}`);
     }
   }
 }

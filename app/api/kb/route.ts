@@ -11,7 +11,9 @@ function normalizeCategory(cat: string | null | undefined): string {
 /**
  * GET /api/kb?niche=[niche_key]
  * Centralized KB Loader for n8n workflows.
- * Fetches dynamic knowledge base entries from Supabase 'kb_source' table.
+ * Production text KB currently lives in Supabase 'kb_source'.
+ * Do not switch this to 'kb_items' until the vector table is populated and
+ * its Prisma model is reconciled with the live pgvector schema.
  */
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

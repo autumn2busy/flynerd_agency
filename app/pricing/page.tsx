@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 const monoStyle = { fontFamily: "var(--font-mono)" } as const;
 
 export default function ServicesPage() {
+  const auditPrice = SERVICES.find((s) => s.slug === "automation-audit")?.priceDisplay || "$495";
+
   return (
     <div className="min-h-screen bg-[var(--bg-base)]">
 
@@ -114,7 +116,7 @@ export default function ServicesPage() {
             </h2>
             <p className="text-base text-[var(--text-secondary)] mb-10 max-w-xl" style={{ lineHeight: 1.7 }}>
               The Automation Audit gives you a 30-day roadmap and ROI-ranked priorities.
-              The $495 fee is credited toward any Quickstart Workflow Build or AI Concierge Launch.
+              The {auditPrice} fee is credited toward any Quickstart Workflow Build or AI Concierge Launch.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -122,7 +124,7 @@ export default function ServicesPage() {
                 className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold text-black accent-glow"
                 style={{ background: "var(--accent)", fontFamily: "var(--font-mono)" }}
               >
-                Book Audit — $495 <ArrowUpRight size={16} />
+                Book Audit — {auditPrice} <ArrowUpRight size={16} />
               </Link>
               <Link
                 href="/contact"

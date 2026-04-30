@@ -1,5 +1,10 @@
 # Knowledge Base (Supabase Vector) Setup
 
+> **Production note (2026-04-30):** `/api/kb` currently reads `kb_source`,
+> not `kb_items`. A live Supabase check showed `kb_source` has 34 rows and
+> `kb_items` has 0 rows. Treat `kb_items` as the dormant vector/RAG path until
+> it is populated and reconciled. See `docs/kb-table-decision.md`.
+
 This module adds a multi-niche KB backed by Supabase Postgres + pgvector.
 
 ## Included niches

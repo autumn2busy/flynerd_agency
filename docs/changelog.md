@@ -35,3 +35,9 @@
 - rawServices optional so existing cold-lead demos require zero prop changes
 
 ---
+
+- ab768dabc8ba10ff0f6a2d68f7dac933a6489482 chore: finish legacy domain migration and remove dead links (audit cleanup)
+- b22c3115be0aa0896b057c3b98431250a9a46cfb chore: remove tmp-builder-syres.json and add PII gitignore patterns (audit cleanup)
+- ebd2f6f96aac604c1bff3401033b75020b947c4c chore(config): read Vercel target project and base URL from env vars (audit cleanup)
+- 1c6c671e099157f491a147ea9cbec660a50b9895 fix(api): normalize /api/kb category to canonical lowercase snake_case
+- ca71ade2a0a00a0c244f3c9ae91542871ef9634f fix(status): patch forbidden status literals and add contract test (Audit Fix 1)

@@ -10,7 +10,6 @@ const servicesData: Record<string, {
     heroDescription: string;
     features: { title: string; description: string }[];
     process: string[];
-    pricing: { label: string; price: string; description: string };
     faqs: { question: string; answer: string }[];
     tools?: string[];
 }> = {
@@ -27,7 +26,6 @@ const servicesData: Record<string, {
             { title: "Monitoring & Optimization", description: "Real-time dashboards to track performance and continuously improve." },
         ],
         process: ["Discovery call to understand your workflows", "Process mapping and opportunity identification", "Custom automation design and development", "Testing, deployment, and team training", "Ongoing monitoring and optimization"],
-        pricing: { label: "Custom", price: "Starting at $2,000", description: "Project-based pricing depending on scope and complexity" },
         faqs: [
             { question: "What tools do you work with?", answer: "We work with Make.com, Zapier, n8n, and can build custom integrations with any API-enabled tool." },
             { question: "How long does a typical automation project take?", answer: "Simple automations can be done in 1-2 weeks. Complex multi-system integrations typically take 4-8 weeks." },
@@ -48,7 +46,6 @@ const servicesData: Record<string, {
             { title: "Analytics & Reporting", description: "Custom dashboards that show what matters." },
         ],
         process: ["CRM and MarTech audit", "Data cleanup and migration strategy", "Journey design and automation build", "Integration and testing", "Training and ongoing support"],
-        pricing: { label: "Monthly Retainer", price: "Starting at $2,500/mo", description: "Or project-based for specific implementations" },
         faqs: [
             { question: "Which CRMs do you work with?", answer: "HubSpot, Salesforce, ActiveCampaign, Pipedrive, and most major CRM platforms." },
             { question: "Can you migrate data from our old system?", answer: "Yes, we handle full data migrations including cleanup and enrichment." },
@@ -69,7 +66,6 @@ const servicesData: Record<string, {
             { title: "Performance Tracking", description: "A/B testing, analytics, and optimization recommendations." },
         ],
         process: ["Strategy consultation (30 min)", "Audience segmentation setup", "Draft creation and client approval", "Campaign launch", "Performance tracking and optimization"],
-        pricing: { label: "Per Campaign", price: "$499", description: "Complete done-for-you email campaign automation" },
         faqs: [
             { question: "What's included in the $499 package?", answer: "Strategy consultation, audience segmentation, 3-5 email sequence, ActiveCampaign setup, A/B testing, and 30-day performance report." },
             { question: "How long until the campaign is live?", answer: "Typically 5-7 business days from consultation to launch." },
@@ -90,7 +86,6 @@ const servicesData: Record<string, {
             { title: "Multi-Platform Integration", description: "Shopify, Wix, Slack, Google Workspace, and more." },
         ],
         process: ["Requirements gathering and use case definition", "AI agent design and training", "Integration with your platforms", "Testing and refinement", "Deployment and monitoring"],
-        pricing: { label: "Custom", price: "Starting at $1,500", description: "Depends on complexity and integration requirements" },
         faqs: [
             { question: "What platforms can you integrate with?", answer: "Shopify, Wix, WordPress, Slack, Google Workspace, most CRMs, and any platform with an API." },
             { question: "Can the AI learn from our existing content?", answer: "Yes, we train agents on your knowledge base, FAQs, and brand guidelines." },
@@ -111,7 +106,6 @@ const servicesData: Record<string, {
             { title: "Analytics Integration", description: "Full tracking setup to measure what matters." },
         ],
         process: ["Discovery and strategy", "Wireframing and design", "Development and content integration", "SEO optimization and testing", "Launch and training"],
-        pricing: { label: "Project", price: "Starting at $3,000", description: "Landing pages start at $1,500" },
         faqs: [
             { question: "What platform do you build on?", answer: "Primarily Next.js for performance and flexibility, but we also work with Webflow, WordPress, and Shopify." },
             { question: "Is hosting included?", answer: "We can recommend and help set up hosting (Vercel, Netlify, etc.), but hosting costs are separate." },
@@ -132,7 +126,6 @@ const servicesData: Record<string, {
             { title: "AI Content Assistance", description: "Tools and prompts that accelerate creation while maintaining quality." },
         ],
         process: ["Content audit and strategy session", "System design and tool selection", "Workflow automation setup", "AI assistant configuration", "Training and documentation"],
-        pricing: { label: "Custom", price: "Starting at $1,000", description: "Based on scope and number of channels" },
         faqs: [
             { question: "Can you help with content ideas?", answer: "Yes, we help develop content calendars and topic clusters based on your SEO and audience strategy." },
             { question: "Which tools do you use for repurposing?", answer: "Various AI tools plus custom workflows in Make.com to automate distribution across platforms." },
@@ -191,12 +184,12 @@ export default async function ServicePage({ params }: Props) {
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link href="/contact" className="btn btn-primary">
-                                Get Started
+                                Book Strategy Call
                                 <ArrowUpRight size={18} />
                             </Link>
-                            <a href="#pricing" className="btn btn-ghost">
+                            <Link href="/pricing" className="btn btn-ghost">
                                 View Pricing
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -256,23 +249,7 @@ export default async function ServicePage({ params }: Props) {
                 </section>
             )}
 
-            {/* Pricing */}
-            <section id="pricing" className="py-24 bg-[var(--bg-elevated)]">
-                <div className="section-container">
-                    <div className="max-w-xl mx-auto text-center">
-                        <h2 className="text-2xl font-semibold mb-4">Pricing</h2>
-                        <div className="glass-card rounded-2xl p-8">
-                            <span className="text-sm text-[var(--text-muted)]">{service.pricing.label}</span>
-                            <div className="text-4xl font-bold gradient-text my-4">{service.pricing.price}</div>
-                            <p className="text-[var(--text-secondary)] mb-6">{service.pricing.description}</p>
-                            <Link href="/contact" className="btn btn-primary w-full">
-                                Get Started
-                                <ArrowUpRight size={18} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
 
             {/* FAQs */}
             <section className="py-24">

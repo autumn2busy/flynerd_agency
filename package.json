@@ -6,6 +6,7 @@
     "dev": "next dev",
     "dev:n8n": "next dev -p 3010",
     "check:statuses": "node scripts/check-status-literals.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
     "build": "node scripts/check-status-literals.mjs && prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
