@@ -12,7 +12,7 @@ Deployed to Vercel. Next.js 15 + Tailwind + TypeScript.
 ## Architecture
 - app/page.tsx — homepage (ChatScenario NOT yet imported — fix is pending)
 - app/api/chat-demo/route.ts — demo chat endpoint (currently Groq, migrating to Claude)
-- app/api/agents/* — outbound pipeline: scout, intel, builder, outreach, closer, growth, expire
+- app/api/agents/closer and app/api/agents/expire — remaining agency-hosted agent routes. Outbound scout/intel/build/outreach orchestration lives in sonata-stack.
 - lib/prompts.ts — versioned prompt registry (ALWAYS update version on changes)
 - lib/activecampaign.ts, lib/vercel.ts, lib/heygen.ts — external integrations
 - components/home/ChatScenario.tsx — live chat widget (complete, needs import in page.tsx)
@@ -31,7 +31,7 @@ Deployed to Vercel. Next.js 15 + Tailwind + TypeScript.
 
 ## Critical rules
 - NEVER delete or modify lib/prompts.ts without bumping the version number
-- NEVER deploy prompt changes without running e2e-live-test.mjs first
+- NEVER deploy prompt changes without running the Sonata live outreach E2E first: from `sonata-stack`, run `npm run build`, then `E2E_LEAD_ID=<uuid> node --env-file=.env scripts/tests/e2e-live-test.mjs`
 - ALWAYS use streaming responses for chat endpoints
 - ALWAYS add ANTHROPIC_API_KEY to Vercel env vars before deploying Claude routes
 - NEVER add agent logic here — it belongs in sonata-stack
