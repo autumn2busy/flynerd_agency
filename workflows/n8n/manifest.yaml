@@ -1,0 +1,79 @@
+# n8n Workflow Registry
+# Lifecycle stages: deployed, draft, archive
+# Update this whenever you add, deploy, or retire a workflow.
+
+workflows:
+  chat:
+    - file: chat/master-router.deployed.json
+      purpose: "FlyNerd Master Router v3 - receives AC payload, routes by category"
+      n8n_id: "<unknown - confirm in n8n cloud>"
+      stage: deployed
+
+    - file: chat/general-agent.deployed.json
+      purpose: "Catch-all chat agent for unmatched niches"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/home-high-ticket-agent.deployed.json
+      purpose: "Home services premium category agent (HVAC, roofing, solar)"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/home-recurring-agent.deployed.json
+      purpose: "Home services recurring category agent"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/legal-agent.deployed.json
+      purpose: "Legal category agent (all law sub-niches)"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/medical-agent.deployed.json
+      purpose: "Medical category agent (med-spa, dentistry, etc.)"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/chat-master-stateful.deployed.json
+      purpose: "Stateful chat orchestrator"
+      n8n_id: "<unknown>"
+      stage: deployed
+
+    - file: chat/category-agent-template.draft.json
+      purpose: "Template for spinning up new category agents"
+      n8n_id: null
+      stage: draft
+
+  sync:
+    - file: <not in repo>
+      purpose: "AC tag sync to Supabase status - d42cyp27QDIqZczu"
+      n8n_id: "d42cyp27QDIqZczu"
+      stage: deployed
+      notes: "Lives in n8n cloud, not versioned in repo. Export and add to chat/ or sync/ folder when convenient."
+
+  niche:
+    - { file: niche/hvac.draft.json,      purpose: "HVAC niche workflow",      stage: draft }
+    - { file: niche/medical.draft.json,   purpose: "Medical niche workflow",   stage: draft }
+    - { file: niche/legal.draft.json,     purpose: "Legal niche workflow",     stage: draft }
+    - { file: niche/film.draft.json,      purpose: "Film niche workflow",      stage: draft }
+    - { file: niche/logistics.draft.json, purpose: "Logistics niche workflow", stage: draft }
+
+  estimate:
+    - { file: estimate/hvac-subworkflow.draft.json,             purpose: "HVAC estimate subworkflow",             stage: draft }
+    - { file: estimate/roofing-subworkflow.draft.json,          purpose: "Roofing estimate subworkflow",          stage: draft }
+    - { file: estimate/plumbing-subworkflow.draft.json,         purpose: "Plumbing estimate subworkflow",         stage: draft }
+    - { file: estimate/medspa-subworkflow.draft.json,           purpose: "Med spa estimate subworkflow",          stage: draft }
+    - { file: estimate/estate-planning-subworkflow.draft.json,  purpose: "Estate planning estimate subworkflow",  stage: draft }
+    - { file: estimate/personal-injury-subworkflow.draft.json,  purpose: "Personal injury estimate subworkflow",  stage: draft }
+    - { file: estimate/pest-control-subworkflow.draft.json,     purpose: "Pest control estimate subworkflow",     stage: draft }
+    - { file: estimate/senior-care-subworkflow.draft.json,      purpose: "Senior care estimate subworkflow",      stage: draft }
+    - { file: estimate/water-damage-subworkflow.draft.json,     purpose: "Water damage estimate subworkflow",     stage: draft }
+    - { file: estimate/generate-subworkflow.draft.json,         purpose: "Estimate generation subworkflow",       stage: draft }
+
+  archive:
+    - { file: archive/hvac-chat-agent.archive.json,            purpose: "Older HVAC chat agent draft", stage: archive, notes: "Owner review needed - duplicate of hvac-chat-agent-1" }
+    - { file: archive/hvac-chat-agent-1.archive.json,          purpose: "Older HVAC chat agent draft (alt copy)", stage: archive, notes: "Owner review needed - duplicate of hvac-chat-agent" }
+    - { file: archive/HVAC_CHAT_AGENT.archive.json,            purpose: "Even older HVAC chat agent",  stage: archive }
+    - { file: archive/supabase-estimates-setup.archive.sql,    purpose: "One-time SQL setup for estimate tables (already applied to prod)", stage: archive }
+    - { file: archive/supabase-hvac-setup.archive.sql,         purpose: "One-time SQL setup for HVAC tables (already applied to prod)",     stage: archive }
+    - { file: archive/generate-subworkflows.archive.js,        purpose: "Generator script for estimate subworkflows (one-shot, completed)",  stage: archive }

@@ -41,3 +41,25 @@
 - ebd2f6f96aac604c1bff3401033b75020b947c4c chore(config): read Vercel target project and base URL from env vars (audit cleanup)
 - 1c6c671e099157f491a147ea9cbec660a50b9895 fix(api): normalize /api/kb category to canonical lowercase snake_case
 - ca71ade2a0a00a0c244f3c9ae91542871ef9634f fix(status): patch forbidden status literals and add contract test (Audit Fix 1)
+
+---
+
+### 2026-05-01 - DELETED: n8n workspace junk files + workflow reorg
+**Repo:** flynerd-agency
+
+**Files deleted:**
+- public/n8n-niche-workflows/err.txt - error log artifact, no replacement
+- public/n8n-niche-workflows/test.js - empty test file, no replacement
+
+**Files moved (history preserved via git mv):**
+- Deployed chat workflows moved to workflows/n8n/chat/ with `.deployed.json` suffixes
+- Niche workflows moved to workflows/n8n/niche/ with `.draft.json` suffixes
+- Estimate subworkflows moved to workflows/n8n/estimate/ with `.draft.json` suffixes
+- Duplicate and legacy HVAC chat agents, one-shot SQL setup files, and generator script moved to workflows/n8n/archive/
+- n8n reference docs moved to workflows/n8n/docs/
+
+**New file:** workflows/n8n/manifest.yaml - workflow registry
+
+**Reason:** Q6 audit decision - n8n workflows organized by domain at top level, lifecycle as filename suffix. Also removes n8n workflow JSON files from public/ where they were inadvertently web-accessible.
+
+**Owner review needed:** Two duplicate "hvac chat agent" files moved to archive/. Diff and pick the canonical copy.
