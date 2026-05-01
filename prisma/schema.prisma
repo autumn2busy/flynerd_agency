@@ -92,6 +92,41 @@ model LeadEvent {
   @@index([lead_id, created_at], map: "idx_lead_event_lead_created_at")
 }
 
+model Offer {
+  id                 String   @id @default(uuid()) @db.Uuid
+  lead_id            String
+  profile            String
+  amount_cents       Int
+  product_name       String
+  stripe_session_id  String   @unique
+  stripe_session_url String
+  status             String   @default("created")
+  metadata           Json     @default("{}")
+  created_at         DateTime @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([lead_id], map: "idx_offer_lead_id")
+  @@index([status], map: "idx_offer_status")
+}
+
+model PaymentIntent {
+  id                       String   @id @default(uuid()) @db.Uuid
+  offer_id                 String?  @db.Uuid
+  lead_id                  String
+  stripe_payment_intent_id String?
+  stripe_event_id          String   @unique
+  stripe_event_type        String
+  amount_cents             Int?
+  currency                 String?
+  status                   String
+  raw_event                Json
+  created_at               DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([lead_id], map: "idx_payment_intent_lead_id")
+  @@index([offer_id], map: "idx_payment_intent_offer_id")
+  @@index([stripe_event_type], map: "idx_payment_intent_event_type")
+}
+
 model Client {
   id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   businessName            String
